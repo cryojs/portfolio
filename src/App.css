@@ -18,11 +18,12 @@
 }
 
 .portfolio-shell {
+  --shell-left-gutter: max(24px, calc((100vw - 1200px) / 2));
   display: grid;
   grid-template-columns: 184px minmax(0, 1fr);
   gap: 72px;
-  width: min(1200px, calc(100% - 64px));
-  margin: 0 auto;
+  width: min(1200px, calc(100% - var(--shell-left-gutter)));
+  margin: 0 0 0 var(--shell-left-gutter);
   border-right: 1px solid var(--border);
 }
 
@@ -176,7 +177,7 @@
   min-height: min(800px, 96svh);
   flex-direction: column;
   justify-content: center;
-  padding: 72px 0 88px;
+  padding: 72px 0 62px;
   overflow: hidden;
 }
 
@@ -272,6 +273,36 @@
   line-height: 1.2;
 }
 
+.hero-thoughtful {
+  position: relative;
+  display: inline-block;
+}
+
+.hero-scribble {
+  position: absolute;
+  z-index: -1;
+  right: -6%;
+  bottom: -0.28em;
+  width: 112%;
+  height: 0.62em;
+  color: var(--blue);
+  overflow: visible;
+}
+
+.hero-scribble path,
+.heading-doodle path,
+.contact-doodle path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.doodle-echo {
+  opacity: 0.38;
+}
+
 .hero-highlights {
   display: grid;
   gap: 12px;
@@ -357,7 +388,7 @@
 }
 
 .content-section {
-  padding: 84px 0 100px;
+  padding: 59px 0 70px;
 }
 
 .section-heading {
@@ -396,6 +427,41 @@
   font-weight: 520;
   letter-spacing: -0.055em;
   line-height: 1.05;
+}
+
+.section-title-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.heading-doodle {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  color: var(--blue);
+}
+
+.heading-doodle--spark {
+  transform: rotate(7deg);
+}
+
+.heading-doodle--coffee {
+  transform: rotate(-6deg);
+}
+
+.heading-doodle--tool {
+  transform: rotate(8deg);
+}
+
+.heading-doodle--book {
+  transform: rotate(-4deg);
+}
+
+.heading-doodle--contact {
+  width: 38px;
+  height: 38px;
+  transform: rotate(-5deg);
 }
 
 .section-heading > p {
@@ -524,7 +590,7 @@
 }
 
 .projects-section {
-  padding-bottom: 112px;
+  padding-bottom: 78px;
 }
 
 .project-grid {
@@ -860,16 +926,40 @@
 }
 
 .contact-section {
-  margin: 18px 0 80px;
+  position: relative;
+  margin: 18px 0 56px;
   padding: 42px;
+  overflow: hidden;
   background: var(--paper-soft);
   border: 1px solid var(--border);
   border-radius: 16px;
 }
 
-.contact-section h2 {
+.contact-section > :not(.contact-doodle) {
+  position: relative;
+  z-index: 1;
+}
+
+.contact-doodle {
+  position: absolute;
+  top: -25px;
+  right: -18px;
+  width: 340px;
+  color: var(--blue);
+  opacity: 0.42;
+  transform: rotate(-7deg);
+}
+
+.contact-heading-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
   max-width: 620px;
   margin-top: 18px;
+}
+
+.contact-section h2 {
+  margin-top: 0;
 }
 
 .contact-section > p {
@@ -919,7 +1009,6 @@ button:focus-visible {
   .portfolio-shell {
     grid-template-columns: 158px minmax(0, 1fr);
     gap: 48px;
-    width: min(100% - 48px, 1040px);
   }
 
   .desktop-rail {
@@ -996,6 +1085,7 @@ button:focus-visible {
   .portfolio-shell {
     display: block;
     width: 100%;
+    margin: 0;
     border-right: 0;
   }
 
@@ -1015,7 +1105,7 @@ button:focus-visible {
   .hero-section {
     width: calc(100% + 20px);
     min-height: 0;
-    padding: 62px 20px 72px 0;
+    padding: 62px 20px 50px 0;
   }
 
   .hero-section::before {
@@ -1044,7 +1134,7 @@ button:focus-visible {
   }
 
   .content-section {
-    padding: 70px 0 84px;
+    padding: 49px 0 59px;
   }
 
   .section-heading {
@@ -1057,6 +1147,11 @@ button:focus-visible {
   .section-heading > p {
     max-width: none;
     text-align: left;
+  }
+
+  .heading-doodle {
+    width: 30px;
+    height: 30px;
   }
 
   .experience-trigger,
@@ -1093,7 +1188,7 @@ button:focus-visible {
   }
 
   .projects-section {
-    padding-bottom: 96px;
+    padding-bottom: 67px;
   }
 
   .education-card {
@@ -1107,8 +1202,15 @@ button:focus-visible {
   }
 
   .contact-section {
-    margin: 0 0 56px;
+    margin: 0 0 39px;
     padding: 28px 22px;
+  }
+
+  .contact-doodle {
+    top: -2px;
+    right: -78px;
+    width: 255px;
+    opacity: 0.32;
   }
 
   .contact-actions {

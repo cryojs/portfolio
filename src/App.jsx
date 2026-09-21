@@ -1,18 +1,22 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import { DesktopRail, MobileHeader } from './components/SiteNav'
+import { ContactLoop, HeadingDoodle, HeroUnderline } from './components/Doodles'
 import { ExperienceList } from './components/ExperienceList'
 import { ProjectCard } from './components/ProjectCard'
 import { SkillsPanel } from './components/SkillsPanel'
 import { ArrowIcon, GithubIcon, LinkedinIcon } from './components/Icons'
 import { education, experience, navigation, profile, projects, skillGroups } from './data/portfolio'
 
-function SectionHeading({ label, title, note }) {
+function SectionHeading({ label, title, note, doodle }) {
   return (
     <div className="section-heading">
       <div>
         <span className="section-label">{label}</span>
-        <h2>{title}</h2>
+        <div className="section-title-row">
+          <h2>{title}</h2>
+          <HeadingDoodle type={doodle} />
+        </div>
       </div>
       {note && <p>{note}</p>}
     </div>
@@ -92,7 +96,9 @@ function App() {
               <span>{education.location}</span>
             </div>
 
-            <p className="hero-statement">{profile.intro}</p>
+            <p className="hero-statement">
+              Currently building <span className="hero-thoughtful">thoughtful<HeroUnderline /></span> web apps and learning backend development.
+            </p>
 
             <ul className="hero-highlights">
               <li>studying computer science at Waterloo</li>
@@ -108,24 +114,24 @@ function App() {
           </section>
 
           <section className="content-section" id="experience">
-            <SectionHeading label="experience" title="Where I’ve worked" note="Select a role to read more" />
+            <SectionHeading label="experience" title="Where I’ve worked" note="Select a role to read more" doodle="experience" />
             <ExperienceList items={experience} />
           </section>
 
           <section className="content-section projects-section" id="projects">
-            <SectionHeading label="projects" title="Things I’ve built" note="A mix of product, accessibility, and play" />
+            <SectionHeading label="projects" title="Things I’ve built" note="A mix of product, accessibility, and play" doodle="projects" />
             <div className="project-grid">
               {projects.map((project) => <ProjectCard project={project} key={project.id} />)}
             </div>
           </section>
 
           <section className="content-section" id="skills">
-            <SectionHeading label="skills" title="My toolkit" note="Select to view technologies" />
+            <SectionHeading label="skills" title="My toolkit" note="Select to view technologies" doodle="skills" />
             <SkillsPanel groups={skillGroups} />
           </section>
 
           <section className="content-section education-section" id="education">
-            <SectionHeading label="education" title="Current program" />
+            <SectionHeading label="education" title="Current program" doodle="education" />
             <article className="education-card">
               <div>
                 <h3>{education.school}</h3>
@@ -139,8 +145,12 @@ function App() {
           </section>
 
           <section className="contact-section" id="contact">
+            <ContactLoop />
             <span className="section-label">contact</span>
-            <h2>Have something interesting in mind?</h2>
+            <div className="contact-heading-row">
+              <h2>Have something interesting in mind?</h2>
+              <HeadingDoodle type="contact" />
+            </div>
             <p>I’m always happy to talk about software, projects, and new opportunities.</p>
             <div className="contact-actions">
               <a className="primary-action" href={`mailto:${profile.email}`}>{profile.email} <ArrowIcon /></a>
