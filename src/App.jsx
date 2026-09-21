@@ -1,120 +1,160 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
+import { useEffect, useState } from 'react'
 import './App.css'
+import { DesktopRail, MobileHeader } from './components/SiteNav'
+import { ExperienceList } from './components/ExperienceList'
+import { ProjectCard } from './components/ProjectCard'
+import { SkillsPanel } from './components/SkillsPanel'
+import { ArrowIcon, GithubIcon, LinkedinIcon } from './components/Icons'
+import { education, experience, navigation, profile, projects, skillGroups } from './data/portfolio'
+
+function SectionHeading({ label, title, note }) {
+  return (
+    <div className="section-heading">
+      <div>
+        <span className="section-label">{label}</span>
+        <h2>{title}</h2>
+      </div>
+      {note && <p>{note}</p>}
+    </div>
+  )
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [activeSection, setActiveSection] = useState('intro')
+
+  useEffect(() => {
+    const sections = navigation
+      .map((item) => document.getElementById(item.id))
+      .filter(Boolean)
+    let animationFrame
+
+    const updateActiveSection = () => {
+      animationFrame = undefined
+      const scrollTop = window.scrollY
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight
+
+      if (scrollTop <= 8) {
+        setActiveSection(sections[0]?.id ?? 'intro')
+        return
+      }
+
+      if (scrollTop >= maxScroll - 8) {
+        setActiveSection(sections.at(-1)?.id ?? 'contact')
+        return
+      }
+
+      const marker = Math.min(window.innerHeight * 0.34, 300)
+      let currentSection = sections[0]
+
+      for (const section of sections) {
+        if (section.getBoundingClientRect().top > marker) break
+        currentSection = section
+      }
+
+      if (currentSection) setActiveSection(currentSection.id)
+    }
+
+    const scheduleUpdate = () => {
+      if (animationFrame) cancelAnimationFrame(animationFrame)
+      animationFrame = requestAnimationFrame(updateActiveSection)
+    }
+
+    window.addEventListener('scroll', scheduleUpdate, { passive: true })
+    window.addEventListener('resize', scheduleUpdate)
+    window.addEventListener('hashchange', scheduleUpdate)
+    scheduleUpdate()
+
+    return () => {
+      if (animationFrame) cancelAnimationFrame(animationFrame)
+      window.removeEventListener('scroll', scheduleUpdate)
+      window.removeEventListener('resize', scheduleUpdate)
+      window.removeEventListener('hashchange', scheduleUpdate)
+    }
+  }, [])
 
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+      <MobileHeader activeSection={activeSection} />
+      <div className="portfolio-shell">
+        <DesktopRail activeSection={activeSection} />
 
-      <div className="ticks"></div>
+        <main className="portfolio-main">
+          <section className="hero-section" id="intro">
+            <span className="hero-kicker">HI, I&apos;M</span>
+            <h1 aria-label={profile.name}>
+              <span>{profile.firstName}</span>
+              <span>{profile.lastName}</span>
+            </h1>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+            <div className="education-line">
+              <span className="education-pill">CS CO-OP</span>
+              <strong>{education.school}</strong>
+              <span>{education.location}</span>
+            </div>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+            <p className="hero-statement">{profile.intro}</p>
+
+            <ul className="hero-highlights">
+              <li>studying computer science at Waterloo</li>
+              <li>built 10 iOS apps through an Apple-supported development program</li>
+              <li>contributed editorials, tests, and guides to USACO Guide</li>
+            </ul>
+
+            <div className="hero-actions">
+              <a className="primary-action" href={`mailto:${profile.email}`}>Email me <ArrowIcon /></a>
+              <a className="secondary-action" href={profile.links.linkedin} target="_blank" rel="noreferrer"><LinkedinIcon /> LinkedIn</a>
+              <a className="secondary-action" href={profile.links.github} target="_blank" rel="noreferrer"><GithubIcon /> GitHub</a>
+            </div>
+          </section>
+
+          <section className="content-section" id="experience">
+            <SectionHeading label="experience" title="Where I’ve worked" note="Select a role to read more" />
+            <ExperienceList items={experience} />
+          </section>
+
+          <section className="content-section projects-section" id="projects">
+            <SectionHeading label="projects" title="Things I’ve built" note="A mix of product, accessibility, and play" />
+            <div className="project-grid">
+              {projects.map((project) => <ProjectCard project={project} key={project.id} />)}
+            </div>
+          </section>
+
+          <section className="content-section" id="skills">
+            <SectionHeading label="skills" title="My toolkit" note="Select to view technologies" />
+            <SkillsPanel groups={skillGroups} />
+          </section>
+
+          <section className="content-section education-section" id="education">
+            <SectionHeading label="education" title="Current program" />
+            <article className="education-card">
+              <div>
+                <h3>{education.school}</h3>
+                <p>{education.degree}</p>
+              </div>
+              <div className="education-card__meta">
+                <span>{education.location}</span>
+                <span>{education.dates}</span>
+              </div>
+            </article>
+          </section>
+
+          <section className="contact-section" id="contact">
+            <span className="section-label">contact</span>
+            <h2>Have something interesting in mind?</h2>
+            <p>I’m always happy to talk about software, projects, and new opportunities.</p>
+            <div className="contact-actions">
+              <a className="primary-action" href={`mailto:${profile.email}`}>{profile.email} <ArrowIcon /></a>
+              <a className="contact-social" href={profile.links.linkedin} target="_blank" rel="noreferrer"><LinkedinIcon /> LinkedIn</a>
+              <a className="contact-social" href={profile.links.github} target="_blank" rel="noreferrer"><GithubIcon /> GitHub</a>
+            </div>
+          </section>
+
+          <footer className="site-footer">
+            <span>© 2026 Jason Sun</span>
+            <a href="#intro">Back to top <ArrowIcon direction="up" /></a>
+          </footer>
+        </main>
+      </div>
     </>
   )
 }
