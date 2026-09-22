@@ -1,5 +1,6 @@
 import { ArrowIcon, GithubIcon } from './Icons'
 import { MediaPreview } from './MediaPreview'
+import { Globe } from 'lucide-react'
 
 export function ProjectCard({ project }) {
   return (
@@ -18,7 +19,7 @@ export function ProjectCard({ project }) {
       </div>
       <div className="mt-4 flex gap-4">
         <a className="inline-flex items-center gap-1.5 text-[11px] font-[550] text-muted no-underline transition-colors duration-150 hover:text-blue focus-visible:text-blue" href={project.github} target="_blank" rel="noreferrer"><GithubIcon className="size-[13px]" /> Source</a>
-        {project.live && <a className="inline-flex items-center gap-1.5 text-[11px] font-[550] text-muted no-underline transition-colors duration-150 hover:text-blue focus-visible:text-blue" href={project.live} target="_blank" rel="noreferrer">Live site <ArrowIcon className="size-[13px]" /></a>}
+        {project.live && <a className="inline-flex items-center gap-1.5 text-[11px] font-[550] text-muted no-underline transition-colors duration-150 hover:text-blue focus-visible:text-blue" href={project.live} target="_blank" rel="noreferrer"><Globe className="size-[13px] shrink-0" aria-hidden="true" /> Live site</a>}
       </div>
     </article>
   )

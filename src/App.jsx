@@ -7,6 +7,8 @@ import { SkillsPanel } from './components/SkillsPanel'
 import { ArrowIcon, GithubIcon, LinkedinIcon } from './components/Icons'
 import { education, experience, navigation, profile, projects, skillGroups } from './data/portfolio'
 
+const readifyProject = projects.find((project) => project.id === 'readify')
+
 function SectionHeading({ label, title, note, doodle }) {
   return (
     <div className="mb-[34px] flex items-end justify-between gap-[30px] max-[780px]:mb-7 max-[780px]:flex-col max-[780px]:items-start max-[780px]:gap-3">
@@ -49,6 +51,47 @@ function ProblemBadge({ label, href, detail }) {
           <strong className="text-[15px] font-[650] text-blue-dark">{label}</strong>
           <span className="text-[11px] leading-[1.35] text-ink-soft">{detail}</span>
           <span className="overflow-hidden text-[10px] text-ellipsis whitespace-nowrap text-blue-dark">{href.replace('https://', '')}</span>
+        </span>
+      </span>
+    </a>
+  )
+}
+
+function ProjectPreviewLink({ project }) {
+  const previewId = `project-preview-${project.id}`
+
+  return (
+    <a
+      aria-describedby={previewId}
+      className="group problem-border problem-border-badge project-preview-link inline-flex items-center rounded-full bg-blue-soft px-2 py-1 text-[10px] font-[650] leading-[1.2] whitespace-nowrap !text-blue-dark no-underline transition duration-150 hover:-translate-y-px hover:bg-[#bfdbfe] focus-visible:-translate-y-px focus-visible:bg-[#bfdbfe]"
+      href={project.github}
+      target="_blank"
+      rel="noreferrer"
+    >
+      <span className="text-blue-dark">{project.title}</span>
+      <svg className="problem-border-svg text-[#93c5fd]" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true">
+        <rect x="1" y="1" width="98" height="38" rx="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 4" vectorEffect="non-scaling-stroke" />
+      </svg>
+      <span
+        id={previewId}
+        role="tooltip"
+        className="link-preview invisible pointer-events-none absolute bottom-[calc(100%+12px)] left-[-12px] z-[5] isolate w-[270px] whitespace-normal p-3.5 pr-6 text-blue-dark max-[780px]:right-[-4px] max-[780px]:left-auto max-[780px]:w-[min(270px,calc(100vw_-_40px))]"
+      >
+        <span className="link-preview-layer absolute inset-[5px_-5px_-5px_5px] z-0 bg-blue-soft" aria-hidden="true" />
+        <span className="link-preview-paper absolute inset-0 z-[1]" aria-hidden="true" />
+        <span className="link-preview-fold absolute right-0 bottom-0 z-[2] size-[22px]" aria-hidden="true" />
+        <span className="link-preview-content relative z-[3] grid w-full max-w-full min-w-0 grid-cols-1 gap-2.5">
+          <span className="block aspect-[16/9] w-full max-w-full min-w-0 overflow-hidden rounded-[3px] border border-blue-soft bg-blue-soft">
+            <img className="block h-full w-full max-w-full min-w-0 object-cover" src={project.media.image} alt="" style={{ objectPosition: '35% center' }} />
+          </span>
+          <span className="grid min-w-0 max-w-full gap-1">
+            <strong className="text-[15px] font-[650] text-blue-dark">{project.title}</strong>
+            <span className="break-words text-[11px] leading-[1.35] text-ink-soft">{project.description}</span>
+          </span>
+          <span className="flex flex-wrap gap-1">
+            {project.tech.slice(0, 3).map((technology) => <span className="rounded-full bg-blue-soft px-1.5 py-0.5 text-[9px] font-[600] text-blue-dark" key={technology}>{technology}</span>)}
+          </span>
+          <span className="overflow-hidden text-[10px] text-ellipsis whitespace-nowrap text-blue-dark">{project.github.replace('https://', '')}</span>
         </span>
       </span>
     </a>
@@ -143,7 +186,7 @@ function App() {
           </p>
 
           <ul className="mt-7 mb-0 grid max-w-[690px] list-none gap-3 p-0 text-sm leading-[1.55] text-ink-soft">
-            <li className="relative pl-[25px] before:absolute before:top-[0.58em] before:left-0.5 before:size-1.5 before:rounded-full before:bg-blue before:content-['']">studying computer science at Waterloo</li>
+            <li className="relative pl-[25px] before:absolute before:top-[0.58em] before:left-0.5 before:size-1.5 before:rounded-full before:bg-blue before:content-['']">Currently working on <ProjectPreviewLink project={readifyProject} />, a browser extension to simplify reading</li>
             <li className="relative pl-[25px] before:absolute before:top-[0.58em] before:left-0.5 before:size-1.5 before:rounded-full before:bg-blue before:content-['']">built 10 iOS apps through an Apple-supported development program</li>
             <li className="relative pl-[25px] leading-[1.55] before:absolute before:top-[0.58em] before:left-0.5 before:size-1.5 before:rounded-full before:bg-blue before:content-['']">
               <span>enjoy solving problems on</span>

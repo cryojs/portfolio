@@ -61,7 +61,7 @@ export const projects = [
     description: 'An AI-powered QA control room that tests live websites, surfaces UX friction, verifies fixes, and creates pull requests.',
     tech: ['React', 'TypeScript', 'Browserbase', 'OpenAI API', 'React Flow'],
     github: 'https://github.com/CryoJS/friction',
-    live: 'https://friction.pages.dev',
+    live: 'https://friction-d95.pages.dev/',
     media: {
       image: '/projects/friction/cover.png',
       alt: 'Friction Paths view showing site routes, assigned agents, and scan results',

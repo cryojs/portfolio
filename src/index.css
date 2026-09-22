@@ -64,6 +64,11 @@
 
   a {
     color: inherit;
+    transition: color 150ms ease;
+  }
+
+  a:hover {
+    color: var(--color-blue);
   }
 
   ::selection {
@@ -144,7 +149,9 @@
 }
 
 .problem-border-badge:hover .link-preview,
-.problem-border-badge:focus-visible .link-preview {
+.problem-border-badge:focus-visible .link-preview,
+.project-preview-link:hover .link-preview,
+.project-preview-link:focus-visible .link-preview {
   visibility: visible;
   opacity: 1;
   animation: link-preview-drop 240ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
@@ -152,7 +159,9 @@
 }
 
 .problem-border-badge:hover .link-preview-content,
-.problem-border-badge:focus-visible .link-preview-content {
+.problem-border-badge:focus-visible .link-preview-content,
+.project-preview-link:hover .link-preview-content,
+.project-preview-link:focus-visible .link-preview-content {
   animation: link-preview-content-straighten 240ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
