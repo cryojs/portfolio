@@ -6,6 +6,7 @@
   --color-canvas: #ffffff;
   --color-paper: #f5f5f5;
   --color-paper-soft: #fafafa;
+  --color-paper-note: #eff6ff;
   --color-border: #e5e5e5;
   --color-border-strong: #d4d4d4;
   --color-ink: #171717;
@@ -92,21 +93,11 @@
 }
 
 .problem-border {
-  --problem-border-color: #93c5fd;
   border: 1px solid transparent;
 }
 
 .problem-border-badge {
   position: relative;
-}
-
-.problem-border-preview {
-  --problem-border-color: var(--color-canvas);
-}
-
-.problem-border-badge:hover,
-.problem-border-badge:focus-visible {
-  --problem-border-color: var(--color-blue);
 }
 
 .problem-border-svg {
@@ -116,6 +107,81 @@
   height: 100%;
   overflow: visible;
   pointer-events: none;
+}
+
+.link-preview {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(8px) rotate(1.2deg) scale(0.97);
+  transform-origin: bottom left;
+  transition: opacity 140ms ease, visibility 0s linear 240ms;
+}
+
+.link-preview-layer {
+  border-radius: 5px 4px 6px 3px;
+  transform: rotate(2deg);
+  box-shadow: 0 5px 12px rgb(30 64 175 / 10%);
+}
+
+.link-preview-paper {
+  border: 1px solid #bfdbfe;
+  border-radius: 5px 4px 6px 3px;
+  background-color: var(--color-paper-note);
+  background-image: radial-gradient(rgb(30 64 175 / 7%) 0.55px, transparent 0.55px);
+  background-size: 8px 8px;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%);
+  filter: drop-shadow(0 6px 14px rgb(30 64 175 / 10%)) drop-shadow(0 2px 4px rgb(23 23 23 / 6%));
+}
+
+.link-preview-fold {
+  background: #bfdbfe;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  filter: drop-shadow(-1px -1px 0 rgb(30 64 175 / 12%));
+}
+
+.link-preview-content {
+  transform: rotate(-1.2deg);
+}
+
+.problem-border-badge:hover .link-preview,
+.problem-border-badge:focus-visible .link-preview {
+  visibility: visible;
+  opacity: 1;
+  animation: link-preview-drop 240ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  transition-delay: 0s;
+}
+
+.problem-border-badge:hover .link-preview-content,
+.problem-border-badge:focus-visible .link-preview-content {
+  animation: link-preview-content-straighten 240ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes link-preview-drop {
+  0% {
+    transform: translateY(8px) rotate(1.2deg) scale(0.97);
+  }
+
+  68% {
+    transform: translateY(-1px) rotate(-1deg) scale(1.01);
+  }
+
+  100% {
+    transform: translateY(0) rotate(-0.75deg) scale(1);
+  }
+}
+
+@keyframes link-preview-content-straighten {
+  0% {
+    transform: rotate(-1.2deg);
+  }
+
+  68% {
+    transform: rotate(1deg);
+  }
+
+  100% {
+    transform: rotate(0.75deg);
+  }
 }
 
 .hero-scribble {
@@ -294,6 +360,12 @@
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+
+  .link-preview,
+  .link-preview-content {
+    transform: none !important;
+    animation: none !important;
   }
 }
 

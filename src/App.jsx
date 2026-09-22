@@ -23,8 +23,11 @@ function SectionHeading({ label, title, note, doodle }) {
 }
 
 function ProblemBadge({ label, href, detail }) {
+  const previewId = `link-preview-${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
+
   return (
     <a
+      aria-describedby={previewId}
       className="group problem-border problem-border-badge inline-flex items-center rounded-full bg-blue-soft px-2 py-1 text-[10px] font-[650] leading-[1.2] whitespace-nowrap !text-blue-dark no-underline transition duration-150 hover:-translate-y-px hover:bg-[#bfdbfe] focus-visible:-translate-y-px focus-visible:bg-[#bfdbfe]"
       href={href}
       target="_blank"
@@ -34,15 +37,18 @@ function ProblemBadge({ label, href, detail }) {
       <svg className="problem-border-svg text-[#93c5fd]" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true">
         <rect x="1" y="1" width="98" height="38" rx="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 4" vectorEffect="non-scaling-stroke" />
       </svg>
-      <span className="invisible pointer-events-none absolute bottom-[calc(100%+8px)] left-[calc(100%-6px)] z-[5] w-[230px] translate-y-[7px] rounded-[14px] bg-blue p-4 text-white opacity-0 transition-[opacity,transform,visibility] duration-150 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 max-[780px]:right-[-4px] max-[780px]:left-auto max-[780px]:w-[min(230px,calc(100vw_-_40px))] problem-border problem-border-preview"
+      <span
+        id={previewId}
+        role="tooltip"
+        className="link-preview invisible pointer-events-none absolute bottom-[calc(100%+12px)] left-[calc(100%-6px)] z-[5] isolate w-[230px] p-4 pr-7 text-blue-dark max-[780px]:right-[-4px] max-[780px]:left-auto max-[780px]:w-[min(230px,calc(100vw_-_40px))]"
       >
-        <svg className="problem-border-svg text-blue-soft" viewBox="0 0 230 100" preserveAspectRatio="none" aria-hidden="true">
-          <rect x="1" y="1" width="228" height="98" rx="14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 4" vectorEffect="non-scaling-stroke" />
-        </svg>
-        <span className="relative grid gap-[5px]">
-          <strong className="text-[15px] font-[650] text-blue-soft">{label}</strong>
-          <span className="text-[11px] leading-[1.35] text-white">{detail}</span>
-          <span className="overflow-hidden text-[10px] text-ellipsis whitespace-nowrap text-white">{href.replace('https://', '')}</span>
+        <span className="link-preview-layer absolute inset-[5px_-5px_-5px_5px] z-0 bg-blue-soft" aria-hidden="true" />
+        <span className="link-preview-paper absolute inset-0 z-[1]" aria-hidden="true" />
+        <span className="link-preview-fold absolute right-0 bottom-0 z-[2] size-[22px]" aria-hidden="true" />
+        <span className="link-preview-content relative z-[3] grid gap-[5px]">
+          <strong className="text-[15px] font-[650] text-blue-dark">{label}</strong>
+          <span className="text-[11px] leading-[1.35] text-ink-soft">{detail}</span>
+          <span className="overflow-hidden text-[10px] text-ellipsis whitespace-nowrap text-blue-dark">{href.replace('https://', '')}</span>
         </span>
       </span>
     </a>
