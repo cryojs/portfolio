@@ -184,25 +184,47 @@
   }
 }
 
-.hero-scribble {
-  position: absolute;
-  z-index: -1;
-  right: -6%;
-  bottom: -0.28em;
-  width: 112%;
-  height: 0.62em;
-  overflow: visible;
-  color: var(--color-blue);
+.scribble-underline {
+  position: relative;
+  z-index: 0;
+  display: inline-block;
+  white-space: nowrap;
+  isolation: isolate;
 }
 
-.hero-scribble path,
+.scribble-underline-svg {
+  position: absolute;
+  z-index: -1;
+  right: -5%;
+  bottom: -0.2em;
+  width: 110%;
+  height: 0.42em;
+  overflow: visible;
+  color: var(--color-blue);
+  pointer-events: none;
+}
+
+.scribble-underline-svg--long {
+  bottom: -0.18em;
+  height: 0.46em;
+}
+
+.scribble-underline-svg path,
 .heading-doodle path,
 .contact-doodle path {
   fill: none;
   stroke: currentColor;
-  stroke-width: 2.4;
+  stroke-width: 1.45;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+.scribble-underline-svg path {
+  opacity: 0.72;
+}
+
+.scribble-underline-echo {
+  opacity: 0.24 !important;
 }
 
 .doodle-echo {

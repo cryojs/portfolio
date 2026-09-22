@@ -1,10 +1,14 @@
-export function HeroUnderline() {
+export function ScribbleUnderline({ children }) {
+  const isLong = String(children).length > 6
+
   return (
-    <svg className="hero-scribble" viewBox="0 0 180 22" aria-hidden="true">
-      <path d="M3 9C24 14 48 4 70 9C94 15 116 5 141 9C155 11 166 9 177 6" />
-      <path className="doodle-echo" d="M5 14C31 10 51 17 77 12C102 7 128 16 174 10" />
-      <path className="doodle-echo" d="M13 18C48 13 73 18 105 14C130 11 151 15 169 13" />
-    </svg>
+    <span className="scribble-underline">
+      <span className="relative z-[1]">{children}</span>
+      <svg className={`scribble-underline-svg${isLong ? ' scribble-underline-svg--long' : ''}`} viewBox={isLong ? '0 0 280 22' : '0 0 180 22'} preserveAspectRatio="none" aria-hidden="true">
+        <path d={isLong ? 'M2 10C28 3 54 15 82 9S136 4 164 10S220 15 278 7' : 'M3 9C24 14 48 4 70 9C94 15 116 5 141 9C155 11 166 9 177 6'} />
+        <path className="scribble-underline-echo" d={isLong ? 'M5 14C37 8 69 18 105 13S174 8 211 14S251 16 278 11' : 'M5 14C31 10 51 17 77 12C102 7 128 16 174 10'} />
+      </svg>
+    </span>
   )
 }
 

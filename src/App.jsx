@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { DesktopRail, MobileHeader } from './components/SiteNav'
-import { ContactLoop, HeadingDoodle, HeroUnderline } from './components/Doodles'
+import { ContactLoop, HeadingDoodle, ScribbleUnderline } from './components/Doodles'
 import { ExperienceList } from './components/ExperienceList'
 import { ProjectCard } from './components/ProjectCard'
 import { SkillsPanel } from './components/SkillsPanel'
@@ -135,7 +135,11 @@ function App() {
           </div>
 
           <p className="mt-[42px] max-w-[680px] text-[clamp(1.65rem,3vw,2.25rem)] font-medium leading-[1.2] tracking-[-0.045em] text-ink max-[780px]:mt-9 max-[780px]:text-[clamp(1.6rem,7vw,2.15rem)]">
-            Currently building <span className="relative inline-block">thoughtful<HeroUnderline /></span> web apps and learning backend development.
+            Currently building thoughtful{' '}
+            <ScribbleUnderline>web</ScribbleUnderline>{' '}
+            apps and{' '}
+            <ScribbleUnderline>learning backend</ScribbleUnderline>{' '}
+            development.
           </p>
 
           <ul className="mt-7 mb-0 grid max-w-[690px] list-none gap-3 p-0 text-sm leading-[1.55] text-ink-soft">
