@@ -89,6 +89,27 @@
   }
 }
 
+@media (min-width: 781px) {
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
+}
+
+html,
+body,
+.site-shell {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.site-shell::-webkit-scrollbar {
+  display: none;
+}
+
 .hero-with-pattern::before {
   position: absolute;
   top: 56px;

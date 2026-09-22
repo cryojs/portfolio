@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { DesktopRail, MobileHeader } from './components/SiteNav'
 import { ContactActions } from './components/ContactActions'
 import { ContactLoop, HeadingDoodle, ScribbleUnderline } from './components/Doodles'
@@ -34,28 +34,39 @@ function SectionHeading({ label, title, note, doodle }) {
   )
 }
 
-function PageShell({ activeSection, children }) {
+function PageShell({ activeSection, children, scrollRef }) {
   return (
-    <div className="mx-auto grid w-full max-w-250 grid-cols-[184px_minmax(0,1fr)] gap-18 border-r border-border bg-[radial-gradient(circle_280px_at_calc(100%+40px)_-50px,var(--color-blue)_0_99.5%,transparent_100%)] bg-no-repeat max-[1080px]:grid-cols-[158px_minmax(0,1fr)] max-[1080px]:gap-12 max-[780px]:mx-0 max-[780px]:block max-[780px]:w-full max-[780px]:border-r-0 max-[780px]:bg-[radial-gradient(circle_180px_at_100%_-50px,var(--color-blue)_0_99.5%,transparent_100%)]">
-      <DesktopRail activeSection={activeSection} />
-      <main className="w-full min-w-0 max-w-none pr-18 max-[1080px]:pr-12 max-[780px]:overflow-x-clip max-[780px]:px-5 max-[780px]:pr-5">{children}</main>
+    <div className="site-shell-frame mx-auto h-svh w-full max-w-250 border-r border-border max-[780px]:mx-0 max-[780px]:h-auto max-[780px]:w-full max-[780px]:border-r-0">
+      <div ref={scrollRef} className="site-shell h-full overflow-y-auto max-[780px]:h-auto max-[780px]:overflow-visible">
+        <div className="grid min-h-full grid-cols-[184px_minmax(0,1fr)] gap-18 bg-[radial-gradient(circle_280px_at_calc(100%+40px)_-50px,var(--color-blue)_0_99.5%,transparent_100%)] bg-no-repeat max-[1080px]:grid-cols-[158px_minmax(0,1fr)] max-[1080px]:gap-12 max-[780px]:block max-[780px]:bg-[radial-gradient(circle_180px_at_100%_-50px,var(--color-blue)_0_99.5%,transparent_100%)]">
+          <DesktopRail activeSection={activeSection} />
+          <main className="w-full min-w-0 max-w-none pr-18 max-[1080px]:pr-12 max-[780px]:overflow-x-clip max-[780px]:px-5 max-[780px]:pr-5">{children}</main>
+        </div>
+      </div>
     </div>
   )
 }
 
 function App() {
   const [activeSection, setActiveSection] = useState('intro')
+  const shellRef = useRef(null)
 
   useEffect(() => {
+    const shell = shellRef.current
     const sections = navigation
       .map((item) => document.getElementById(item.id))
       .filter(Boolean)
     let animationFrame
+    let scrollTarget
+
+    const getScrollTop = () => scrollTarget === shell ? shell.scrollTop : window.scrollY
+    const getScrollHeight = () => scrollTarget === shell ? shell.scrollHeight : document.documentElement.scrollHeight
+    const getViewportHeight = () => scrollTarget === shell ? shell.clientHeight : window.innerHeight
 
     const updateActiveSection = () => {
       animationFrame = undefined
-      const scrollTop = window.scrollY
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight
+      const scrollTop = getScrollTop()
+      const maxScroll = Math.max(0, getScrollHeight() - getViewportHeight())
 
       if (scrollTop <= 8) {
         setActiveSection(sections[0]?.id ?? 'intro')
@@ -67,7 +78,7 @@ function App() {
         return
       }
 
-      const marker = Math.min(window.innerHeight * 0.34, 300)
+      const marker = Math.min(getViewportHeight() * 0.34, 300)
       let currentSection = sections[0]
 
       for (const section of sections) {
@@ -83,23 +94,35 @@ function App() {
       animationFrame = requestAnimationFrame(updateActiveSection)
     }
 
-    window.addEventListener('scroll', scheduleUpdate, { passive: true })
+    const viewportQuery = window.matchMedia('(min-width: 781px)')
+    const updateScrollTarget = () => {
+      const nextTarget = viewportQuery.matches ? shell : window
+
+      if (!nextTarget || scrollTarget === nextTarget) return
+      if (scrollTarget) scrollTarget.removeEventListener('scroll', scheduleUpdate)
+      scrollTarget = nextTarget
+      scrollTarget.addEventListener('scroll', scheduleUpdate, { passive: true })
+      scheduleUpdate()
+    }
+
     window.addEventListener('resize', scheduleUpdate)
     window.addEventListener('hashchange', scheduleUpdate)
-    scheduleUpdate()
+    viewportQuery.addEventListener('change', updateScrollTarget)
+    updateScrollTarget()
 
     return () => {
       if (animationFrame) cancelAnimationFrame(animationFrame)
-      window.removeEventListener('scroll', scheduleUpdate)
+      if (scrollTarget) scrollTarget.removeEventListener('scroll', scheduleUpdate)
       window.removeEventListener('resize', scheduleUpdate)
       window.removeEventListener('hashchange', scheduleUpdate)
+      viewportQuery.removeEventListener('change', updateScrollTarget)
     }
   }, [])
 
   return (
     <>
       <MobileHeader activeSection={activeSection} />
-      <PageShell activeSection={activeSection}>
+      <PageShell activeSection={activeSection} scrollRef={shellRef}>
         <section className="hero-with-pattern relative flex min-h-[min(800px,96svh)] max-w-full flex-col justify-center overflow-hidden scroll-mt-9 pt-18 pb-16 *:z-1 max-[780px]:min-h-0 max-[780px]:scroll-mt-20 max-[780px]:pr-0 max-[780px]:pt-16 max-[780px]:pb-13" id="intro">
           <span className="text-[13px] font-semibold text-blue">Hello! I&apos;m</span>
           <h1 className="m-0 mt-6 mb-9 grid w-max gap-0.5 font-display text-[clamp(4.9rem,9.1vw,7.35rem)] font-[680] leading-[0.73] tracking-[-0.065em] text-ink font-stretch-condensed max-[1080px]:text-[clamp(4.76rem,10.5vw,6.3rem)] max-[780px]:mb-8 max-[780px]:mt-6 max-[780px]:w-full max-[780px]:text-[clamp(4.06rem,18.2vw,5.6rem)] max-[430px]:text-[clamp(3.78rem,20.3vw,5.04rem)]" aria-label={profile.name}>
