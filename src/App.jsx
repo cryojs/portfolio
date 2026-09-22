@@ -211,8 +211,8 @@ function App() {
           </div>
         </section>
 
-        <footer className="flex w-full max-w-[900px] items-center justify-between gap-6 border-t border-border py-[22px] pb-7 text-[10px] text-muted uppercase max-[780px]:pb-6">
-          <span>&copy; 2026 jason sun</span>
+        <footer className="flex w-full max-w-[900px] items-center justify-between gap-6 border-t border-border py-[22px] pb-7 text-[10px] text-muted max-[780px]:pb-6">
+          <span>&copy; 2026 Jason Sun</span>
           <a className="inline-flex items-center gap-[5px] text-muted no-underline transition-colors duration-150 hover:text-blue focus-visible:text-blue" href="#intro">back to top <ArrowIcon direction="up" /></a>
         </footer>
       </PageShell>
