@@ -11,20 +11,26 @@ export function HeroUnderline() {
 export function ProjectSpark() {
   return (
     <svg className="heading-doodle heading-doodle--spark" viewBox="0 0 56 56" aria-hidden="true">
-      <path d="M29 3C28 13 27 20 23 25C18 29 12 31 4 32C13 33 20 35 24 40C27 44 28 49 29 54C31 46 33 40 38 36C42 33 47 32 53 31C45 29 39 27 35 23C31 18 30 11 29 3Z" />
-      <path className="doodle-echo" d="M42 7L41 17M37 12L47 11" />
+      <path d="M14 12C14 11 15 10 17 10H39C41 10 42 11 42 13V31C42 33 41 34 39 34H17C15 34 14 33 14 31V12Z" />
+      <path className="doodle-echo" d="M18 14H38V30H18V14Z" />
+      <path className="keyboard-deck-fill" d="M14 33Q14 32.5 15 33H42Q42.5 33 43 33.5L48 39V40Q48 42 46 42H22Q20.5 42 19.5 41L14 35Q13 34 14 33Z" />
+      <path className="keyboard-deck-outline" d="M14 33Q14 32.5 15 33H42Q42.5 33 43 33.5L48 39V40Q48 42 46 42" />
+      <path className="keyboard-deck-outline" d="M22 42Q20.5 42 19.5 41L14 35Q13 34 14 33" />
+      <path className="keyboard-bottom-edge" d="M22 42H46" />
+      <path className="doodle-echo keyboard-lines" d="M18 35L42 35M21 38L42 38M25 35L26 37M30 35L31 38M35 35L36 38M40 35L41 37" />
+      <path className="project-star-solid" d="M9 23C10 27 12 29 16 30C12 31 10 33 9 37C8 33 6 31 3 30C6 29 8 27 9 23Z" />
+      <path className="project-star-solid" d="M49 5L50 8L53 9L50 10L49 13L48 10L45 9L48 8L49 5Z" />
     </svg>
   )
 }
 
-function CoffeeCup() {
+function BubbleTea() {
   return (
-    <svg className="heading-doodle heading-doodle--coffee" viewBox="0 0 56 56" aria-hidden="true">
-      <path d="M17 12C13 9 20 7 17 3M28 12C24 9 31 7 28 3" />
-      <path d="M9 19C16 16 36 16 44 20L41 37C40 44 15 45 13 37L9 19Z" />
-      <path d="M12 20C19 23 35 24 43 20M15 26C22 28 34 28 41 26" />
-      <path d="M43 24C51 21 53 29 49 34C47 37 44 37 41 36" />
-      <path className="doodle-echo" d="M10 45C20 48 37 48 47 44M15 22C22 25 35 25 41 22" />
+    <svg className="heading-doodle heading-doodle--bubble-tea" viewBox="0 0 56 84" aria-hidden="true">
+      <path className="bubble-tea-straw" d="M27 57L33 4L37 4L31 57Z" />
+      <path d="M11 28C18 25 38 25 45 28L41 73C34 80 20 80 14 73L11 28Z" />
+      <path d="M11 28C18 32 37 32 45 28L43 23C35 20 21 20 13 23L11 28Z" />
+      <path className="doodle-echo" d="M15 43C22 46 35 46 42 43M18 60C18 57 22 57 22 60C22 63 18 63 18 60ZM28 68C28 65 32 65 32 68C32 71 28 71 28 68ZM35 55C35 52 39 52 39 55C39 58 35 58 35 55Z" />
     </svg>
   )
 }
@@ -59,7 +65,7 @@ function ContactBubble() {
 }
 
 export function HeadingDoodle({ type }) {
-  if (type === 'experience') return <CoffeeCup />
+  if (type === 'experience') return <BubbleTea />
   if (type === 'projects') return <ProjectSpark />
   if (type === 'skills') return <SkillsTool />
   if (type === 'education') return <EducationBook />
