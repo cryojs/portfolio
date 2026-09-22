@@ -36,7 +36,7 @@ function SectionHeading({ label, title, note, doodle }) {
 
 function PageShell({ activeSection, children }) {
   return (
-    <div className="grid w-[min(1000px,calc(100%-max(24px,calc((100vw-1200px)/2))))] grid-cols-[184px_minmax(0,1fr)] gap-18 ml-[max(24px,calc((100vw-1200px)/2))] border-r border-border bg-[radial-gradient(circle_280px_at_calc(100%+40px)_-50px,var(--color-blue)_0_99.5%,transparent_100%)] bg-no-repeat max-[1080px]:grid-cols-[158px_minmax(0,1fr)] max-[1080px]:gap-12 max-[780px]:block max-[780px]:ml-0 max-[780px]:w-full max-[780px]:border-r-0 max-[780px]:bg-[radial-gradient(circle_180px_at_100%_-50px,var(--color-blue)_0_99.5%,transparent_100%)]">
+    <div className="mx-auto grid w-full max-w-250 grid-cols-[184px_minmax(0,1fr)] gap-18 border-r border-border bg-[radial-gradient(circle_280px_at_calc(100%+40px)_-50px,var(--color-blue)_0_99.5%,transparent_100%)] bg-no-repeat max-[1080px]:grid-cols-[158px_minmax(0,1fr)] max-[1080px]:gap-12 max-[780px]:mx-0 max-[780px]:block max-[780px]:w-full max-[780px]:border-r-0 max-[780px]:bg-[radial-gradient(circle_180px_at_100%_-50px,var(--color-blue)_0_99.5%,transparent_100%)]">
       <DesktopRail activeSection={activeSection} />
       <main className="w-full min-w-0 max-w-none pr-18 max-[1080px]:pr-12 max-[780px]:overflow-x-clip max-[780px]:px-5 max-[780px]:pr-5">{children}</main>
     </div>

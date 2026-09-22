@@ -52,7 +52,7 @@ function NavLinks({ activeSection, onNavigate, mobile = false }) {
 
 export function DesktopRail({ activeSection }) {
   return (
-    <aside className="sticky top-0 flex h-svh flex-col border-r border-border py-8 pr-[30px] max-[1080px]:pr-6 max-[780px]:hidden">
+    <aside className="sticky top-0 flex h-svh flex-col border-r border-border py-8 pr-[30px] pl-6 max-[1080px]:pr-6 max-[780px]:hidden">
       <a className="inline-flex self-start items-baseline text-[33px] font-bold tracking-[-0.07em] text-ink no-underline" href="#intro" aria-label={`${profile.name}, back to top`}>
         <span>js</span><i className="text-blue not-italic">.</i>
       </a>
