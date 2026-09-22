@@ -57,13 +57,14 @@ function LinkPreview({ id, label, href, detail, preview }) {
   )
 }
 
-export function LinkBadge({ label, href, detail, preview = {} }) {
+export function LinkBadge({ label, href, detail, preview = {}, size = 'large' }) {
   const previewId = `link-preview-${preview.id ?? slugify(label)}`
+  const textSize = size === 'large' ? 'text-sm' : 'text-[10px]'
 
   return (
     <a
       aria-describedby={previewId}
-      className="group link-badge link-preview-trigger inline-flex items-center rounded-full bg-blue-soft px-2 py-1 text-[10px] font-[650] leading-[1.2] whitespace-nowrap !text-blue-dark no-underline transition duration-150 hover:-translate-y-px hover:bg-[#bfdbfe] focus-visible:-translate-y-px focus-visible:bg-[#bfdbfe]"
+      className={`group link-badge link-preview-trigger inline-flex items-center rounded-full bg-blue-soft px-2 py-1 ${textSize} font-[650] leading-[1.2] whitespace-nowrap !text-blue-dark no-underline transition duration-150 hover:-translate-y-px hover:bg-[#bfdbfe] focus-visible:-translate-y-px focus-visible:bg-[#bfdbfe]`}
       href={href}
       target="_blank"
       rel="noreferrer"

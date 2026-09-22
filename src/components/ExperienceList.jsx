@@ -28,7 +28,7 @@ export function ExperienceList({ items }) {
               <span className={`grid size-8 place-items-center rounded-lg border border-border text-muted transition duration-200 max-[780px]:col-start-2 max-[780px]:row-span-2 max-[780px]:row-start-1 max-[780px]:self-start ${open ? 'rotate-90 border-[#bfdbfe] bg-[#eff6ff] text-blue' : ''}`} aria-hidden="true"><ArrowIcon direction="right" /></span>
             </button>
             <CollapsiblePanel id={panelId} open={open}>
-              <ul className="m-0 grid max-w-[720px] list-none gap-[11px] px-16 pt-2.5 pb-[26px] text-sm leading-[1.65] text-ink-soft max-[780px]:px-2 max-[780px]:pb-[22px] max-[780px]:pl-[18px]">
+              <ul className="m-0 grid max-w-180 list-none gap-3 px-8 pt-2.5 pb-6.5 text-sm leading-[1.65] text-ink-soft max-[780px]:px-2 max-[780px]:pb-5.5 max-[780px]:pl-4.5">
                 {item.highlights.map((highlight) => <li className="relative pl-4 before:absolute before:top-[0.72em] before:left-0 before:size-1 before:rounded-full before:bg-blue before:content-['']" key={highlight}>{highlight}</li>)}
               </ul>
             </CollapsiblePanel>
