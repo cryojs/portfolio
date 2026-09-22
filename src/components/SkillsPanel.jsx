@@ -85,7 +85,7 @@ export function SkillsPanel({ groups }) {
               onClick={() => toggle(group.id)}
             >
               <strong className="text-base font-[580] tracking-[-0.02em]">{group.label}</strong>
-              <span className={`grid size-8 place-items-center rounded-lg border border-border text-muted transition duration-200 ${open ? 'rotate-90 border-[#bfdbfe] bg-[#eff6ff] text-blue' : ''}`} aria-hidden="true"><ArrowIcon direction="right" /></span>
+              <span className={`grid size-8 place-items-center rounded-lg border border-border text-muted transition duration-200 ${open ? 'rotate-90 border-[#bfdbfe] bg-paper-note text-blue' : ''}`} aria-hidden="true"><ArrowIcon direction="right" className={open ? 'text-blue' : ''} /></span>
             </button>
 
             <CollapsiblePanel id={panelId} open={open}>

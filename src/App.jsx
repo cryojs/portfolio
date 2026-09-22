@@ -195,9 +195,8 @@ function App() {
             <span className="inline-flex w-fit items-center justify-self-start rounded-full bg-blue-soft px-2.5 py-1.5 text-[10px] font-[650] tracking-[0.08em] text-blue-dark uppercase">contact</span>
             <div className="mt-5 max-w-155">
               <h2 className="m-0 text-[clamp(2rem,4vw,2.8rem)] font-[520] leading-[1.05] tracking-[-0.055em] text-ink">
-                Have something interesting{' '}
                 <span className="inline-flex items-center gap-3 align-middle whitespace-nowrap">
-                  in mind?
+                  Wanna chat?
                   <HeadingDoodle type="contact" />
                 </span>
               </h2>
