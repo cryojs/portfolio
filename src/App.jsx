@@ -193,9 +193,14 @@ function App() {
           <ContactLoop />
           <div className="relative z-[1]">
             <span className="inline-flex w-fit items-center justify-self-start rounded-full bg-blue-soft px-2.5 py-1.5 text-[10px] font-[650] tracking-[0.08em] text-blue-dark uppercase">contact</span>
-            <div className="mt-[18px] flex max-w-[620px] items-center gap-3.5">
-              <h2 className="m-0 text-[clamp(2rem,4vw,2.8rem)] font-[520] leading-[1.05] tracking-[-0.055em] text-ink">Have something interesting in mind?</h2>
-              <HeadingDoodle type="contact" />
+            <div className="mt-[18px] max-w-[620px]">
+              <h2 className="m-0 text-[clamp(2rem,4vw,2.8rem)] font-[520] leading-[1.05] tracking-[-0.055em] text-ink">
+                Have something interesting{' '}
+                <span className="inline-flex items-center gap-3 align-middle whitespace-nowrap">
+                  in mind?
+                  <HeadingDoodle type="contact" />
+                </span>
+              </h2>
             </div>
             <p className="my-[18px] mb-7 max-w-[520px] text-[15px] leading-[1.6] text-muted">I&apos;m always happy to talk about software, projects, and new opportunities.</p>
             <div className="flex flex-wrap items-center gap-[9px] max-[780px]:flex-col max-[780px]:items-stretch">

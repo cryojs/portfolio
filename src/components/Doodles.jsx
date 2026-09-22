@@ -75,11 +75,13 @@ export function HeadingDoodle({ type }) {
 
 export function ContactLoop() {
   return (
-    <svg className="contact-doodle" viewBox="0 0 260 170" aria-hidden="true">
-      <path d="M246 27C222 15 191 13 170 24C151 34 143 50 149 65C156 81 177 88 199 82C220 77 232 62 225 47C218 31 195 24 175 30C151 36 136 53 123 75C108 102 91 125 61 136C42 143 27 141 13 137" />
-      <path d="M30 126C24 132 20 135 13 137C19 141 24 145 29 151" />
-      <path className="doodle-echo" d="M249 32C225 18 194 18 173 28C157 36 149 51 154 63C160 76 179 82 197 77C215 72 225 60 220 49C214 37 196 31 179 35C157 41 143 57 130 79C114 106 95 132 63 141C43 147 28 144 16 140" />
-      <path className="doodle-echo" d="M32 130C26 134 21 137 15 140C21 143 25 148 27 154" />
+    <svg className="contact-doodle" viewBox="0 0 360 280" aria-hidden="true">
+      <path d="M346 200C354 181 346 151 322 138C295 125 270 140 270 169C270 195 298 207 319 190C340 173 332 139 309 108C278 74 243 58 214 70C182 87 181 120 205 145C231 169 266 182 270 210C274 237 257 256 239 260C232 261 226 261 220 260" />
+      <path d="M244 238C234 247 224 257 220 260C230 263 240 270 248 276" />
+      <path className="doodle-echo contact-loop-motif" d="M324 119C334 131 338 144 339 156" />
+      <path className="doodle-echo contact-loop-motif" d="M282 207C296 213 310 209 321 199" />
+      <path className="doodle-echo contact-loop-motif" d="M208 160C225 173 241 180 255 184" />
+      <path className="doodle-echo contact-loop-motif" d="M281 221C281 235 274 247 264 254" />
       <path className="doodle-echo" d="M236 20L242 21M226 13L231 8M250 43L257 45" />
     </svg>
   )

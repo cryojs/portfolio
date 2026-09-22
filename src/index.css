@@ -209,6 +209,10 @@
   opacity: 0.38;
 }
 
+.contact-loop-motif {
+  opacity: 0.55;
+}
+
 .heading-doodle {
   width: 34px;
   height: 34px;
@@ -293,7 +297,7 @@
   position: absolute;
   top: -25px;
   right: -18px;
-  width: 340px;
+  width: 400px;
   color: var(--color-blue);
   opacity: 0.42;
   transform: rotate(-7deg);
