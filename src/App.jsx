@@ -1,13 +1,23 @@
 import { useEffect, useState } from 'react'
 import { DesktopRail, MobileHeader } from './components/SiteNav'
+import { ContactActions } from './components/ContactActions'
 import { ContactLoop, HeadingDoodle, ScribbleUnderline } from './components/Doodles'
 import { ExperienceList } from './components/ExperienceList'
+import { LinkBadge } from './components/LinkBadge'
 import { ProjectCard } from './components/ProjectCard'
 import { SkillsPanel } from './components/SkillsPanel'
-import { ArrowIcon, GithubIcon, LinkedinIcon } from './components/Icons'
-import { education, experience, navigation, profile, projects, skillGroups } from './data/portfolio'
+import { ArrowIcon } from './components/Icons'
+import { education, experience, navigation, profile, projects, projectsById, skillGroups } from './data/portfolio'
 
-const readifyProject = projects.find((project) => project.id === 'readify')
+const currentProject = projectsById[profile.currentProjectId]
+const currentYear = new Date().getFullYear()
+const currentProjectPreview = {
+  id: currentProject.id,
+  image: currentProject.media.image,
+  imageAlt: currentProject.media.alt,
+  imagePosition: '35% center',
+  tags: currentProject.tech.slice(0, 3),
+}
 
 function SectionHeading({ label, title, note, doodle }) {
   return (
@@ -21,80 +31,6 @@ function SectionHeading({ label, title, note, doodle }) {
       </div>
       {note && <p className="m-0 mb-1 max-w-none text-right text-xs leading-[1.5] text-muted whitespace-nowrap max-[780px]:text-left">{note}</p>}
     </div>
-  )
-}
-
-function ProblemBadge({ label, href, detail }) {
-  const previewId = `link-preview-${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
-
-  return (
-    <a
-      aria-describedby={previewId}
-      className="group problem-border problem-border-badge inline-flex items-center rounded-full bg-blue-soft px-2 py-1 text-[10px] font-[650] leading-[1.2] whitespace-nowrap !text-blue-dark no-underline transition duration-150 hover:-translate-y-px hover:bg-[#bfdbfe] focus-visible:-translate-y-px focus-visible:bg-[#bfdbfe]"
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-    >
-      <span className="text-blue-dark">{label}</span>
-      <svg className="problem-border-svg text-[#93c5fd]" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true">
-        <rect x="1" y="1" width="98" height="38" rx="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 4" vectorEffect="non-scaling-stroke" />
-      </svg>
-      <span
-        id={previewId}
-        role="tooltip"
-        className="link-preview invisible pointer-events-none absolute bottom-[calc(100%+12px)] left-[calc(100%-6px)] z-[5] isolate w-[230px] p-4 pr-7 text-blue-dark max-[780px]:right-[-4px] max-[780px]:left-auto max-[780px]:w-[min(230px,calc(100vw_-_40px))]"
-      >
-        <span className="link-preview-layer absolute inset-[5px_-5px_-5px_5px] z-0 bg-blue-soft" aria-hidden="true" />
-        <span className="link-preview-paper absolute inset-0 z-[1]" aria-hidden="true" />
-        <span className="link-preview-fold absolute right-0 bottom-0 z-[2] size-[22px]" aria-hidden="true" />
-        <span className="link-preview-content relative z-[3] grid gap-[5px]">
-          <strong className="text-[15px] font-[650] text-blue-dark">{label}</strong>
-          <span className="text-[11px] leading-[1.35] text-ink-soft">{detail}</span>
-          <span className="overflow-hidden text-[10px] text-ellipsis whitespace-nowrap text-blue-dark">{href.replace('https://', '')}</span>
-        </span>
-      </span>
-    </a>
-  )
-}
-
-function ProjectPreviewLink({ project }) {
-  const previewId = `project-preview-${project.id}`
-
-  return (
-    <a
-      aria-describedby={previewId}
-      className="group problem-border problem-border-badge project-preview-link inline-flex items-center rounded-full bg-blue-soft px-2 py-1 text-[10px] font-[650] leading-[1.2] whitespace-nowrap !text-blue-dark no-underline transition duration-150 hover:-translate-y-px hover:bg-[#bfdbfe] focus-visible:-translate-y-px focus-visible:bg-[#bfdbfe]"
-      href={project.github}
-      target="_blank"
-      rel="noreferrer"
-    >
-      <span className="text-blue-dark">{project.title}</span>
-      <svg className="problem-border-svg text-[#93c5fd]" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true">
-        <rect x="1" y="1" width="98" height="38" rx="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 4" vectorEffect="non-scaling-stroke" />
-      </svg>
-      <span
-        id={previewId}
-        role="tooltip"
-        className="link-preview invisible pointer-events-none absolute bottom-[calc(100%+12px)] left-[-12px] z-[5] isolate w-[270px] whitespace-normal p-3.5 pr-6 text-blue-dark max-[780px]:right-[-4px] max-[780px]:left-auto max-[780px]:w-[min(270px,calc(100vw_-_40px))]"
-      >
-        <span className="link-preview-layer absolute inset-[5px_-5px_-5px_5px] z-0 bg-blue-soft" aria-hidden="true" />
-        <span className="link-preview-paper absolute inset-0 z-[1]" aria-hidden="true" />
-        <span className="link-preview-fold absolute right-0 bottom-0 z-[2] size-[22px]" aria-hidden="true" />
-        <span className="link-preview-content relative z-[3] grid w-full max-w-full min-w-0 grid-cols-1 gap-2.5">
-          <span className="block aspect-[16/9] w-full max-w-full min-w-0 overflow-hidden rounded-[3px] border border-blue-soft bg-blue-soft">
-            <img className="block h-full w-full max-w-full min-w-0 object-cover" src={project.media.image} alt="" style={{ objectPosition: '35% center' }} />
-          </span>
-          <span className="grid min-w-0 max-w-full gap-1">
-            <strong className="text-[15px] font-[650] text-blue-dark">{project.title}</strong>
-            <span className="break-words text-[11px] leading-[1.35] text-ink-soft">{project.description}</span>
-          </span>
-          <span className="flex flex-wrap gap-1">
-            {project.tech.slice(0, 3).map((technology) => <span className="rounded-full bg-blue-soft px-1.5 py-0.5 text-[9px] font-[600] text-blue-dark" key={technology}>{technology}</span>)}
-          </span>
-          <span className="overflow-hidden text-[10px] text-ellipsis whitespace-nowrap text-blue-dark">{project.github.replace('https://', '')}</span>
-        </span>
-      </span>
-    </a>
   )
 }
 
@@ -186,23 +122,19 @@ function App() {
           </p>
 
           <ul className="mt-7 mb-0 grid max-w-[690px] list-none gap-3 p-0 text-sm leading-[1.55] text-ink-soft">
-            <li className="relative pl-[25px] before:absolute before:top-[0.58em] before:left-0.5 before:size-1.5 before:rounded-full before:bg-blue before:content-['']">Currently working on <ProjectPreviewLink project={readifyProject} />, a browser extension to simplify reading</li>
+            <li className="relative pl-[25px] before:absolute before:top-[0.58em] before:left-0.5 before:size-1.5 before:rounded-full before:bg-blue before:content-['']">Currently working on <LinkBadge label={currentProject.title} href={currentProject.github} detail={currentProject.description} preview={currentProjectPreview} />, {currentProject.spotlightDescription}</li>
             <li className="relative pl-[25px] before:absolute before:top-[0.58em] before:left-0.5 before:size-1.5 before:rounded-full before:bg-blue before:content-['']">built 10 iOS apps through an Apple-supported development program</li>
             <li className="relative pl-[25px] leading-[1.55] before:absolute before:top-[0.58em] before:left-0.5 before:size-1.5 before:rounded-full before:bg-blue before:content-['']">
               <span>enjoy solving problems on</span>
               <span className="ml-[5px] inline-flex items-center gap-2 align-middle">
-                <ProblemBadge label="DMOJ" href={profile.links.dmoj} detail="Competitive programming profile" />
+                <LinkBadge label="DMOJ" href={profile.links.dmoj} detail="Competitive programming profile" />
                 <span className="text-xs font-medium text-ink-soft">and</span>
-                <ProblemBadge label="LeetCode" href={profile.links.leetcode} detail="Algorithms and data structures" />
+                <LinkBadge label="LeetCode" href={profile.links.leetcode} detail="Algorithms and data structures" />
               </span>
             </li>
           </ul>
 
-          <div className="mt-8 flex flex-wrap items-center gap-[9px]">
-            <a className="inline-flex min-h-[42px] items-center justify-center gap-2 rounded-lg bg-[#171717] px-[15px] text-[13px] font-[550] !text-white no-underline shadow-[rgba(0,0,0,0.05)_0_1px_2px] transition duration-150 hover:-translate-y-px hover:bg-[#1e40af] focus-visible:-translate-y-px focus-visible:bg-[#1e40af]" href={`mailto:${profile.email}`}>Email me <ArrowIcon /></a>
-            <a className="inline-flex min-h-[42px] items-center justify-center gap-2 rounded-lg border border-border bg-canvas px-[15px] text-[13px] font-[550] text-ink-soft no-underline transition duration-150 hover:border-[#bfdbfe] hover:bg-[#eff6ff] hover:text-blue focus-visible:border-[#bfdbfe] focus-visible:bg-[#eff6ff] focus-visible:text-blue" href={profile.links.linkedin} target="_blank" rel="noreferrer"><LinkedinIcon /> LinkedIn</a>
-            <a className="inline-flex min-h-[42px] items-center justify-center gap-2 rounded-lg border border-border bg-canvas px-[15px] text-[13px] font-[550] text-ink-soft no-underline transition duration-150 hover:border-[#bfdbfe] hover:bg-[#eff6ff] hover:text-blue focus-visible:border-[#bfdbfe] focus-visible:bg-[#eff6ff] focus-visible:text-blue" href={profile.links.github} target="_blank" rel="noreferrer"><GithubIcon /> GitHub</a>
-          </div>
+          <ContactActions className="mt-8" />
         </section>
 
         <section className="w-full max-w-[900px] scroll-mt-9 py-[59px] pb-[70px] max-[780px]:scroll-mt-[78px] max-[780px]:py-[49px] max-[780px]:pb-[59px]" id="experience">
@@ -250,16 +182,12 @@ function App() {
               </h2>
             </div>
             <p className="my-[18px] mb-7 max-w-[520px] text-[15px] leading-[1.6] text-muted">I&apos;m always happy to talk about software, projects, and new opportunities.</p>
-            <div className="flex flex-wrap items-center gap-[9px] max-[780px]:flex-col max-[780px]:items-stretch">
-              <a className="inline-flex min-h-[42px] items-center justify-center gap-2 rounded-lg bg-[#171717] px-[15px] text-[13px] font-[550] !text-white no-underline shadow-[rgba(0,0,0,0.05)_0_1px_2px] transition duration-150 hover:-translate-y-px hover:bg-[#1e40af] focus-visible:-translate-y-px focus-visible:bg-[#1e40af] max-[780px]:justify-start" href={`mailto:${profile.email}`}>{profile.email} <ArrowIcon /></a>
-              <a className="inline-flex min-h-[42px] items-center justify-center gap-2 rounded-lg border border-border bg-canvas px-[15px] text-[13px] font-[550] text-ink-soft no-underline transition duration-150 hover:border-[#bfdbfe] hover:bg-[#eff6ff] hover:text-blue focus-visible:border-[#bfdbfe] focus-visible:bg-[#eff6ff] focus-visible:text-blue max-[780px]:justify-start" href={profile.links.linkedin} target="_blank" rel="noreferrer"><LinkedinIcon /> LinkedIn</a>
-              <a className="inline-flex min-h-[42px] items-center justify-center gap-2 rounded-lg border border-border bg-canvas px-[15px] text-[13px] font-[550] text-ink-soft no-underline transition duration-150 hover:border-[#bfdbfe] hover:bg-[#eff6ff] hover:text-blue focus-visible:border-[#bfdbfe] focus-visible:bg-[#eff6ff] focus-visible:text-blue max-[780px]:justify-start" href={profile.links.github} target="_blank" rel="noreferrer"><GithubIcon /> GitHub</a>
-            </div>
+            <ContactActions emailLabel={profile.email} stackOnMobile />
           </div>
         </section>
 
         <footer className="flex w-full max-w-[900px] items-center justify-between gap-6 border-t border-border py-[22px] pb-7 text-[10px] text-muted max-[780px]:pb-6">
-          <span>&copy; 2026 Jason Sun</span>
+          <span>&copy; {currentYear} {profile.name}</span>
           <a className="inline-flex items-center gap-[5px] text-muted no-underline transition-colors duration-150 hover:text-blue focus-visible:text-blue" href="#intro">back to top <ArrowIcon direction="up" /></a>
         </footer>
       </PageShell>

@@ -1,6 +1,6 @@
+import { Globe } from 'lucide-react'
 import { ArrowIcon, GithubIcon } from './Icons'
 import { MediaPreview } from './MediaPreview'
-import { Globe } from 'lucide-react'
 
 export function ProjectCard({ project }) {
   return (

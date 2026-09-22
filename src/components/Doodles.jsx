@@ -68,13 +68,17 @@ function ContactBubble() {
   )
 }
 
+const headingDoodles = {
+  experience: BubbleTea,
+  projects: ProjectSpark,
+  skills: SkillsTool,
+  education: EducationBook,
+  contact: ContactBubble,
+}
+
 export function HeadingDoodle({ type }) {
-  if (type === 'experience') return <BubbleTea />
-  if (type === 'projects') return <ProjectSpark />
-  if (type === 'skills') return <SkillsTool />
-  if (type === 'education') return <EducationBook />
-  if (type === 'contact') return <ContactBubble />
-  return null
+  const Doodle = headingDoodles[type]
+  return Doodle ? <Doodle /> : null
 }
 
 export function ContactLoop() {

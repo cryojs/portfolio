@@ -3,14 +3,14 @@ import { navigation, profile } from '../data/portfolio'
 import { GithubIcon, LinkedinIcon, MailIcon, MenuIcon } from './Icons'
 
 const socialLinks = [
-  { label: 'Email Jason', href: `mailto:${profile.email}`, icon: MailIcon },
-  { label: 'Jason on LinkedIn', href: profile.links.linkedin, icon: LinkedinIcon },
-  { label: 'Jason on GitHub', href: profile.links.github, icon: GithubIcon },
+  { label: `Email ${profile.firstName}`, href: `mailto:${profile.email}`, icon: MailIcon },
+  { label: `${profile.name} on LinkedIn`, href: profile.links.linkedin, icon: LinkedinIcon },
+  { label: `${profile.name} on GitHub`, href: profile.links.github, icon: GithubIcon },
 ]
 
-function SocialLinks({ className = '' }) {
+function SocialLinks({ className = 'mb-2' }) {
   return (
-    <div className={`flex gap-[7px] ${className || 'mb-2'}`}>
+    <div className={`flex gap-[7px] ${className}`}>
       {socialLinks.map(({ label, href, icon: Icon }) => (
         <a
           key={label}
@@ -53,7 +53,7 @@ function NavLinks({ activeSection, onNavigate, mobile = false }) {
 export function DesktopRail({ activeSection }) {
   return (
     <aside className="sticky top-0 flex h-svh flex-col border-r border-border py-8 pr-[30px] max-[1080px]:pr-6 max-[780px]:hidden">
-      <a className="inline-flex self-start items-baseline text-[33px] font-bold tracking-[-0.07em] text-ink no-underline" href="#intro" aria-label="Jason Sun, back to top">
+      <a className="inline-flex self-start items-baseline text-[33px] font-bold tracking-[-0.07em] text-ink no-underline" href="#intro" aria-label={`${profile.name}, back to top`}>
         <span>js</span><i className="text-blue not-italic">.</i>
       </a>
       <NavLinks activeSection={activeSection} />
@@ -72,7 +72,7 @@ export function MobileHeader({ activeSection }) {
   return (
     <header className="sticky top-0 z-20 hidden border-b border-border bg-white/95 backdrop-blur-[16px] max-[780px]:block">
       <div className="flex min-h-[58px] w-full items-center justify-between px-5">
-        <a className="inline-flex items-baseline text-[33px] font-bold tracking-[-0.07em] text-ink no-underline" href="#intro" aria-label="Jason Sun, back to top" onClick={() => setOpen(false)}>
+        <a className="inline-flex items-baseline text-[33px] font-bold tracking-[-0.07em] text-ink no-underline" href="#intro" aria-label={`${profile.name}, back to top`} onClick={() => setOpen(false)}>
           <span>js</span><i className="text-blue not-italic">.</i>
         </a>
         <button

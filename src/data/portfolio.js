@@ -3,7 +3,7 @@ export const profile = {
   firstName: 'Jason',
   lastName: 'Sun',
   email: 'jasonsun.dev@gmail.com',
-  intro: 'Currently building thoughtful web apps and learning backend development.',
+  currentProjectId: 'readify',
   links: {
     github: 'https://github.com/CryoJS',
     linkedin: 'https://www.linkedin.com/in/jasonsuncs/',
@@ -72,6 +72,7 @@ export const projects = [
     id: 'readify',
     title: 'Readify',
     dates: 'Sept. 2026 — present',
+    spotlightDescription: 'a browser extension to simplify reading',
     description: 'A cross-browser accessibility extension that personalizes typography and uses AI to explain and answer questions about webpages.',
     tech: ['WXT', 'React', 'TypeScript', 'Gemini API'],
     github: 'https://github.com/CryoJS/readify',
@@ -111,12 +112,16 @@ export const projects = [
   },
 ]
 
+export const projectsById = Object.fromEntries(projects.map((project) => [project.id, project]))
+
 export const skillGroups = [
   {
+    id: 'languages',
     label: 'Languages',
     values: ['Python', 'C++', 'C#', 'Swift', 'JavaScript', 'TypeScript', 'HTML/CSS'],
   },
   {
+    id: 'frameworks-tools',
     label: 'Frameworks & tools',
     values: ['React', 'Next.js', 'WXT', 'React Flow', 'Browserbase', 'OpenAI API', 'Gemini API', 'Supabase', 'Git'],
   },

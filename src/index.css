@@ -34,6 +34,12 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
   html {
     min-width: 320px;
     scroll-behavior: smooth;
@@ -97,15 +103,12 @@
   opacity: 0.55;
 }
 
-.problem-border {
+.link-badge {
   border: 1px solid transparent;
-}
-
-.problem-border-badge {
   position: relative;
 }
 
-.problem-border-svg {
+.link-badge-border {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -148,20 +151,16 @@
   transform: rotate(-1.2deg);
 }
 
-.problem-border-badge:hover .link-preview,
-.problem-border-badge:focus-visible .link-preview,
-.project-preview-link:hover .link-preview,
-.project-preview-link:focus-visible .link-preview {
+.link-preview-trigger:hover .link-preview,
+.link-preview-trigger:focus-visible .link-preview {
   visibility: visible;
   opacity: 1;
   animation: link-preview-drop 240ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
   transition-delay: 0s;
 }
 
-.problem-border-badge:hover .link-preview-content,
-.problem-border-badge:focus-visible .link-preview-content,
-.project-preview-link:hover .link-preview-content,
-.project-preview-link:focus-visible .link-preview-content {
+.link-preview-trigger:hover .link-preview-content,
+.link-preview-trigger:focus-visible .link-preview-content {
   animation: link-preview-content-straighten 240ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
@@ -402,55 +401,4 @@
     transform: none !important;
     animation: none !important;
   }
-}
-
-:root {
-  font-family: 'Inter Variable', Inter, ui-sans-serif, system-ui, sans-serif;
-  color: #171717;
-  background: #ffffff;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  min-width: 320px;
-  scroll-behavior: smooth;
-}
-
-body {
-  min-width: 320px;
-  min-height: 100svh;
-  margin: 0;
-  overflow-x: hidden;
-  background: #ffffff;
-}
-
-#root {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: clip;
-}
-
-button,
-a {
-  font: inherit;
-}
-
-button {
-  -webkit-tap-highlight-color: transparent;
-}
-
-a {
-  color: inherit;
-}
-
-::selection {
-  color: #ffffff;
-  background: #2563eb;
 }
