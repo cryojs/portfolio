@@ -29,14 +29,14 @@ function SectionHeading({ label, title, note, doodle }) {
           <HeadingDoodle type={doodle} />
         </div>
       </div>
-      {note && <p className="m-0 mb-1 max-w-none text-right text-xs leading-[1.5] text-muted whitespace-nowrap max-[780px]:text-left">{note}</p>}
+      {note && <p className="m-0 mb-1 max-w-none text-right text-xs leading-normal text-muted whitespace-nowrap max-[780px]:text-left">{note}</p>}
     </div>
   )
 }
 
 function PageShell({ activeSection, children }) {
   return (
-    <div className="grid w-[min(1000px,calc(100%_-_max(24px,calc((100vw_-_1200px)/2))))] grid-cols-[184px_minmax(0,1fr)] gap-18 ml-[max(24px,calc((100vw_-_1200px)/2))] border-r border-border bg-[radial-gradient(circle_280px_at_calc(100%_+_40px)_-50px,var(--color-blue)_0_99.5%,transparent_100%)] bg-no-repeat max-[1080px]:grid-cols-[158px_minmax(0,1fr)] max-[1080px]:gap-12 max-[780px]:block max-[780px]:ml-0 max-[780px]:w-full max-[780px]:border-r-0 max-[780px]:bg-[radial-gradient(circle_180px_at_100%_-50px,var(--color-blue)_0_99.5%,transparent_100%)]">
+    <div className="grid w-[min(1000px,calc(100%-max(24px,calc((100vw-1200px)/2))))] grid-cols-[184px_minmax(0,1fr)] gap-18 ml-[max(24px,calc((100vw-1200px)/2))] border-r border-border bg-[radial-gradient(circle_280px_at_calc(100%+40px)_-50px,var(--color-blue)_0_99.5%,transparent_100%)] bg-no-repeat max-[1080px]:grid-cols-[158px_minmax(0,1fr)] max-[1080px]:gap-12 max-[780px]:block max-[780px]:ml-0 max-[780px]:w-full max-[780px]:border-r-0 max-[780px]:bg-[radial-gradient(circle_180px_at_100%_-50px,var(--color-blue)_0_99.5%,transparent_100%)]">
       <DesktopRail activeSection={activeSection} />
       <main className="w-full min-w-0 max-w-none pr-18 max-[1080px]:pr-12 max-[780px]:overflow-x-clip max-[780px]:px-5 max-[780px]:pr-5">{children}</main>
     </div>
@@ -100,9 +100,9 @@ function App() {
     <>
       <MobileHeader activeSection={activeSection} />
       <PageShell activeSection={activeSection}>
-        <section className="hero-with-pattern relative flex min-h-[min(800px,96svh)] max-w-full flex-col justify-center overflow-hidden scroll-mt-9 pt-18 pb-16 [&>*]:relative [&>*]:z-[1] max-[780px]:min-h-0 max-[780px]:scroll-mt-20 max-[780px]:pr-0 max-[780px]:pt-16 max-[780px]:pb-13" id="intro">
+        <section className="hero-with-pattern relative flex min-h-[min(800px,96svh)] max-w-full flex-col justify-center overflow-hidden scroll-mt-9 pt-18 pb-16 *:z-1 max-[780px]:min-h-0 max-[780px]:scroll-mt-20 max-[780px]:pr-0 max-[780px]:pt-16 max-[780px]:pb-13" id="intro">
           <span className="text-[13px] font-semibold text-blue">Hello! I&apos;m</span>
-          <h1 className="m-0 mt-6 mb-9 grid w-max gap-0.5 font-display text-[clamp(4.9rem,9.1vw,7.35rem)] font-[680] leading-[0.73] tracking-[-0.065em] text-ink [font-stretch:condensed] max-[1080px]:text-[clamp(4.76rem,10.5vw,6.3rem)] max-[780px]:mb-8 max-[780px]:mt-6 max-[780px]:w-full max-[780px]:text-[clamp(4.06rem,18.2vw,5.6rem)] max-[430px]:text-[clamp(3.78rem,20.3vw,5.04rem)]" aria-label={profile.name}>
+          <h1 className="m-0 mt-6 mb-9 grid w-max gap-0.5 font-display text-[clamp(4.9rem,9.1vw,7.35rem)] font-[680] leading-[0.73] tracking-[-0.065em] text-ink font-stretch-condensed max-[1080px]:text-[clamp(4.76rem,10.5vw,6.3rem)] max-[780px]:mb-8 max-[780px]:mt-6 max-[780px]:w-full max-[780px]:text-[clamp(4.06rem,18.2vw,5.6rem)] max-[430px]:text-[clamp(3.78rem,20.3vw,5.04rem)]" aria-label={profile.name}>
             <span>{profile.firstName.toUpperCase()}</span>
             <span className="after:text-blue after:content-['.']">{profile.lastName.toUpperCase()}</span>
           </h1>
@@ -157,7 +157,7 @@ function App() {
           <article className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-8 rounded-2xl border border-border bg-canvas p-6 max-[780px]:grid-cols-1 max-[780px]:gap-5 max-[780px]:p-6">
             <div>
               <h3 className="m-0 text-lg font-[620] tracking-[-0.03em] text-ink">{education.school}</h3>
-              <p className="mt-2 mb-0 text-sm leading-[1.5] text-muted">{education.degree}</p>
+              <p className="mt-2 mb-0 text-sm leading-normal text-muted">{education.degree}</p>
             </div>
             <div className="grid gap-2 text-right text-[11px] leading-[1.45] text-muted max-[780px]:text-left">
               <span>{education.location}</span>
@@ -168,7 +168,7 @@ function App() {
 
         <section className="relative mt-5 mb-14 w-full max-w-225 scroll-mt-9 overflow-hidden rounded-2xl border border-border bg-paper-soft p-11 max-[780px]:mt-0 max-[780px]:mb-10 max-[780px]:scroll-mt-20 max-[780px]:px-6 max-[780px]:py-7" id="contact">
           <ContactLoop />
-          <div className="relative z-[1]">
+          <div className="relative z-1">
             <span className="inline-flex w-fit items-center justify-self-start rounded-full bg-blue-soft px-2.5 py-1.5 text-[10px] font-[650] tracking-[0.08em] text-blue-dark uppercase">contact</span>
             <div className="mt-5 max-w-155">
               <h2 className="m-0 text-[clamp(2rem,4vw,2.8rem)] font-[520] leading-[1.05] tracking-[-0.055em] text-ink">
@@ -186,7 +186,7 @@ function App() {
 
         <footer className="flex w-full max-w-225 items-center justify-between gap-6 border-t border-border py-6 pb-7 text-[10px] text-muted max-[780px]:pb-6">
           <span>&copy; {currentYear} {profile.name}</span>
-          <a className="inline-flex items-center gap-1 text-muted no-underline transition-colors duration-150 hover:text-blue focus-visible:text-blue" href="#intro">back to top <ArrowIcon direction="up" /></a>
+          <a className="inline-flex items-center gap-1 text-muted no-underline transition-colors duration-150 hover:text-blue" href="#intro">back to top <ArrowIcon direction="up" /></a>
         </footer>
       </PageShell>
     </>

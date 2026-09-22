@@ -24,6 +24,7 @@ export const experience = [
     id: 'career-education-council',
     role: 'iOS Developer (Co-op)',
     company: 'Career Education Council',
+    logo: '/logos/develop-the-future-program.jpg',
     location: 'Remote',
     dates: 'Sept. 2024 — Jan. 2025',
     highlights: [
@@ -35,6 +36,7 @@ export const experience = [
     id: 'usaco-guide',
     role: 'Open Source Contributor',
     company: 'USACO Guide',
+    logo: '/logos/cpinitiative.jpg',
     location: 'Remote',
     dates: 'Oct. 2024 — Dec. 2024',
     highlights: [
@@ -45,6 +47,7 @@ export const experience = [
     id: 'three-flavors',
     role: 'Computer Camp Assistant',
     company: 'Three-Flavors Summer Camp',
+    logo: '/logos/threeflavors.webp',
     location: 'Richmond Hill, ON',
     dates: 'July 2023',
     highlights: [
