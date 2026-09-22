@@ -19,11 +19,14 @@
 
 .portfolio-shell {
   --shell-left-gutter: max(24px, calc((100vw - 1200px) / 2));
+  --shell-column-gap: 72px;
   display: grid;
   grid-template-columns: 184px minmax(0, 1fr);
-  gap: 72px;
-  width: min(1200px, calc(100% - var(--shell-left-gutter)));
+  gap: var(--shell-column-gap);
+  width: min(1000px, calc(100% - var(--shell-left-gutter)));
   margin: 0 0 0 var(--shell-left-gutter);
+  background: radial-gradient(circle 280px at calc(100% + 40px) -50px, var(--blue) 0 99.5%, transparent 100%);
+  background-repeat: no-repeat;
   border-right: 1px solid var(--border);
 }
 
@@ -148,6 +151,7 @@
   width: 100%;
   min-width: 0;
   max-width: none;
+  padding-right: var(--shell-column-gap);
 }
 
 .hero-section,
@@ -195,19 +199,6 @@
   opacity: 0.55;
 }
 
-.hero-section::after {
-  position: absolute;
-  z-index: 0;
-  top: -255px;
-  right: -255px;
-  width: 420px;
-  height: 420px;
-  pointer-events: none;
-  content: '';
-  background: var(--blue);
-  border-radius: 50%;
-}
-
 .hero-section > * {
   position: relative;
   z-index: 1;
@@ -217,7 +208,7 @@
   color: var(--blue);
   font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.28em;
+  letter-spacing: normal;
 }
 
 .hero-section h1 {
@@ -231,7 +222,6 @@
   font-weight: 680;
   letter-spacing: -0.065em;
   line-height: 0.73;
-  text-transform: uppercase;
 }
 
 .hero-section h1 span:last-child::after {
@@ -329,6 +319,112 @@
   content: '';
   border-radius: 50%;
   background: var(--blue);
+}
+
+.hero-problem-solving {
+  line-height: 1.55;
+}
+
+.hero-problem-solving__label {
+  display: inline;
+}
+
+.problem-badges {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+.problem-connector {
+  color: var(--ink-soft);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.problem-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 8px;
+  color: var(--blue-dark);
+  background: var(--blue-soft);
+  border: 1px dashed #93c5fd;
+  border-radius: 9999px;
+  font-size: 10px;
+  font-weight: 550;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: color 160ms ease, background 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.problem-badge:hover,
+.problem-badge:focus-visible {
+  color: var(--blue-dark);
+  background: #bfdbfe;
+  border-color: var(--blue);
+  transform: translateY(-1px);
+}
+
+.problem-preview {
+  position: absolute;
+  z-index: 5;
+  bottom: calc(100% + 8px);
+  left: calc(100% - 6px);
+  width: 230px;
+  padding: 16px;
+  color: var(--blue-dark);
+  background: var(--blue-soft);
+  border: 1px dashed #93c5fd;
+  border-radius: 14px;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(7px);
+  transition: opacity 160ms ease, transform 180ms ease, visibility 160ms ease;
+  pointer-events: none;
+}
+
+.problem-badge:hover .problem-preview,
+.problem-badge:focus-visible .problem-preview {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.problem-badge:nth-of-type(2) .problem-preview {
+  transform: translateY(7px);
+}
+
+.problem-badge:nth-of-type(2):hover .problem-preview,
+.problem-badge:nth-of-type(2):focus-visible .problem-preview {
+  transform: translateY(0);
+}
+
+.problem-preview__content {
+  display: grid;
+  position: relative;
+  gap: 5px;
+}
+
+.problem-preview__content strong {
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.problem-preview__content > span:not(.problem-preview__url) {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.problem-preview__url {
+  overflow: hidden;
+  color: var(--ink-soft);
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .hero-actions,
@@ -443,11 +539,62 @@
 }
 
 .heading-doodle--spark {
+  width: 48px;
+  height: 48px;
   transform: rotate(7deg);
+  shape-rendering: geometricPrecision;
 }
 
-.heading-doodle--coffee {
+.heading-doodle--spark path {
+  stroke-width: 1.8;
+}
+
+.heading-doodle--spark .doodle-echo {
+  stroke: #93c5fd;
+  opacity: 1;
+}
+
+.heading-doodle--spark .keyboard-lines {
+  stroke-width: 1.8;
+}
+
+.heading-doodle--spark .keyboard-deck-fill {
+  fill: #dbeafe;
+  stroke: none;
+}
+
+.heading-doodle--spark .keyboard-deck-outline,
+.heading-doodle--spark .keyboard-bottom-edge {
+  stroke: var(--blue);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  shape-rendering: geometricPrecision;
+}
+
+.heading-doodle--spark .keyboard-bottom-edge {
+  stroke-linecap: butt;
+}
+
+.heading-doodle--spark .project-star-solid {
+  fill: #93c5fd;
+  stroke: #93c5fd;
+  stroke-width: 1.8;
+}
+
+.heading-doodle--bubble-tea {
+  width: 34px;
+  height: 50px;
   transform: rotate(-6deg);
+}
+
+.bubble-tea-straw {
+  stroke-width: 2.8 !important;
+}
+
+.heading-doodle--bubble-tea .doodle-echo {
+  stroke: #93c5fd;
+  opacity: 1;
 }
 
 .heading-doodle--tool {
@@ -465,12 +612,13 @@
 }
 
 .section-heading > p {
-  max-width: 230px;
+  max-width: none;
   margin: 0 0 4px;
   color: var(--muted);
   font-size: 12px;
   line-height: 1.5;
   text-align: right;
+  white-space: nowrap;
 }
 
 .experience-list {
@@ -1007,8 +1155,9 @@ button:focus-visible {
 
 @media (max-width: 1080px) {
   .portfolio-shell {
+    --shell-column-gap: 48px;
     grid-template-columns: 158px minmax(0, 1fr);
-    gap: 48px;
+    gap: var(--shell-column-gap);
   }
 
   .desktop-rail {
@@ -1086,6 +1235,7 @@ button:focus-visible {
     display: block;
     width: 100%;
     margin: 0;
+    background: radial-gradient(circle 180px at 100% -50px, var(--blue) 0 99.5%, transparent 100%);
     border-right: 0;
   }
 
@@ -1103,7 +1253,6 @@ button:focus-visible {
   }
 
   .hero-section {
-    width: calc(100% + 20px);
     min-height: 0;
     padding: 62px 20px 50px 0;
   }
@@ -1113,13 +1262,6 @@ button:focus-visible {
     right: -70px;
     width: 220px;
     height: 220px;
-  }
-
-  .hero-section::after {
-    top: -175px;
-    right: -175px;
-    width: 260px;
-    height: 260px;
   }
 
   .hero-section h1 {
@@ -1152,6 +1294,16 @@ button:focus-visible {
   .heading-doodle {
     width: 30px;
     height: 30px;
+  }
+
+  .heading-doodle--spark {
+    width: 42px;
+    height: 42px;
+  }
+
+  .heading-doodle--bubble-tea {
+    width: 30px;
+    height: 44px;
   }
 
   .experience-trigger,
@@ -1211,6 +1363,12 @@ button:focus-visible {
     right: -78px;
     width: 255px;
     opacity: 0.32;
+  }
+
+  .problem-preview {
+    right: -4px;
+    left: auto;
+    width: min(230px, calc(100vw - 40px));
   }
 
   .contact-actions {

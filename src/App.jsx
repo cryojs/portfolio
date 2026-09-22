@@ -23,6 +23,30 @@ function SectionHeading({ label, title, note, doodle }) {
   )
 }
 
+function ProblemBadge({ label, href, detail }) {
+  return (
+    <a className="problem-badge" href={href} target="_blank" rel="noreferrer">
+      <span className="problem-badge__label">{label}</span>
+        <span className="problem-preview">
+        <span className="problem-preview__content">
+          <strong>{label}</strong>
+          <span>{detail}</span>
+          <span className="problem-preview__url">{href.replace('https://', '')}</span>
+        </span>
+      </span>
+    </a>
+  )
+}
+
+function PageShell({ activeSection, children }) {
+  return (
+    <div className="portfolio-shell">
+      <DesktopRail activeSection={activeSection} />
+      <main className="portfolio-main">{children}</main>
+    </div>
+  )
+}
+
 function App() {
   const [activeSection, setActiveSection] = useState('intro')
 
@@ -79,15 +103,12 @@ function App() {
   return (
     <>
       <MobileHeader activeSection={activeSection} />
-      <div className="portfolio-shell">
-        <DesktopRail activeSection={activeSection} />
-
-        <main className="portfolio-main">
+      <PageShell activeSection={activeSection}>
           <section className="hero-section" id="intro">
-            <span className="hero-kicker">HI, I&apos;M</span>
+            <span className="hero-kicker">Hello! I&apos;m</span>
             <h1 aria-label={profile.name}>
-              <span>{profile.firstName}</span>
-              <span>{profile.lastName}</span>
+              <span>{profile.firstName.toUpperCase()}</span>
+              <span>{profile.lastName.toUpperCase()}</span>
             </h1>
 
             <div className="education-line">
@@ -103,7 +124,14 @@ function App() {
             <ul className="hero-highlights">
               <li>studying computer science at Waterloo</li>
               <li>built 10 iOS apps through an Apple-supported development program</li>
-              <li>contributed editorials, tests, and guides to USACO Guide</li>
+              <li className="hero-problem-solving">
+                <span className="hero-problem-solving__label">enjoy solving problems on</span>
+                <span className="problem-badges">
+                  <ProblemBadge label="DMOJ" href={profile.links.dmoj} detail="Competitive programming profile" />
+                  <span className="problem-connector">and</span>
+                  <ProblemBadge label="LeetCode" href={profile.links.leetcode} detail="Algorithms and data structures" />
+                </span>
+              </li>
             </ul>
 
             <div className="hero-actions">
@@ -119,7 +147,7 @@ function App() {
           </section>
 
           <section className="content-section projects-section" id="projects">
-            <SectionHeading label="projects" title="Things I’ve built" note="A mix of product, accessibility, and play" doodle="projects" />
+            <SectionHeading label="projects" title="Things I’ve built" note="Ideas I thought were useful, helpful, or fun" doodle="projects" />
             <div className="project-grid">
               {projects.map((project) => <ProjectCard project={project} key={project.id} />)}
             </div>
@@ -160,11 +188,10 @@ function App() {
           </section>
 
           <footer className="site-footer">
-            <span>© 2026 Jason Sun</span>
-            <a href="#intro">Back to top <ArrowIcon direction="up" /></a>
+            <span>© 2026 jason sun</span>
+            <a href="#intro">back to top <ArrowIcon direction="up" /></a>
           </footer>
-        </main>
-      </div>
+      </PageShell>
     </>
   )
 }

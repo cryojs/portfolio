@@ -7,6 +7,8 @@ export const profile = {
   links: {
     github: 'https://github.com/CryoJS',
     linkedin: 'https://www.linkedin.com/in/jasonsuncs/',
+    dmoj: 'https://dmoj.ca/user/Vastaway',
+    leetcode: 'https://leetcode.com/u/Vastaway/',
   },
 }
 
