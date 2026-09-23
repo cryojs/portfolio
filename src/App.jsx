@@ -34,12 +34,12 @@ function SectionHeading({ label, title, note, doodle }) {
   )
 }
 
-function PageShell({ activeSection, children, scrollRef }) {
+function PageShell({ activeSection, onNavigate, children, scrollRef }) {
   return (
     <div className="site-shell-frame mx-auto h-svh w-full max-w-250 border-r border-border max-[780px]:mx-0 max-[780px]:h-auto max-[780px]:w-full max-[780px]:border-r-0">
       <div ref={scrollRef} className="site-shell h-full overflow-y-auto max-[780px]:h-auto max-[780px]:overflow-visible">
         <div className="grid min-h-full grid-cols-[184px_minmax(0,1fr)] gap-18 bg-[radial-gradient(circle_280px_at_calc(100%+40px)_-50px,var(--color-blue)_0_99.5%,transparent_100%)] bg-no-repeat max-[1080px]:grid-cols-[158px_minmax(0,1fr)] max-[1080px]:gap-12 max-[780px]:block max-[780px]:bg-[radial-gradient(circle_180px_at_100%_-50px,var(--color-blue)_0_99.5%,transparent_100%)]">
-          <DesktopRail activeSection={activeSection} />
+          <DesktopRail activeSection={activeSection} onNavigate={onNavigate} />
           <main className="w-full min-w-0 max-w-none pr-18 max-[1080px]:pr-12 max-[780px]:overflow-x-clip max-[780px]:px-5 max-[780px]:pr-5">{children}</main>
         </div>
       </div>
@@ -50,6 +50,12 @@ function PageShell({ activeSection, children, scrollRef }) {
 function App() {
   const [activeSection, setActiveSection] = useState('intro')
   const shellRef = useRef(null)
+  const navigationIntentRef = useRef(null)
+
+  const handleSectionNavigate = (sectionId) => {
+    navigationIntentRef.current = sectionId
+    setActiveSection(sectionId)
+  }
 
   useEffect(() => {
     const shell = shellRef.current
@@ -62,6 +68,7 @@ function App() {
     const getScrollTop = () => scrollTarget === shell ? shell.scrollTop : window.scrollY
     const getScrollHeight = () => scrollTarget === shell ? shell.scrollHeight : document.documentElement.scrollHeight
     const getViewportHeight = () => scrollTarget === shell ? shell.clientHeight : window.innerHeight
+    const getHashSectionId = () => navigation.find((item) => `#${item.id}` === window.location.hash)?.id
 
     const updateActiveSection = () => {
       animationFrame = undefined
@@ -74,7 +81,7 @@ function App() {
       }
 
       if (scrollTop >= maxScroll - 8) {
-        setActiveSection(sections.at(-1)?.id ?? 'contact')
+        setActiveSection(navigationIntentRef.current ?? sections.at(-1)?.id ?? 'contact')
         return
       }
 
@@ -94,6 +101,23 @@ function App() {
       animationFrame = requestAnimationFrame(updateActiveSection)
     }
 
+    const clearNavigationIntent = () => {
+      if (!navigationIntentRef.current) return
+      navigationIntentRef.current = null
+      scheduleUpdate()
+    }
+
+    const handleKeyDown = (event) => {
+      if ([' ', 'ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End'].includes(event.key)) {
+        clearNavigationIntent()
+      }
+    }
+
+    const handleHashChange = () => {
+      navigationIntentRef.current = getHashSectionId() ?? null
+      scheduleUpdate()
+    }
+
     const viewportQuery = window.matchMedia('(min-width: 781px)')
     const updateScrollTarget = () => {
       const nextTarget = viewportQuery.matches ? shell : window
@@ -105,8 +129,13 @@ function App() {
       scheduleUpdate()
     }
 
+    navigationIntentRef.current = getHashSectionId() ?? null
     window.addEventListener('resize', scheduleUpdate)
-    window.addEventListener('hashchange', scheduleUpdate)
+    window.addEventListener('hashchange', handleHashChange)
+    window.addEventListener('wheel', clearNavigationIntent, { passive: true })
+    window.addEventListener('touchstart', clearNavigationIntent, { passive: true })
+    window.addEventListener('pointerdown', clearNavigationIntent, { passive: true })
+    window.addEventListener('keydown', handleKeyDown)
     viewportQuery.addEventListener('change', updateScrollTarget)
     updateScrollTarget()
 
@@ -114,15 +143,19 @@ function App() {
       if (animationFrame) cancelAnimationFrame(animationFrame)
       if (scrollTarget) scrollTarget.removeEventListener('scroll', scheduleUpdate)
       window.removeEventListener('resize', scheduleUpdate)
-      window.removeEventListener('hashchange', scheduleUpdate)
+      window.removeEventListener('hashchange', handleHashChange)
+      window.removeEventListener('wheel', clearNavigationIntent)
+      window.removeEventListener('touchstart', clearNavigationIntent)
+      window.removeEventListener('pointerdown', clearNavigationIntent)
+      window.removeEventListener('keydown', handleKeyDown)
       viewportQuery.removeEventListener('change', updateScrollTarget)
     }
   }, [])
 
   return (
     <>
-      <MobileHeader activeSection={activeSection} />
-      <PageShell activeSection={activeSection} scrollRef={shellRef}>
+      <MobileHeader activeSection={activeSection} onNavigate={handleSectionNavigate} />
+      <PageShell activeSection={activeSection} onNavigate={handleSectionNavigate} scrollRef={shellRef}>
         <section className="hero-with-pattern relative flex min-h-[min(800px,96svh)] max-w-full flex-col justify-center overflow-hidden scroll-mt-9 pt-18 pb-16 *:z-1 max-[780px]:min-h-0 max-[780px]:scroll-mt-20 max-[780px]:pr-0 max-[780px]:pt-16 max-[780px]:pb-13" id="intro">
           <span className="text-[13px] font-semibold text-blue">Hello! I&apos;m</span>
           <h1 className="m-0 mt-6 mb-9 grid w-max gap-0.5 font-display text-[clamp(4.9rem,9.1vw,7.35rem)] font-[680] leading-[0.73] tracking-[-0.065em] text-ink font-stretch-condensed max-[1080px]:text-[clamp(4.76rem,10.5vw,6.3rem)] max-[780px]:mb-8 max-[780px]:mt-6 max-[780px]:w-full max-[780px]:text-[clamp(4.06rem,18.2vw,5.6rem)] max-[430px]:text-[clamp(3.78rem,20.3vw,5.04rem)]" aria-label={profile.name}>

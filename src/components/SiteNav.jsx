@@ -39,7 +39,7 @@ function NavLinks({ activeSection, onNavigate, mobile = false }) {
             href={`#${item.id}`}
             className={`group flex items-center gap-2.5 py-2 no-underline transition-colors duration-150 hover:text-ink focus-visible:text-ink ${mobile ? 'text-[14px]' : 'text-[13px]'} ${active ? 'text-ink' : 'text-muted'}`}
             aria-current={active ? 'location' : undefined}
-            onClick={onNavigate}
+            onClick={() => onNavigate?.(item.id)}
           >
             <span className={`size-1.5 shrink-0 rounded-full transition duration-150 ${active ? 'bg-blue shadow-[0_0_0_4px_var(--color-blue-soft)]' : 'bg-border-strong'}`} aria-hidden="true" />
             {item.label}
@@ -50,13 +50,13 @@ function NavLinks({ activeSection, onNavigate, mobile = false }) {
   )
 }
 
-export function DesktopRail({ activeSection }) {
+export function DesktopRail({ activeSection, onNavigate }) {
   return (
     <aside className="sticky top-0 flex h-svh flex-col border-r border-border py-8 pr-[30px] pl-6 max-[1080px]:pr-6 max-[780px]:hidden">
-      <a className="inline-flex self-start items-baseline text-[33px] font-bold tracking-[-0.07em] text-ink no-underline" href="#intro" aria-label={`${profile.name}, back to top`}>
+      <a className="inline-flex self-start items-baseline text-[33px] font-bold tracking-[-0.07em] text-ink no-underline" href="#intro" aria-label={`${profile.name}, back to top`} onClick={() => onNavigate?.('intro')}>
         <span>js</span><i className="text-blue not-italic">.</i>
       </a>
-      <NavLinks activeSection={activeSection} />
+      <NavLinks activeSection={activeSection} onNavigate={onNavigate} />
       <div className="mt-auto grid gap-[9px] text-[10px] text-muted">
         <SocialLinks />
         <a className="overflow-hidden text-ellipsis whitespace-nowrap text-ink-soft no-underline" href={`mailto:${profile.email}`}>{profile.email}</a>
@@ -66,13 +66,18 @@ export function DesktopRail({ activeSection }) {
   )
 }
 
-export function MobileHeader({ activeSection }) {
+export function MobileHeader({ activeSection, onNavigate }) {
   const [open, setOpen] = useState(false)
+
+  const handleNavigate = (sectionId) => {
+    onNavigate?.(sectionId)
+    setOpen(false)
+  }
 
   return (
     <header className="sticky top-0 z-20 hidden border-b border-border bg-white/95 backdrop-blur-[16px] max-[780px]:block">
       <div className="flex min-h-[58px] w-full items-center justify-between px-5">
-        <a className="inline-flex items-baseline text-[33px] font-bold tracking-[-0.07em] text-ink no-underline" href="#intro" aria-label={`${profile.name}, back to top`} onClick={() => setOpen(false)}>
+        <a className="inline-flex items-baseline text-[33px] font-bold tracking-[-0.07em] text-ink no-underline" href="#intro" aria-label={`${profile.name}, back to top`} onClick={() => handleNavigate('intro')}>
           <span>js</span><i className="text-blue not-italic">.</i>
         </a>
         <button
@@ -88,7 +93,7 @@ export function MobileHeader({ activeSection }) {
       </div>
       {open && (
         <div className="animate-[menu-in_160ms_ease_both] border-t border-border px-5 pt-[9px] pb-5" id="mobile-navigation">
-          <NavLinks activeSection={activeSection} onNavigate={() => setOpen(false)} mobile />
+          <NavLinks activeSection={activeSection} onNavigate={handleNavigate} mobile />
           <SocialLinks className="mt-[14px] mb-0" />
         </div>
       )}
