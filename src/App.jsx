@@ -14,6 +14,7 @@ const currentYear = new Date().getFullYear()
 const currentProjectPreview = {
   id: currentProject.id,
   image: currentProject.media.image,
+  video: currentProject.media.video,
   imageAlt: currentProject.media.alt,
   imagePosition: '35% center',
   tags: currentProject.tech.slice(0, 3),
@@ -173,12 +174,12 @@ function App() {
             Currently building thoughtful{' '}
             <ScribbleUnderline>web</ScribbleUnderline>{' '}
             apps and{' '}
-            <ScribbleUnderline>learning backend</ScribbleUnderline>{' '}
+            <ScribbleUnderline>exploring backend</ScribbleUnderline>{' '}
             development.
           </p>
 
           <ul className="mt-7 mb-0 grid max-w-173 list-none gap-3 p-0 text-sm leading-[1.55] text-ink-soft">
-            <li className="relative pl-6 before:absolute before:top-[0.58em] before:left-0.5 before:size-1.5 before:rounded-full before:bg-blue before:content-['']">Currently working on <LinkBadge label={currentProject.title} href={currentProject.github} detail={currentProject.description} preview={currentProjectPreview} />, {currentProject.spotlightDescription}</li>
+            <li className="relative pl-6 before:absolute before:top-[0.58em] before:left-0.5 before:size-1.5 before:rounded-full before:bg-blue before:content-['']">Recently shipped <LinkBadge label={currentProject.title} href={currentProject.github} detail={currentProject.description} preview={currentProjectPreview} />, {currentProject.spotlightDescription}</li>
             <li className="relative pl-6 before:absolute before:top-[0.58em] before:left-0.5 before:size-1.5 before:rounded-full before:bg-blue before:content-['']">built 10 iOS apps through an Apple-supported development program</li>
             <li className="relative pl-6 leading-[1.55] before:absolute before:top-[0.58em] before:left-0.5 before:size-1.5 before:rounded-full before:bg-blue before:content-['']">
               <span>enjoy solving problems on </span>

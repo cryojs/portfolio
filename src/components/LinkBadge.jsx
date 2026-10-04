@@ -1,3 +1,5 @@
+import { useRef, useState } from 'react'
+
 function slugify(value) {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, '-')
 }
@@ -14,7 +16,7 @@ function BadgeBorder() {
   )
 }
 
-function LinkPreview({ id, label, href, detail, preview }) {
+function LinkPreview({ id, label, href, detail, preview, videoRef, isVideoPlaying }) {
   const hasThumbnail = Boolean(preview?.image)
   const previewPosition = hasThumbnail ? 'left-[-12px] w-[270px] whitespace-normal p-3.5 pr-6' : 'left-[calc(100%-6px)] w-[230px] p-4 pr-7'
   const mobileWidth = hasThumbnail ? 'max-[780px]:w-[min(270px,calc(100vw_-_40px))]' : 'max-[780px]:w-[min(230px,calc(100vw_-_40px))]'
@@ -31,8 +33,21 @@ function LinkPreview({ id, label, href, detail, preview }) {
       <span className="link-preview-fold absolute right-0 bottom-0 z-[2] size-[22px]" aria-hidden="true" />
       <span className={`link-preview-content relative z-[3] grid ${contentLayout}`}>
         {hasThumbnail && (
-          <span className="block aspect-[16/9] w-full max-w-full min-w-0 overflow-hidden rounded-[3px] border border-blue-soft bg-blue-soft">
-            <img className="block h-full w-full max-w-full min-w-0 object-cover" src={preview.image} alt={preview.imageAlt ?? ''} style={{ objectPosition: preview.imagePosition ?? 'center' }} />
+          <span className="relative block aspect-[16/9] w-full max-w-full min-w-0 overflow-hidden rounded-[3px] border border-blue-soft bg-blue-soft">
+            <img className={`block h-full w-full max-w-full min-w-0 object-cover transition-opacity duration-300 ${isVideoPlaying ? 'opacity-0' : 'opacity-100'}`} src={preview.image} alt={preview.imageAlt ?? ''} style={{ objectPosition: preview.imagePosition ?? 'center' }} />
+            {preview.video && (
+              <video
+                ref={videoRef}
+                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${isVideoPlaying ? 'opacity-100' : 'opacity-0'}`}
+                src={preview.video}
+                poster={preview.image}
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                aria-hidden="true"
+              />
+            )}
           </span>
         )}
         {hasThumbnail ? (
@@ -60,6 +75,20 @@ function LinkPreview({ id, label, href, detail, preview }) {
 export function LinkBadge({ label, href, detail, preview = {}, size = 'large' }) {
   const previewId = `link-preview-${preview.id ?? slugify(label)}`
   const textSize = size === 'large' ? 'text-sm' : 'text-[10px]'
+  const videoRef = useRef(null)
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false)
+
+  const playPreview = () => {
+    if (!videoRef.current) return
+    videoRef.current.play().then(() => setIsVideoPlaying(true)).catch(() => {})
+  }
+
+  const stopPreview = () => {
+    if (!videoRef.current) return
+    videoRef.current.pause()
+    videoRef.current.currentTime = 0
+    setIsVideoPlaying(false)
+  }
 
   return (
     <a
@@ -68,10 +97,14 @@ export function LinkBadge({ label, href, detail, preview = {}, size = 'large' })
       href={href}
       target="_blank"
       rel="noreferrer"
+      onMouseEnter={playPreview}
+      onMouseLeave={stopPreview}
+      onFocus={playPreview}
+      onBlur={stopPreview}
     >
       <span className="text-blue-dark">{label}</span>
       <BadgeBorder />
-      <LinkPreview id={previewId} label={label} href={href} detail={detail} preview={preview} />
+      <LinkPreview id={previewId} label={label} href={href} detail={detail} preview={preview} videoRef={videoRef} isVideoPlaying={isVideoPlaying} />
     </a>
   )
 }
