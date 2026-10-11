@@ -10,7 +10,7 @@ function displayUrl(href) {
 
 function BadgeBorder() {
   return (
-    <svg className="link-badge-border text-[#93c5fd]" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true">
+    <svg className="link-badge-border text-blue-dark" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true">
       <rect x="1" y="1" width="98" height="38" rx="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 4" vectorEffect="non-scaling-stroke" />
     </svg>
   )
@@ -93,7 +93,7 @@ export function LinkBadge({ label, href, detail, preview = {}, size = 'large' })
   return (
     <a
       aria-describedby={previewId}
-      className={`group link-badge link-preview-trigger inline-flex items-center rounded-full bg-blue-soft px-2 py-1 ${textSize} font-[650] leading-[1.2] whitespace-nowrap !text-blue-dark no-underline transition duration-150 hover:-translate-y-px hover:bg-[#bfdbfe] focus-visible:-translate-y-px focus-visible:bg-[#bfdbfe]`}
+      className={`group link-badge link-preview-trigger inline-flex items-center rounded-full bg-blue-soft px-2 py-1 ${textSize} font-[650] leading-[1.2] whitespace-nowrap !text-blue-dark no-underline transition duration-150 hover:-translate-y-px hover:bg-blue-soft focus-visible:-translate-y-px focus-visible:bg-blue-soft`}
       href={href}
       target="_blank"
       rel="noreferrer"

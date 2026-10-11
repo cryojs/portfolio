@@ -7,11 +7,15 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test tests/routes.test.mjs",
+    "test:browser": "playwright test",
+    "format": "prettier --write src/App.jsx src/index.css src/pages src/components/Editorial.jsx src/components/Silhouette.jsx src/components/CyberGraphics.jsx src/data/editorial.js src/data/chapters.js tests playwright.config.js"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",
     "@fontsource-variable/roboto-condensed": "^5.3.0",
+    "@fontsource/cormorant-garamond": "^5.3.0",
     "lucide-react": "^1.47.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
@@ -19,6 +23,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.64.0",
     "@tailwindcss/vite": "^4.3.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
@@ -27,6 +32,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.6",
     "globals": "^17.12.0",
+    "prettier": "^3.9.10",
     "tailwindcss": "^4.3.3",
     "vite": "^8.3.0"
   }

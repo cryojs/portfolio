@@ -14,7 +14,7 @@ function SocialLinks({ className = 'mb-2' }) {
       {socialLinks.map(({ label, href, icon: Icon }) => (
         <a
           key={label}
-          className="grid size-[31px] place-items-center rounded-full border border-border text-muted transition duration-150 hover:border-[#bfdbfe] hover:bg-[#eff6ff] hover:text-blue focus-visible:border-[#bfdbfe] focus-visible:bg-[#eff6ff] focus-visible:text-blue"
+          className="grid size-[31px] place-items-center rounded-full border border-border text-muted transition duration-150 hover:border-blue-soft hover:bg-paper-note hover:text-blue focus-visible:border-blue-soft focus-visible:bg-paper-note focus-visible:text-blue"
           href={href}
           aria-label={label}
           target={href.startsWith('http') ? '_blank' : undefined}
@@ -52,8 +52,8 @@ function NavLinks({ activeSection, onNavigate, mobile = false }) {
 
 export function DesktopRail({ activeSection, onNavigate }) {
   return (
-    <aside className="sticky top-0 flex h-svh flex-col border-r border-border py-8 pr-[30px] pl-6 max-[1080px]:pr-6 max-[780px]:hidden">
-      <a className="inline-flex self-start items-baseline text-[33px] font-bold tracking-[-0.07em] text-ink no-underline" href="#intro" aria-label={`${profile.name}, back to top`} onClick={() => onNavigate?.('intro')}>
+    <aside className="notebook-rail sticky top-0 flex h-svh flex-col border-r border-border py-8 pr-[30px] pl-6 max-[1080px]:pr-6 max-[780px]:hidden">
+      <a className="site-mark" href="#intro" aria-label={`${profile.name}, back to top`} onClick={() => onNavigate?.('intro')}>
         <span>js</span><i className="text-blue not-italic">.</i>
       </a>
       <NavLinks activeSection={activeSection} onNavigate={onNavigate} />
@@ -75,9 +75,9 @@ export function MobileHeader({ activeSection, onNavigate }) {
   }
 
   return (
-    <header className="sticky top-0 z-20 hidden border-b border-border bg-white/95 backdrop-blur-[16px] max-[780px]:block">
+    <header className="mobile-header-paper sticky top-0 z-20 hidden border-b border-border bg-canvas/95 backdrop-blur-[16px] max-[780px]:block">
       <div className="flex min-h-[58px] w-full items-center justify-between px-5">
-        <a className="inline-flex items-baseline text-[33px] font-bold tracking-[-0.07em] text-ink no-underline" href="#intro" aria-label={`${profile.name}, back to top`} onClick={() => handleNavigate('intro')}>
+        <a className="site-mark" href="#intro" aria-label={`${profile.name}, back to top`} onClick={() => handleNavigate('intro')}>
           <span>js</span><i className="text-blue not-italic">.</i>
         </a>
         <button

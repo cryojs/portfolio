@@ -22,6 +22,7 @@ export const education = {
 export const experience = [
   {
     id: 'career-education-council',
+    tech: ['Swift', 'SwiftUI', 'UIKit'],
     role: 'iOS Developer (Co-op)',
     company: 'Career Education Council',
     logo: '/logos/develop-the-future-program.jpg',
@@ -34,6 +35,7 @@ export const experience = [
   },
   {
     id: 'usaco-guide',
+    tech: ['Open source', 'Algorithms', 'Editorials'],
     role: 'Open Source Contributor',
     company: 'USACO Guide',
     logo: '/logos/cpinitiative.jpg',
@@ -45,6 +47,7 @@ export const experience = [
   },
   {
     id: 'three-flavors',
+    tech: ['Python', 'Teaching', 'Mentorship'],
     role: 'Computer Camp Assistant',
     company: 'Three-Flavors Summer Camp',
     logo: '/logos/threeflavors.webp',
@@ -67,6 +70,8 @@ export const projects = [
     live: 'https://friction-d95.pages.dev/',
     media: {
       image: '/projects/friction/cover.png',
+      width: 2190,
+      height: 1457,
       alt: 'Friction Paths view showing site routes, assigned agents, and scan results',
       position: 'center',
     },
@@ -85,6 +90,8 @@ export const projects = [
     ],
     media: {
       image: '/projects/readify/cover.png',
+      width: 1093,
+      height: 1168,
       video: '/projects/readify/preview.webm',
       alt: 'Readify browser extension answering a question about a webpage',
       position: 'center top',
@@ -100,6 +107,8 @@ export const projects = [
     live: 'https://refrain-timer.vercel.app/',
     media: {
       image: '/projects/refrain/cover.png',
+      width: 1626,
+      height: 714,
       alt: 'Refrain focus timer beside a task list',
       position: 'center',
     },
@@ -114,6 +123,8 @@ export const projects = [
     media: {
       variant: 'tidebreak',
       gameplay: '/projects/tidebreak/gameplay.png',
+      width: 1780,
+      height: 1017,
       editor: '/projects/tidebreak/editor.png',
       alt: 'Tidebreak gameplay and in-game level editor',
     },
@@ -137,6 +148,7 @@ export const skillGroups = [
 
 export const navigation = [
   { id: 'intro', label: 'hello' },
+  { id: 'currently', label: 'currently' },
   { id: 'experience', label: 'experience' },
   { id: 'projects', label: 'projects' },
   { id: 'skills', label: 'skills' },

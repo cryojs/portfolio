@@ -68,7 +68,19 @@ function ContactBubble() {
   )
 }
 
+function CurrentOrbit() {
+  return (
+    <svg className="heading-doodle heading-doodle--orbit" viewBox="0 0 56 56" aria-hidden="true">
+      <circle cx="28" cy="28" r="14" />
+      <path d="M8 28C13 15 24 9 36 12C46 14 51 23 48 34C45 45 34 50 23 47C13 44 7 38 8 28Z" />
+      <path d="M24 25C27 22 31 22 34 25M24 33C27 36 31 36 34 33" />
+      <path className="doodle-echo" d="M13 12L16 15M43 40L47 43M39 9L40 13" />
+    </svg>
+  )
+}
+
 const headingDoodles = {
+  currently: CurrentOrbit,
   experience: BubbleTea,
   projects: ProjectSpark,
   skills: SkillsTool,
@@ -91,6 +103,25 @@ export function ContactLoop() {
       <path className="doodle-echo contact-loop-motif" d="M208 160C225 173 241 180 255 184" />
       <path className="doodle-echo contact-loop-motif" d="M281 221C281 235 274 247 264 254" />
       <path className="doodle-echo" d="M236 20L242 21M226 13L231 8M250 43L257 45" />
+    </svg>
+  )
+}
+
+export function PortraitDoodle() {
+  return (
+    <svg className="portrait-doodle" viewBox="0 0 280 280" role="img" aria-label="A playful hand-drawn avatar of Jason at a laptop">
+      <circle className="portrait-doodle-paper" cx="140" cy="140" r="118" />
+      <circle className="portrait-doodle-halo" cx="140" cy="140" r="94" />
+      <path className="portrait-doodle-hair" d="M86 105C88 73 112 53 143 55C176 56 198 77 196 108C185 95 174 91 163 88C144 102 118 104 86 105Z" />
+      <path className="portrait-doodle-face" d="M96 103C94 132 98 158 118 172C132 182 153 182 168 169C185 154 188 128 183 103C160 110 126 111 96 103Z" />
+      <path className="portrait-doodle-line" d="M119 131C124 127 129 128 132 132M151 132C155 128 161 128 164 132M133 151C140 155 148 155 154 150" />
+      <path className="portrait-doodle-shirt" d="M92 220C96 190 113 175 139 174C166 175 185 192 189 220" />
+      <path className="portrait-doodle-line" d="M113 186L140 211L168 185M140 211V224" />
+      <path className="portrait-doodle-laptop" d="M57 222H223L211 239H69L57 222Z" />
+      <path className="portrait-doodle-screen" d="M78 217V181C78 177 81 175 85 175H195C199 175 202 178 202 181V217" />
+      <path className="portrait-doodle-screen-line" d="M95 193C109 188 121 199 136 193C150 187 163 193 184 187M105 203H170" />
+      <path className="portrait-doodle-star" d="M45 87L49 96L58 99L49 102L45 111L42 102L33 99L42 96L45 87ZM224 87L227 94L234 97L227 99L224 106L222 99L215 97L222 94L224 87Z" />
+      <path className="portrait-doodle-line portrait-doodle-loop" d="M218 145C241 148 247 162 238 175C230 187 215 188 207 179" />
     </svg>
   )
 }
