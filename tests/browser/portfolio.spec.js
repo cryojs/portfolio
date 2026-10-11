@@ -10,12 +10,53 @@ test('all pages load directly, expose navigation, and keep assets intact', async
   for (const route of pages) {
     await page.goto(`/#${route}`)
     await expect(page.locator(`.route-${route}`)).toBeVisible()
+    await expect(page).toHaveTitle('Jason Sun - Portfolio')
     await expect(page.locator('.page-wipe')).toHaveCount(0)
+    if (route === 'home') {
+      await expect(page.locator('.home-scene .scene-photo')).toHaveCount(2)
+      const stacks = page.locator('.home-scene .photo-stack')
+      await expect(stacks).toHaveCount(3)
+      const firstPhotos = [
+        '/photos/selfie-spain.jpg',
+        '/photos/spain.jpg',
+        '/photos/toronto.jpg',
+      ]
+      await expect(stacks.nth(1).getByText('1/3')).toBeVisible()
+      for (let index = 0; index < stacks.count(); index += 1) {
+        const stack = stacks.nth(index)
+        const stackImage = stack.locator('img')
+        if (index === 2) {
+          await expect(stackImage).toHaveAttribute('src', '/photos/disney.jpg')
+        } else {
+          await expect(stackImage).toHaveAttribute('src', firstPhotos[index])
+        }
+        if (index > 0) {
+          const firstPhoto = await stackImage.getAttribute('src')
+          await stack.getByRole('button', { name: /flip to photo/ }).click()
+          await expect(stackImage).not.toHaveAttribute('src', firstPhoto)
+        } else {
+          await expect(stack.getByRole('button')).toHaveCount(0)
+          await expect(page.locator('.about-object')).toHaveAttribute(
+            'href',
+            '#about',
+          )
+        }
+      }
+    }
     await expect(page.locator('h1')).toBeVisible()
     await page.evaluate(() => document.fonts.ready)
     await expect(
       page.locator('nav[aria-label="Main navigation"] a'),
     ).toHaveCount(4)
+    await expect(
+      page.locator(
+        '.site-footer a[href="https://www.linkedin.com/in/jasonsuncs/"]',
+      ),
+    ).toHaveCount(1)
+    await expect(
+      page.locator('.site-footer a[href="https://github.com/CryoJS"]'),
+    ).toHaveCount(1)
+    await expect(page.getByText('let’s talk ↗')).toHaveCount(0)
     expect(
       await page
         .locator('img')

@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { chapters, resolveRoute } from './data/chapters'
+import { profile } from './data/portfolio'
 import { Star } from './components/Editorial'
 import CyberBackdrop from './components/CyberGraphics'
 import Home from './pages/Home'
@@ -40,6 +41,7 @@ export default function App() {
       theme === 'light' ? 'light' : 'dark'
   }, [theme])
   const headingRef = useRef(null)
+  const navRef = useRef(null)
   const routeRef = useRef(route)
   const lastPlacedHash = useRef(route.hash)
 
@@ -65,7 +67,7 @@ export default function App() {
   }, [])
 
   useLayoutEffect(() => {
-    document.title = `${route.page === 'home' ? 'portfolio' : chapters.find((item) => item.id === route.page).label} — jason sun`
+    document.title = 'Jason Sun - Portfolio'
     const target = route.anchor ? document.getElementById(route.anchor) : null
     const focusTarget = target?.querySelector('h2, h3') || headingRef.current
     if (
@@ -87,6 +89,43 @@ export default function App() {
     lastPlacedHash.current = route.hash
     return () => cancelAnimationFrame(frame)
   }, [route])
+
+  useLayoutEffect(() => {
+    const nav = navRef.current
+    if (!nav) return undefined
+
+    let frame = 0
+    const updateIndicator = () => {
+      const active = nav.querySelector('a[aria-current="page"]')
+      if (!active) {
+        // Keep the marker mounted so leaving a page contracts into a slanted
+        // stroke instead of fading away and then reappearing on the next page.
+        nav.style.setProperty('--nav-selection-width', '0px')
+        nav.style.setProperty('--nav-selection-opacity', '1')
+        return
+      }
+      const navRect = nav.getBoundingClientRect()
+      const activeRect = active.getBoundingClientRect()
+      nav.style.setProperty(
+        '--nav-selection-left',
+        `${activeRect.left - navRect.left}px`,
+      )
+      nav.style.setProperty('--nav-selection-width', `${activeRect.width}px`)
+      nav.style.setProperty('--nav-selection-opacity', '1')
+    }
+    const schedule = () => {
+      cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(updateIndicator)
+    }
+
+    schedule()
+    window.addEventListener('resize', schedule)
+    document.fonts?.ready.then(schedule)
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener('resize', schedule)
+    }
+  }, [route.page])
 
   function navigate(event) {
     const link = event.target.closest('a')
@@ -130,7 +169,12 @@ export default function App() {
           <Star />
           <span>jason sun</span>
         </a>
-        <nav aria-label="Main navigation">
+        <nav ref={navRef} aria-label="Main navigation">
+          <span
+            className="nav-selection"
+            data-active={route.page !== 'home'}
+            aria-hidden="true"
+          />
           {chapters.map((item) => (
             <a
               key={item.id}
@@ -179,7 +223,14 @@ export default function App() {
       </main>
       <footer className="site-footer" key={`footer-${route.page}`}>
         <span>© {new Date().getFullYear()} jason sun</span>
-        <a href="#contact">let’s talk ↗</a>
+        <span className="site-footer-links">
+          <a href={profile.links.linkedin} target="_blank" rel="noreferrer">
+            linkedin ↗
+          </a>
+          <a href={profile.links.github} target="_blank" rel="noreferrer">
+            github ↗
+          </a>
+        </span>
       </footer>
     </div>
   )

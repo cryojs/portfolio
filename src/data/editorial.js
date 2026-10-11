@@ -2,19 +2,73 @@
 // Empty or failed sources intentionally render a designed, labelled photo placeholder.
 export const photographs = {
   portrait: {
-    src: '',
-    alt: 'Portrait of Jason Sun',
+    src: '/photos/selfie-spain.jpg',
+    alt: 'Jason outdoors in Spain',
     label: 'A face to the name',
     index: '01',
-    position: 'center',
+    position: 'center 45%',
   },
   everyday: {
-    src: '',
-    alt: 'A moment from Jason’s everyday life',
+    src: '/photos/selfie-toronto.jpg',
+    alt: 'Jason outdoors in Toronto',
     label: 'Life, outside the screen',
     index: '02',
     position: 'center',
   },
+}
+
+export const photographGroups = {
+  spain: [
+    {
+      src: '/photos/selfie-spain.jpg',
+      alt: 'Jason outdoors in Spain',
+      position: 'center 45%',
+    },
+  ],
+  toronto: [
+    {
+      src: '/photos/spain.jpg',
+      alt: 'A view from Spain',
+      position: 'center',
+    },
+    {
+      src: '/photos/selfie-toronto.jpg',
+      alt: 'Jason outdoors in Toronto',
+      position: 'center',
+    },
+    {
+      src: '/photos/toronto.jpg',
+      alt: 'A view from Toronto',
+      position: 'center',
+    },
+  ],
+  travel: [
+    {
+      src: '/photos/disney.jpg',
+      alt: 'A day at Disney',
+      position: 'center',
+    },
+    {
+      src: '/photos/japan.jpg',
+      alt: 'A view from Japan',
+      position: 'center',
+    },
+    {
+      src: '/photos/japan-uniqlo.jpg',
+      alt: 'A detail from Japan',
+      position: 'center',
+    },
+    {
+      src: '/photos/china2.jpg',
+      alt: 'A view from China',
+      position: 'center',
+    },
+    {
+      src: '/photos/great-wall-of-china.jpg',
+      alt: 'The Great Wall of China',
+      position: 'center',
+    },
+  ],
 }
 
 export const aboutCopy = {

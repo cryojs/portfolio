@@ -1,7 +1,7 @@
-import { Photo, Star, Trajectories } from '../components/Editorial'
-import { Burst } from '../components/CyberGraphics'
+import { PhotoStack, Trajectories } from '../components/Editorial'
+import { Burst, DottedGraphic, PhotoMotif } from '../components/CyberGraphics'
 import Silhouette from '../components/Silhouette'
-import { photographs } from '../data/editorial'
+import { photographGroups } from '../data/editorial'
 
 export default function Home({ headingRef }) {
   function move(event) {
@@ -32,15 +32,18 @@ export default function Home({ headingRef }) {
       <a
         href="#about"
         className="scene-object about-object"
-        aria-label="About — the person behind the screen"
+        aria-label="about — the person behind the screen"
       >
-        <Photo photo={photographs.portrait} />
+        <PhotoStack
+          photos={photographGroups.spain}
+          className="about-photo-stack"
+        />
         <span className="object-label">
           about <span>↗</span>
         </span>
       </a>
       <a href="#work" className="scene-object work-object">
-        <Burst className="plush-burst" />
+        <Burst className="plush-burst dotted" />
         <Silhouette kind="bear" />
         <span className="object-label">
           work <span>↗</span>
@@ -53,27 +56,42 @@ export default function Home({ headingRef }) {
           <span className="title-period">.</span>
         </h1>
         <div className="home-introduction">
-          <span className="intro-marker" aria-hidden="true">
-            ↳
-          </span>
           <p>
-            computer science @ waterloo.
+            studying computer science @ uwaterloo.
             <br />
-            making things. figuring things out.
+            always learning, making, and figuring things out.
           </p>
         </div>
       </div>
       <a href="#projects" className="scene-object projects-object">
+        <DottedGraphic className="object-dots project-dots" kind="cloud" />
         <Silhouette kind="quill" />
         <span className="object-label">
           projects <span>↗</span>
         </span>
       </a>
-      <div className="scene-photo">
-        <Photo photo={photographs.everyday} />
-        <Star className="photo-star" />
+      <div
+        className="scene-object scene-photo"
+        aria-label="a set of Spain and Toronto photographs"
+      >
+        <PhotoStack
+          photos={photographGroups.toronto}
+          className="toronto-photo-stack"
+        />
+        <PhotoMotif variant="toronto" />
+      </div>
+      <div
+        className="scene-object scene-photo scene-photo-secondary"
+        aria-label="a group of travel photographs"
+      >
+        <PhotoStack
+          photos={photographGroups.travel}
+          className="travel-photo-stack"
+        />
+        <PhotoMotif variant="travel" />
       </div>
       <a href="#contact" className="scene-object contact-object">
+        <DottedGraphic className="object-dots contact-dots" kind="letter" />
         <Silhouette kind="letter" />
         <span className="object-label">
           contact <span>↗</span>

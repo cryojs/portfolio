@@ -82,6 +82,43 @@ export function Photo({ photo, className = '' }) {
   )
 }
 
+export function PhotoStack({ photos, className = '' }) {
+  const [activeIndex, setActiveIndex] = useState(0)
+  if (!photos?.length) return null
+
+  const photo = photos[activeIndex]
+  const nextIndex = (activeIndex + 1) % photos.length
+
+  return (
+    <div className={`photo-stack ${className}`} data-photo-index={activeIndex}>
+      <span
+        className="photo-stack-layer photo-stack-layer-back"
+        aria-hidden="true"
+      />
+      <span
+        className="photo-stack-layer photo-stack-layer-front"
+        aria-hidden="true"
+      />
+      <div className="photo-stack-frame">
+        <Photo key={photo.src} photo={photo} />
+        {photos.length > 1 && (
+          <button
+            className="photo-stack-control"
+            type="button"
+            onClick={() => setActiveIndex(nextIndex)}
+            aria-label={`flip to photo ${nextIndex + 1} of ${photos.length}`}
+          />
+        )}
+      </div>
+      {photos.length > 1 && (
+        <span className="photo-stack-count" aria-live="polite">
+          {activeIndex + 1}/{photos.length}
+        </span>
+      )}
+    </div>
+  )
+}
+
 export function ExternalLink({ href, children, className = '' }) {
   return (
     <a

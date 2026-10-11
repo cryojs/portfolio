@@ -9,3 +9,5 @@ In `src/data/editorial.js`, update `photographs.portrait` and `photographs.every
 ```
 
 Use WebP or JPEG, roughly 1200–1600px on the long edge, preferably below 300KB. Portrait crops suit the first frame; the second works with landscape or portrait photographs. `position` controls the crop. Each photo is reused on Home and About. Empty or failed sources show the designed “photograph to come” fallback.
+
+Grouped memories used by the home collage live in `photographGroups` in `src/data/editorial.js`. The home about focal point is the single `selfie-spain.jpg` portrait, while the right-hand stack runs `spain.jpg`, `selfie-toronto.jpg`, then `toronto.jpg`. The travel stack remains keyboard-friendly and flips through its related images.

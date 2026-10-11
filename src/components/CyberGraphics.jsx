@@ -1,14 +1,89 @@
 import { useId } from 'react'
 
 export function Burst({ className = '' }) {
+  const patternId = useId()
   return (
     <svg
       viewBox="0 0 240 240"
       className={`burst ${className}`}
-      fill="currentColor"
+      fill={
+        className.includes('dotted') ? `url(#${patternId})` : 'currentColor'
+      }
       aria-hidden="true"
     >
+      {className.includes('dotted') && (
+        <defs>
+          <pattern
+            id={patternId}
+            width="7"
+            height="7"
+            patternUnits="userSpaceOnUse"
+          >
+            <circle cx="2.5" cy="2.5" r="1.35" fill="currentColor" />
+          </pattern>
+        </defs>
+      )}
       <path d="M120 0L135 77L180 15L163 87L235 54L182 108L240 125L179 139L223 195L158 163L166 232L129 181L98 240L96 173L32 211L66 151L0 155L67 120L14 64L86 84L72 10L111 75Z" />
+    </svg>
+  )
+}
+
+const dotShapes = {
+  cloud:
+    'M31 155C13 148 7 130 17 114C7 99 15 80 33 73C31 52 48 36 69 37C78 20 101 13 120 24C135 10 159 13 172 28C193 24 212 35 216 53C234 57 243 77 234 93C244 108 237 126 220 133C215 151 195 162 175 158C164 175 141 182 121 173C102 185 79 178 69 162C53 169 37 165 31 155Z',
+  feather:
+    'M18 186C36 99 103 34 221 22C169 75 141 144 119 221C84 203 47 193 18 186Z M38 176C83 160 130 108 182 43C143 112 111 173 101 204C78 190 56 181 38 176Z M60 173C98 141 131 95 165 54C132 116 104 163 91 191C79 183 69 177 60 173Z',
+  letter: 'M22 62L211 34L224 170L35 201Z M30 70L121 127L214 48L216 158L38 188Z',
+}
+
+export function DottedGraphic({ kind, className = '' }) {
+  const patternId = useId()
+  return (
+    <svg
+      viewBox="0 0 240 240"
+      className={`dotted-graphic dotted-graphic-${kind} ${className}`}
+      fill={`url(#${patternId})`}
+      aria-hidden="true"
+    >
+      <defs>
+        <pattern
+          id={patternId}
+          width="7"
+          height="7"
+          patternUnits="userSpaceOnUse"
+        >
+          <circle cx="2.5" cy="2.5" r="1.35" fill="currentColor" />
+        </pattern>
+      </defs>
+      <path d={dotShapes[kind]} />
+    </svg>
+  )
+}
+
+export function PhotoMotif({ variant = 'toronto', className = '' }) {
+  return (
+    <svg
+      viewBox="0 0 240 180"
+      className={`photo-motif photo-motif-${variant} ${className}`}
+      aria-hidden="true"
+    >
+      {variant === 'toronto' ? (
+        <g fill="none" stroke="currentColor" strokeWidth="3">
+          <path d="M18 38V14h48M174 14h48v48M222 142v24h-48M66 166H18v-26" />
+          <path d="M87 18c34 17 64 43 79 77-16 35-43 57-79 67" strokeDasharray="3 10" />
+          <circle cx="119" cy="95" r="11" />
+          <circle cx="119" cy="95" r="3" fill="currentColor" />
+          <path d="M119 73v-13M119 130v13M97 95H84M154 95h-13" />
+        </g>
+      ) : (
+        <g fill="none" stroke="currentColor" strokeWidth="3">
+          <path d="M20 137c48-58 108-81 201-98" />
+          <path d="M33 153c48-48 113-71 183-83" strokeDasharray="2 11" />
+          <path d="M45 24h42v42H45zM154 111h42v42h-42z" />
+          <path d="M87 45l67 90M87 135l67-90" strokeDasharray="5 8" />
+          <circle cx="135" cy="90" r="8" />
+        </g>
+      )}
     </svg>
   )
 }
