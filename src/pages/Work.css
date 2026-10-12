@@ -1,0 +1,29 @@
+.work-page .experience-gallery { gap: 36px; }
+.work-page .experience-panel { padding: clamp(24px, 2.8vw, 40px); }
+.work-page .experience-header { display: grid; gap: 20px; }
+.work-page .experience-panel-0 .experience-header { grid-template-columns: minmax(0, 1.5fr) minmax(280px, 1fr); align-items: center; gap: 32px; }
+.work-page .experience-identity { gap: 18px; min-height: 52px; }
+.work-page .experience-identity img { width: 52px; height: 52px; }
+.work-page .experience-identity h2 { line-height: 1.08; margin: 0; }
+.work-page .experience-panel:not(.experience-panel-0) .experience-identity h2 { font-size: clamp(22px, 2.1vw, 30px); }
+.work-page .experience-panel:not(.experience-panel-0) .experience-identity img { width: 44px; height: 44px; }
+.work-page .experience-role { margin: 0; font-size: 17px; line-height: 1.5; }
+.work-page .experience-meta { margin-top: 8px; gap: 4px 18px; font-size: 13px; line-height: 1.6; }
+.work-page .experience-body { display: grid; gap: 16px; margin: 26px 0 0; padding-top: 23px; border-top-width: 1px; }
+.work-page .experience-body p { margin: 0; font-size: 16px; line-height: 1.8; }
+.work-page .experience-panel-0 .experience-body { margin-top: 30px; }
+@media (max-width: 1100px) {
+  .work-page .experience-panel-0 .experience-header { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .work-page .experience-panel-0 .experience-details { text-align: left; }
+  .work-page .experience-panel-0 .experience-meta { justify-content: flex-start; }
+}
+@media (max-width: 760px) {
+  .work-page .experience-gallery { gap: 28px; }
+  .work-page .experience-panel { padding: 24px 20px; }
+  .work-page .experience-header { gap: 18px; }
+  .work-page .experience-identity { gap: 14px; }
+  .work-page .experience-identity img { width: 44px; height: 44px; }
+  .work-page .experience-identity h2, .work-page .experience-panel:not(.experience-panel-0) .experience-identity h2 { font-size: clamp(22px, 5vw, 30px); }
+  .work-page .experience-body, .work-page .experience-panel-0 .experience-body { margin-top: 22px; padding-top: 20px; gap: 14px; }
+  .work-page .experience-body p { font-size: 15px; line-height: 1.75; }
+}

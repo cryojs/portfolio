@@ -5766,6 +5766,613 @@ summary {
   }
 }
 
+/* The colored project frame and the centered media viewport are separate. */
+.projects-page .project-art {
+  height: 400px;
+  min-height: 400px;
+  padding: 10px;
+  box-sizing: border-box;
+  display: block;
+  overflow: hidden;
+  border: 1px solid rgba(117, 132, 179, .34);
+  background: #182fe8;
+  transform: none;
+}
+.projects-page .project-readify .project-art { background: #e4e9e6; }
+.projects-page .project-refrain .project-art { background: #b7c7f4; }
+.projects-page .project-tidebreak .project-art { background: #143a54; }
+.projects-page .project-art::before,
+.projects-page .project-art::after {
+  display: none;
+}
+.projects-page .project-art > .project-screen {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  transform: none !important;
+  rotate: none;
+  translate: none !important;
+  scale: 1 !important;
+  transition: none !important;
+}
+.projects-page .project-art:hover > .project-screen,
+.projects-page .project-art > .project-screen:hover,
+.projects-page .project-art > .project-screen:focus-within {
+  transform: none !important;
+  translate: none !important;
+  scale: 1 !important;
+}
+.projects-page .project-banner-media {
+  --carousel-side: 34px;
+  --carousel-top: 28px;
+  --carousel-bottom: 32px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: visible;
+  padding: 0;
+  background: transparent;
+  isolation: isolate;
+}
+.projects-page .project-banner-media::before {
+  display: none;
+}
+.projects-page .project-banner-viewport {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: transparent;
+}
+.projects-page .project-banner-media.has-controls .project-banner-viewport {
+  inset: var(--carousel-top) var(--carousel-side) var(--carousel-bottom);
+}
+.projects-page .project-banner-slide-link {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  color: inherit;
+}
+.projects-page .project-banner-track {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  transition: transform .52s cubic-bezier(.2, .78, .2, 1);
+}
+.projects-page .project-banner-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: transparent;
+}
+.projects-page .project-banner-slide-media {
+  position: static;
+  inset: auto;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  margin: auto;
+  padding: 0;
+  object-fit: contain !important;
+  object-position: center center;
+  background: transparent;
+  transform: none !important;
+  transition: none !important;
+}
+.projects-page .project-banner-nav {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  right: auto;
+  z-index: 6;
+  opacity: 1;
+  translate: 0 -50%;
+  scale: 1;
+  transition: none;
+}
+.projects-page .project-banner-nav-next {
+  right: 10px;
+  left: auto;
+}
+.projects-page .project-banner-nav:hover,
+.projects-page .project-banner-nav:focus-visible {
+  background: rgba(5, 8, 22, .72);
+  translate: 0 -50%;
+  scale: 1;
+}
+.projects-page .project-banner-dots {
+  right: 50%;
+  bottom: 8px;
+  translate: 50% 0;
+  transition: none;
+}
+.projects-page .project-banner-count {
+  top: 8px;
+  right: 10px;
+  left: auto;
+}
+.projects-page .project-banner-video-label {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .projects-page .project-art {
+    height: clamp(230px, 68vw, 360px);
+    min-height: 0;
+    padding: 8px;
+  }
+  .projects-page .project-banner-media {
+    --carousel-side: 34px;
+    --carousel-top: 26px;
+    --carousel-bottom: 32px;
+  }
+  .projects-page .project-banner-nav {
+    left: 6px;
+  }
+  .projects-page .project-banner-nav-next {
+    right: 6px;
+    left: auto;
+  }
+  .projects-page .project-banner-count {
+    top: 6px;
+    right: 6px;
+  }
+  .projects-page .project-banner-dots {
+    bottom: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projects-page .project-banner-track {
+    transition: none;
+  }
+}
+
+/* Project banners are compact galleries: the work stays in focus while the
+   carousel controls remain independent from the project destination link. */
+.project-art .project-screen {
+  top: 50%;
+  right: 1.5%;
+  left: auto;
+  width: 66%;
+  height: 332px;
+  margin-top: -166px;
+  display: block;
+  overflow: visible;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  background: #080b18;
+  box-shadow: 0 22px 58px rgba(0, 0, 0, 0.42), 0 0 0 7px rgba(13, 26, 75, 0.26);
+  transform: perspective(900px) rotateY(-5deg) rotateZ(-2.5deg);
+  transition: translate .6s var(--ease), scale .6s var(--ease);
+}
+.project-art:hover .project-screen {
+  translate: none;
+  scale: 1;
+}
+.project-art .project-screen:hover,
+.project-art .project-screen:focus-within {
+  translate: 0 -8px;
+  scale: 1.025;
+}
+.project-readify .project-screen {
+  right: 1%;
+  width: 62%;
+  transform: perspective(900px) rotateY(5deg) rotateZ(3.5deg);
+}
+.project-refrain .project-screen {
+  width: 68%;
+  transform: perspective(900px) rotateY(-4deg) rotateZ(-2.5deg);
+}
+.project-tidebreak .project-screen {
+  right: 1%;
+  width: 65%;
+  transform: perspective(900px) rotateY(4deg) rotateZ(3deg);
+}
+.project-banner-media {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  background: #080b18;
+}
+.project-banner-media::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(transparent 0 93%, rgba(116, 138, 255, 0.24) 93% 93.5%, transparent 93.5% 100%);
+  mix-blend-mode: screen;
+  opacity: .5;
+}
+.project-banner-slide-link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  overflow: hidden;
+  color: inherit;
+}
+.project-banner-slide-link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -4px;
+}
+.project-banner-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform .52s cubic-bezier(.2, .78, .2, 1);
+  will-change: transform;
+}
+.project-banner-slide {
+  position: relative;
+  flex: 0 0 100%;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #080b18;
+}
+.project-banner-slide-media {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  object-fit: cover;
+  object-position: center;
+  background: #080b18;
+}
+.project-readify .project-banner-slide-media {
+  object-fit: contain;
+  padding: 9px 28px;
+  background: #e6eeea;
+}
+.project-refrain .project-banner-slide-media {
+  object-fit: contain;
+  padding: 13px 10px;
+  background: #0d1730;
+}
+.project-banner-slide .missing-media {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  padding: 24px;
+  color: #fff;
+  text-align: center;
+}
+.project-banner-video-label,
+.project-banner-count {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+  color: #fff;
+  font-size: 8px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.project-banner-video-label {
+  right: 12px;
+  bottom: 12px;
+  padding: 5px 7px;
+  border: 1px solid rgba(255, 255, 255, .4);
+  background: rgba(5, 8, 22, .72);
+}
+.project-banner-count {
+  top: 12px;
+  left: 12px;
+  padding: 5px 7px;
+  background: rgba(5, 8, 22, .68);
+}
+.project-banner-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 6;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, .58);
+  border-radius: 50%;
+  background: rgba(5, 8, 22, .72);
+  color: #fff;
+  font: 18px/1 var(--mono);
+  cursor: pointer;
+  opacity: 0;
+  translate: 0 -50%;
+  transition: opacity .2s ease, background .2s ease, scale .2s ease;
+}
+.project-banner-nav:hover,
+.project-banner-nav:focus-visible {
+  background: var(--blue);
+  scale: 1.08;
+}
+.project-banner-nav:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+.project-banner-nav-prev { left: 12px; }
+.project-banner-nav-next { right: 12px; }
+.project-banner-media:hover .project-banner-nav,
+.project-banner-media:focus-within .project-banner-nav,
+.project-banner-media.is-in-view .project-banner-nav {
+  opacity: 1;
+}
+.project-banner-dots {
+  position: absolute;
+  right: 50%;
+  bottom: 12px;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 8px;
+  border: 1px solid rgba(255, 255, 255, .24);
+  background: rgba(5, 8, 22, .68);
+  translate: 50% 0;
+}
+.project-banner-dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, .72);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: width .2s ease, border-color .2s ease, background .2s ease;
+}
+.project-banner-dot.is-active {
+  width: 19px;
+  border-color: var(--blue);
+  border-radius: 0;
+  background: var(--blue);
+}
+.project-banner-dot:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+.project-banner-media:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+@media (max-width: 760px) {
+  .project-art {
+    height: clamp(230px, 68vw, 360px);
+    min-height: 0;
+    padding: 8px;
+    gap: 0;
+    align-items: stretch;
+  }
+  .project-art .project-art-copy,
+  .project-readify .project-art-copy {
+    display: none;
+  }
+  .project-art .project-screen,
+  .project-readify .project-screen,
+  .project-refrain .project-screen,
+  .project-tidebreak .project-screen {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 100%;
+    margin-top: 0;
+    flex: 1 1 auto;
+    transform: none;
+  }
+  .project-art:hover .project-screen {
+    translate: none;
+    scale: 1;
+  }
+  .project-art .project-screen:hover,
+  .project-art .project-screen:focus-within {
+    translate: 0 -4px;
+    scale: 1.01;
+  }
+  .project-readify .project-banner-slide-media {
+    padding: 6px 14px;
+  }
+  .project-refrain .project-banner-slide-media {
+    padding: 6px;
+  }
+  .project-banner-nav {
+    opacity: 1;
+  }
+  .project-banner-nav-prev { left: 8px; }
+  .project-banner-nav-next { right: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-banner-track,
+  .project-banner-nav,
+  .project-banner-dot,
+  .project-art .project-screen {
+    transition: none;
+  }
+}
+
+/* The project banner itself is the gallery — no separate slogan or mockup frame. */
+.project-art {
+  height: 400px;
+  min-height: 400px;
+  padding: 0;
+  display: block;
+  overflow: hidden;
+  background: #080b18;
+}
+.project-art::before,
+.project-art::after {
+  display: none;
+}
+.project-art .project-screen,
+.project-readify .project-screen,
+.project-refrain .project-screen,
+.project-tidebreak .project-screen {
+  position: relative;
+  inset: auto;
+  top: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  display: block;
+  overflow: hidden;
+  border: 0;
+  background: #080b18;
+  box-shadow: none;
+  transform: none;
+  translate: none;
+  scale: 1;
+  transition: none;
+}
+.project-art:hover .project-screen,
+.project-art .project-screen:hover,
+.project-art .project-screen:focus-within {
+  translate: none;
+  scale: 1;
+}
+.project-screen .project-banner-slide-media {
+  position: static;
+  inset: auto;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  object-fit: cover;
+  transform: none;
+}
+
+@media (max-width: 760px) {
+  .project-art {
+    height: clamp(230px, 68vw, 360px);
+    min-height: 0;
+  }
+}
+
+/* Keep the banner as a quiet padded shell around the centered carousel. */
+.project-art {
+  height: 400px;
+  min-height: 400px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid rgba(117, 132, 179, .34);
+  background: #080b18;
+}
+.project-art .project-screen,
+.project-readify .project-screen,
+.project-refrain .project-screen,
+.project-tidebreak .project-screen {
+  width: 100%;
+  height: 100%;
+  transform: none;
+  translate: none;
+  scale: 1;
+  transition: none;
+}
+.project-art:hover .project-screen,
+.project-art .project-screen:hover,
+.project-art .project-screen:focus-within {
+  transform: none;
+  translate: none;
+  scale: 1;
+}
+.project-banner-media {
+  --carousel-side: clamp(40px, 5vw, 58px);
+  --carousel-top: 30px;
+  --carousel-bottom: 34px;
+  box-sizing: border-box;
+  padding: 0;
+  background: #080b18;
+}
+.project-banner-media::before {
+  display: none;
+}
+.project-banner-media.has-controls {
+  padding: var(--carousel-top) var(--carousel-side) var(--carousel-bottom);
+}
+.project-banner-slide-link {
+  inset: 0;
+}
+.project-banner-media.has-controls .project-banner-slide-link {
+  inset: var(--carousel-top) var(--carousel-side) var(--carousel-bottom);
+}
+.project-screen .project-banner-slide-media {
+  position: static;
+  inset: auto;
+  width: 100%;
+  height: 100%;
+  object-position: center;
+  transform: none;
+  transition: none;
+}
+.project-banner-nav {
+  left: 10px;
+  right: auto;
+  opacity: 1;
+  scale: 1;
+  transition: none;
+}
+.project-banner-nav-next {
+  right: 10px;
+  left: auto;
+}
+.project-banner-nav:hover,
+.project-banner-nav:focus-visible {
+  background: rgba(5, 8, 22, .72);
+  scale: 1;
+}
+.project-banner-dots {
+  bottom: 8px;
+  transition: none;
+}
+.project-banner-count {
+  top: 8px;
+  right: 10px;
+  left: auto;
+}
+.project-banner-video-label {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .project-art {
+    height: clamp(230px, 68vw, 360px);
+    min-height: 0;
+    padding: 8px;
+  }
+  .project-banner-media {
+    --carousel-side: 34px;
+    --carousel-top: 26px;
+    --carousel-bottom: 32px;
+  }
+  .project-banner-nav {
+    left: 6px;
+  }
+  .project-banner-nav-next {
+    right: 6px;
+    left: auto;
+  }
+  .project-banner-count {
+    top: 6px;
+    right: 6px;
+  }
+  .project-banner-dots {
+    bottom: 6px;
+  }
+}
+
 /* Let project banners showcase the actual work instead of decorative emblems. */
 .project-art {
   min-height: 400px;
@@ -6529,5 +7136,286 @@ summary {
   .hobby-collection > .hobby-panel,
   .hobby-collection > .hobby-panel.is-open {
     transition: none;
+  }
+}
+
+/* Final project carousel geometry: the frame supplies color, the viewport
+   supplies centered media, and controls stay in the frame gutters. */
+.projects-page .project-art {
+  height: 400px;
+  min-height: 400px;
+  padding: 10px;
+  box-sizing: border-box;
+  display: block;
+  overflow: hidden;
+  border: 1px solid rgba(117, 132, 179, .34);
+  background: #182fe8;
+  transform: none;
+}
+.projects-page .project-readify .project-art { background: #e4e9e6; }
+.projects-page .project-refrain .project-art { background: #b7c7f4; }
+.projects-page .project-tidebreak .project-art { background: #143a54; }
+.projects-page .project-art::before,
+.projects-page .project-art::after { display: none; }
+.projects-page .project-art > .project-screen {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  transform: none !important;
+  rotate: none;
+  translate: none !important;
+  scale: 1 !important;
+  transition: none !important;
+}
+.projects-page .project-art:hover > .project-screen,
+.projects-page .project-art > .project-screen:hover,
+.projects-page .project-art > .project-screen:focus-within {
+  transform: none !important;
+  translate: none !important;
+  scale: 1 !important;
+}
+.projects-page .project-banner-media {
+  --carousel-side: clamp(40px, 5vw, 58px);
+  --carousel-top: 30px;
+  --carousel-bottom: 34px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: visible;
+  padding: 0;
+  background: transparent;
+  isolation: isolate;
+}
+.projects-page .project-banner-media::before { display: none; }
+.projects-page .project-banner-viewport {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: transparent;
+}
+.projects-page .project-banner-media.has-controls .project-banner-viewport {
+  inset: var(--carousel-top) var(--carousel-side) var(--carousel-bottom);
+}
+.projects-page .project-banner-slide-link {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  color: inherit;
+}
+.projects-page .project-banner-track {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  transition: transform .52s cubic-bezier(.2, .78, .2, 1);
+}
+.projects-page .project-banner-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: transparent;
+}
+.projects-page .project-banner-slide-media {
+  position: static;
+  inset: auto;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  margin: auto;
+  padding: 0;
+  object-fit: contain !important;
+  object-position: center center;
+  background: transparent;
+  transform: none !important;
+  transition: none !important;
+}
+.projects-page .project-banner-nav {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  right: auto;
+  z-index: 6;
+  opacity: 1;
+  translate: 0 -50%;
+  scale: 1;
+  transition: none;
+}
+.projects-page .project-banner-nav-next { right: 10px; left: auto; }
+.projects-page .project-banner-nav:hover,
+.projects-page .project-banner-nav:focus-visible {
+  background: rgba(5, 8, 22, .72);
+  translate: 0 -50%;
+  scale: 1;
+}
+.projects-page .project-banner-dots {
+  right: 50%;
+  bottom: 8px;
+  translate: 50% 0;
+  transition: none;
+}
+.projects-page .project-banner-count {
+  top: 8px;
+  right: 10px;
+  left: auto;
+}
+.projects-page .project-banner-video-label { display: none; }
+@media (max-width: 760px) {
+  .projects-page .project-art {
+    height: clamp(230px, 68vw, 360px);
+    min-height: 0;
+    padding: 8px;
+  }
+  .projects-page .project-banner-media {
+    --carousel-side: 34px;
+    --carousel-top: 26px;
+    --carousel-bottom: 32px;
+  }
+  .projects-page .project-banner-nav { left: 6px; }
+  .projects-page .project-banner-nav-next { right: 6px; left: auto; }
+  .projects-page .project-banner-count { top: 6px; right: 6px; }
+  .projects-page .project-banner-dots { bottom: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .projects-page .project-banner-track { transition: none; }
+}
+
+/* Preserve each asset's aspect ratio while maximizing its footprint inside
+   the centered viewport. */
+.projects-page .project-banner-slide-media {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain !important;
+  object-position: center;
+}
+.projects-page .project-banner-media {
+  --carousel-side: 34px;
+  --carousel-top: 28px;
+  --carousel-bottom: 32px;
+}
+
+/* The media ratio owns the banner geometry. This keeps every gallery slide
+   as large as possible without cropping or stretching it. */
+.projects-page .project-art {
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: var(--project-banner-ratio, 16 / 9);
+  box-sizing: border-box;
+}
+.projects-page .project-art > .project-carousel-shell {
+  position: relative !important;
+  inset: auto !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  margin: 0;
+  overflow: visible !important;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  transform: none !important;
+  translate: none !important;
+  scale: 1 !important;
+}
+.projects-page .project-carousel-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: visible;
+  padding: 0;
+  background: transparent;
+  isolation: isolate;
+}
+.projects-page .project-carousel-frame .project-banner-viewport {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: transparent;
+}
+.projects-page .project-carousel-frame.has-controls .project-banner-viewport {
+  inset: var(--carousel-top) var(--carousel-side) var(--carousel-bottom);
+}
+.projects-page .project-carousel-frame .project-banner-slide-link,
+.projects-page .project-carousel-frame .project-banner-track,
+.projects-page .project-carousel-frame .project-banner-slide {
+  width: 100%;
+  height: 100%;
+}
+.projects-page .project-carousel-frame .project-banner-slide-link {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+}
+.projects-page .project-carousel-frame .project-banner-track {
+  display: flex;
+  transition: transform .52s cubic-bezier(.2, .78, .2, 1);
+}
+.projects-page .project-carousel-frame .project-banner-slide {
+  flex: 0 0 100%;
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: transparent;
+}
+.projects-page .project-carousel-frame .project-banner-slide-media {
+  position: static;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
+  padding: 0;
+  object-fit: contain !important;
+  object-position: center;
+  background: transparent;
+  transform: none !important;
+  transition: none !important;
+}
+.projects-page .project-banner-collage {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(8px, 1.2vw, 16px);
+  align-items: stretch;
+  justify-items: stretch;
+  background: transparent;
+}
+.projects-page .project-banner-collage-image {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  object-fit: contain !important;
+  object-position: center;
+  background: transparent;
+}
+@media (max-width: 760px) {
+  .projects-page .project-art {
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: var(--project-banner-ratio, 16 / 9);
+    padding: 8px;
+  }
+  .projects-page .project-carousel-frame {
+    --carousel-side: 34px;
+    --carousel-top: 26px;
+    --carousel-bottom: 32px;
   }
 }

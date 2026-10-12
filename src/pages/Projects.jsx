@@ -1,113 +1,19 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { ChevronsRight } from 'lucide-react'
+import { ArrowUpRight, ChevronsRight, Code2, Globe, Puzzle } from 'lucide-react'
 import { projects } from '../data/portfolio'
 import { projectEditorial } from '../data/editorial'
-import { ExternalLink, PageIntro } from '../components/Editorial'
+import { PageIntro } from '../components/Editorial'
 import PageEmblem from '../components/PageEmblem'
+import ProjectGallery from '../components/ProjectGallery'
 import Silhouette from '../components/Silhouette'
 
-function ProjectImage({ src, alt, ...props }) {
-  const [failed, setFailed] = useState(false)
-  return failed ? (
-    <div className="missing-media">
-      screenshot unavailable · explore the source below.
-    </div>
-  ) : (
-    <img
-      src={src}
-      alt={alt}
-      loading="lazy"
-      onError={() => setFailed(true)}
-      {...props}
-    />
-  )
-}
-
-function ProjectBannerMedia({ media, title }) {
-  const mediaRef = useRef(null)
-  const videoRef = useRef(null)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [isInView, setIsInView] = useState(false)
-
-  const playPreview = useCallback(() => {
-    if (!videoRef.current) return
-    videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {})
-  }, [])
-
-  const stopPreview = useCallback(() => {
-    if (!videoRef.current) return
-    videoRef.current.pause()
-    videoRef.current.currentTime = 0
-    setIsPlaying(false)
-  }, [])
-
-  useEffect(() => {
-    const element = mediaRef.current
-    const touchDevice = window.matchMedia('(hover: none), (pointer: coarse)')
-    if (!element || !touchDevice.matches || !('IntersectionObserver' in window)) return undefined
-
-    const observer = new IntersectionObserver(([entry]) => {
-      setIsInView(entry.isIntersecting)
-    }, { threshold: 0.45 })
-    observer.observe(element)
-    return () => observer.disconnect()
-  }, [])
-
-  useEffect(() => {
-    if (isInView) playPreview()
-    else stopPreview()
-  }, [isInView, playPreview, stopPreview])
-
-  if (media.variant === 'tidebreak') {
-    return (
-      <div
-        ref={mediaRef}
-        className={`project-banner-media project-banner-media-tidebreak${isInView ? ' is-in-view' : ''}`}
-        role="img"
-        aria-label={media.alt}
-      >
-        <figure className="project-banner-shot project-banner-shot-gameplay">
-          <ProjectImage src={media.gameplay} alt="" loading="lazy" />
-          <figcaption className="mono">gameplay</figcaption>
-        </figure>
-        <figure className="project-banner-shot project-banner-shot-editor">
-          <ProjectImage src={media.editor} alt="" loading="lazy" />
-          <figcaption className="mono">level editor</figcaption>
-        </figure>
-      </div>
-    )
-  }
-
+function ProjectLink({ href, icon: Icon, children }) {
   return (
-    <div
-      ref={mediaRef}
-      className={`project-banner-media${isPlaying ? ' is-playing' : ''}${isInView ? ' is-in-view' : ''}`}
-      onMouseEnter={playPreview}
-      onMouseLeave={stopPreview}
-    >
-      <ProjectImage
-        className="project-banner-image"
-        src={media.image}
-        alt={media.alt}
-        width={media.width}
-        height={media.height}
-        loading="lazy"
-      />
-      {media.video && (
-        <video
-          ref={videoRef}
-          className="project-banner-video"
-          src={media.video}
-          poster={media.image}
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-label={`${title} preview video`}
-        />
-      )}
-      {media.video && <span className="project-banner-video-label mono">live preview</span>}
-    </div>
+    <a className="project-destination" href={href} target="_blank" rel="noreferrer">
+      <Icon size={17} strokeWidth={1.6} aria-hidden="true" />
+      <span>{children}</span>
+      <ArrowUpRight size={13} aria-hidden="true" />
+      <span className="sr-only"> (opens in a new tab)</span>
+    </a>
   )
 }
 
@@ -122,44 +28,14 @@ export default function Projects({ headingRef }) {
       </PageIntro>
       <div className="project-spreads">
         {projects.map((item) => {
-          const editorial = projectEditorial[item.id] || {
-            category: 'software project',
-            line: item.title,
-            detail: item.description,
-          }
+          const editorial = projectEditorial[item.id] || { category: 'software project' }
           return (
-            <article
-              id={`project-${item.id}`}
-              className={`project-spread project-${item.id}`}
-              key={item.id}
-            >
+            <article id={`project-${item.id}`} className={`project-spread project-${item.id}`} key={item.id}>
               <div className="project-top mono">
-                <span>
-                  {editorial.category.replace(/^\d+ \/ /, '').toLowerCase()}
-                </span>
+                <span>{editorial.category.replace(/^\d+ \/ /, '').toLowerCase()}</span>
                 <span>{item.dates}</span>
               </div>
-              <div className="project-art">
-                <div className="project-art-copy">
-                  <p>
-                    {editorial.line.split('\n').map((line, i) => (
-                      <span key={line}>
-                        {i ? <em>{line}</em> : line}
-                        <br />
-                      </span>
-                    ))}
-                  </p>
-                </div>
-                <a
-                  className="project-screen"
-                  href={item.live || item.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`Explore ${item.title} (opens in a new tab)`}
-                >
-                  <ProjectBannerMedia media={item.media} title={item.title} />
-                </a>
-              </div>
+              <ProjectGallery media={item.media} title={item.title} />
               <div className="project-info">
                 <div className="project-overview">
                   <h2 tabIndex={-1}>{item.title}</h2>
@@ -167,19 +43,15 @@ export default function Projects({ headingRef }) {
                 </div>
                 <div>
                   <ul className="tags" aria-label="Technologies">
-                    {item.tech.map((tech) => (
-                      <li key={tech}>{tech}</li>
-                    ))}
+                    {item.tech.map((tech) => <li key={tech}>{tech}</li>)}
                   </ul>
                   <div className="project-links">
-                    <ExternalLink href={item.github}>source code</ExternalLink>
-                    {item.live && (
-                      <ExternalLink href={item.live}>live project</ExternalLink>
-                    )}
+                    <ProjectLink href={item.github} icon={Code2}>source code</ProjectLink>
+                    {item.live && <ProjectLink href={item.live} icon={Globe}>live project</ProjectLink>}
                     {item.storeLinks?.map((link) => (
-                      <ExternalLink href={link.href} key={link.label}>
+                      <ProjectLink href={link.href} icon={Puzzle} key={link.label}>
                         find on {link.label.toLowerCase()}
-                      </ExternalLink>
+                      </ProjectLink>
                     ))}
                   </div>
                 </div>
@@ -189,9 +61,7 @@ export default function Projects({ headingRef }) {
         })}
       </div>
       <a className="next-page" href="#contact">
-        <span>
-          let’s talk about it <ChevronsRight className="next-page-chevron" aria-hidden="true" size={22} strokeWidth={1.8} />
-        </span>
+        <span>let’s talk about it <ChevronsRight className="next-page-chevron" aria-hidden="true" size={22} strokeWidth={1.8} /></span>
         <Silhouette kind="letter" className="next-page-silhouette" />
       </a>
     </div>

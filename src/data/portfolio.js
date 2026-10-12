@@ -79,12 +79,38 @@ export const projects = [
       { label: 'Firefox', href: 'https://addons.mozilla.org/en-CA/firefox/addon/readify-web/' },
     ],
     media: {
-      image: '/projects/readify/cover.png',
+      image: '/projects/readify/wiki-ask-ai.png',
       width: 1093,
       height: 1168,
-      video: '/projects/readify/preview.webm',
+      video: '/projects/readify/showcase.mp4',
       alt: 'Readify browser extension answering a question about a webpage',
       position: 'center top',
+      gallery: [
+        {
+          type: 'video',
+          src: '/projects/readify/showcase.mp4',
+          poster: '/projects/readify/video-poster.jpg',
+          alt: 'Readify browser extension demo on Wikipedia',
+        },
+        {
+          type: 'image',
+          src: '/projects/readify/wiki-base.png',
+          caption: 'original page · before Readify',
+          alt: 'Readify on a Wikipedia article before accessibility settings are applied',
+        },
+        {
+          type: 'image',
+          src: '/projects/readify/wiki-ask-ai.png',
+          caption: 'ask AI about the page',
+          alt: 'Readify asking AI to explain a Wikipedia article',
+        },
+        {
+          type: 'image',
+          src: '/projects/readify/wiki-typography.png',
+          caption: 'fonts, spacing & readability',
+          alt: 'Readify typography controls applied to a Wikipedia article',
+        },
+      ],
     },
   },
   {
@@ -101,6 +127,63 @@ export const projects = [
       height: 1457,
       alt: 'Friction Paths view showing site routes, assigned agents, and scan results',
       position: 'center',
+      video: '/projects/friction/Friction - Demo for HTN 2026.webm',
+      gallery: [
+        {
+          type: 'video',
+          src: '/projects/friction/Friction - Demo for HTN 2026.webm',
+          poster: '/projects/friction/video-poster.jpg',
+          alt: 'Friction demo showing an AI website quality scan',
+        },
+        {
+          type: 'image',
+          src: '/projects/friction/cover.png',
+          caption: 'live routes & agent activity',
+          alt: 'Friction Paths view showing site routes, assigned agents, and scan results',
+        },
+        {
+          type: 'image',
+          src: '/projects/friction/friction1.png',
+          caption: 'start a scan & connect a repository',
+          alt: 'Friction project scan workspace',
+        },
+        {
+          type: 'image',
+          src: '/projects/friction/friction2.png',
+          caption: 'task results & findings',
+          alt: 'Friction task graph showing completed and failed tasks with issue severity',
+        },
+        {
+          type: 'image',
+          src: '/projects/friction/friction3.png',
+          caption: 'site paths & assigned agents',
+          alt: 'Friction project findings view',
+        },
+        {
+          type: 'image',
+          src: '/projects/friction/friction4.png',
+          caption: 'page annotations & UX issues',
+          alt: 'Friction project issue review view',
+        },
+        {
+          type: 'image',
+          src: '/projects/friction/friction5.png',
+          caption: 'scan results by severity',
+          alt: 'Friction scan results with task counts and issues grouped by severity',
+        },
+        {
+          type: 'image',
+          src: '/projects/friction/friction-howitworks.png',
+          caption: 'from website scan to fixes',
+          alt: 'Diagram showing how Friction turns website scans into fixes',
+        },
+        {
+          type: 'image',
+          src: '/projects/friction/friction-architecture.png',
+          caption: 'system architecture',
+          alt: 'Friction system architecture diagram',
+        },
+      ],
     },
   },
   {
@@ -112,11 +195,40 @@ export const projects = [
     github: 'https://github.com/CryoJS/refrain',
     live: 'https://refrain-timer.vercel.app/',
     media: {
-      image: '/projects/refrain/cover.png',
+      image: '/projects/refrain/refrain-timer.png',
       width: 1626,
       height: 714,
       alt: 'Refrain focus timer beside a task list',
       position: 'center',
+      gallery: [
+        {
+          type: 'image',
+          src: '/projects/refrain/refrain-timer.png',
+          caption: 'focus timer & to-do list',
+          alt: 'Refrain focus timer beside a task list',
+        },
+        {
+          type: 'image',
+          src: '/projects/refrain/refrain-stats.png',
+          caption: 'study streaks & activity',
+          alt: 'Refrain study statistics dashboard',
+        },
+        {
+          type: 'image',
+          src: '/projects/refrain/refrain-notes.png',
+          caption: 'notes with Markdown preview',
+          alt: 'Refrain notes workspace with markdown preview',
+        },
+        {
+          type: 'collage',
+          caption: 'timer plans & appearance settings',
+          alt: 'Refrain timer plans and appearance settings',
+          images: [
+            { src: '/projects/refrain/refrain-settings1.png' },
+            { src: '/projects/refrain/refrain-settings2.png' },
+          ],
+        },
+      ],
     },
   },
   {
@@ -128,11 +240,37 @@ export const projects = [
     github: 'https://github.com/CryoJS/tidebreak',
     media: {
       variant: 'tidebreak',
-      gameplay: '/projects/tidebreak/gameplay.png',
+      gameplay: '/projects/tidebreak/tidebreak-gameplay-sliding.png',
       width: 1780,
       height: 1017,
-      editor: '/projects/tidebreak/editor.png',
+      editor: '/projects/tidebreak/tidebreak-mapeditor.png',
       alt: 'Tidebreak gameplay and in-game level editor',
+      gallery: [
+        {
+          type: 'image',
+          src: '/projects/tidebreak/tidebreak-gameplay-sliding.png',
+          caption: 'sliding through tranquil forest',
+          alt: 'Tidebreak platformer gameplay showing a slide through a level',
+        },
+        {
+          type: 'image',
+          src: '/projects/tidebreak/tidebreak-walljump.png',
+          caption: 'wall-jump gameplay',
+          alt: 'Tidebreak platformer wall-jump gameplay',
+        },
+        {
+          type: 'image',
+          src: '/projects/tidebreak/tidebreak-mapselection.png',
+          caption: 'choose a level',
+          alt: 'Tidebreak level selection screen',
+        },
+        {
+          type: 'image',
+          src: '/projects/tidebreak/tidebreak-mapeditor.png',
+          caption: 'build a level in the map editor',
+          alt: 'Tidebreak in-game level editor',
+        },
+      ],
     },
   },
 ]

@@ -10,7 +10,7 @@ function ProjectMedia({ project }) {
   const media = project.media
   if (media.variant === 'tidebreak') return <div className="project-media"><img src={editor ? media.editor : media.gameplay} alt={editor ? 'Tidebreak in-game level editor' : 'Tidebreak platformer gameplay'} loading="lazy"/><button className="media-button" onClick={() => setEditor(!editor)}>{editor ? 'show gameplay' : 'show level editor'} ↔</button></div>
   return <div className="project-media">
-    {playing ? <video controls autoPlay muted playsInline preload="metadata" poster={media.image}><source src={media.video} type="video/webm"/><a href={media.video}>watch the demo</a></video> : <img src={media.image} alt={media.alt} loading="lazy" style={{ objectPosition: media.position }}/>} 
+    {playing ? <video controls autoPlay muted playsInline preload="metadata" poster={media.image}><source src={media.video}/><a href={media.video}>watch the demo</a></video> : <img src={media.image} alt={media.alt} loading="lazy" style={{ objectPosition: media.position }}/>}
     {media.video && <button className="media-button demo-toggle" onClick={() => setPlaying(!playing)}>{playing ? '× close demo' : '▷ play demo'}</button>}
   </div>
 }

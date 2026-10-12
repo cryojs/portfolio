@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react'
-import { Pause, Play, RotateCcw, Volume2 } from 'lucide-react'
+import { Pause, Play, RotateCcw, Volume2, VolumeX } from 'lucide-react'
+import './MusicPreview.css'
 
 const TRACKS = [
   { title: 'make you my what', src: '/audio/Make you my what.opus' },
@@ -12,6 +13,9 @@ const VOLUME_CURVE = 1.7
 
 function MusicTrack({ track }) {
   const audioRef = useRef(null)
+  const volumeControlRef = useRef(null)
+  const volumeToggleRef = useRef(null)
+  const previousVolume = useRef(DEFAULT_VOLUME)
   const sliderId = useId()
   const [playing, setPlaying] = useState(false)
   const [progress, setProgress] = useState(0)
@@ -22,6 +26,33 @@ function MusicTrack({ track }) {
   useEffect(() => {
     if (audioRef.current) audioRef.current.volume = MAX_VOLUME * volume ** VOLUME_CURVE
   }, [volume])
+
+  useEffect(() => {
+    if (!volumeOpen) return
+    function dismiss(event) {
+      if (!volumeControlRef.current?.contains(event.target)) setVolumeOpen(false)
+    }
+    function escape(event) {
+      if (event.key !== 'Escape') return
+      setVolumeOpen(false)
+      volumeToggleRef.current?.focus()
+    }
+    document.addEventListener('pointerdown', dismiss)
+    document.addEventListener('keydown', escape)
+    return () => {
+      document.removeEventListener('pointerdown', dismiss)
+      document.removeEventListener('keydown', escape)
+    }
+  }, [volumeOpen])
+
+  function toggleMute() {
+    if (volume > 0) {
+      previousVolume.current = volume
+      setVolume(0)
+    } else {
+      setVolume(previousVolume.current)
+    }
+  }
 
   function play() {
     const audio = audioRef.current
@@ -59,16 +90,26 @@ function MusicTrack({ track }) {
       </span>
       <span className="music-track-title">{track.title}</span>
       <span className="music-card-right-controls">
-        <span className="music-volume-control">
-          <button type="button" className="music-volume-toggle" aria-label={`volume ${track.title}`}
+        <span className="music-volume-control" ref={volumeControlRef}
+          onBlur={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) setVolumeOpen(false)
+          }}>
+          <button ref={volumeToggleRef} type="button" className="music-volume-toggle" aria-label={`volume ${track.title}`}
             aria-expanded={volumeOpen} aria-controls={sliderId} onClick={() => setVolumeOpen((open) => !open)}>
-            <Volume2 aria-hidden="true" size={13} strokeWidth={2.2} />
+            {volume === 0 ? <VolumeX aria-hidden="true" size={13} strokeWidth={2.2} /> : <Volume2 aria-hidden="true" size={13} strokeWidth={2.2} />}
           </button>
           {volumeOpen && (
-            <span className="music-volume-popover">
-              <input id={sliderId} className="music-volume-slider" type="range"
-                min="0" max="1" step="0.01" value={volume} aria-label={`volume level for ${track.title}`}
-                onChange={(event) => setVolume(Number(event.target.value))} />
+            <span id={sliderId} className="music-volume-popover" role="group" aria-label={`${track.title} volume controls`}>
+              <span className="music-volume-heading"><span>volume</span><output>{Math.round(volume * 100)}%</output></span>
+              <span className="music-volume-row">
+                <button type="button" className="music-mute" aria-label={`${volume === 0 ? 'unmute' : 'mute'} ${track.title}`} onClick={toggleMute}>
+                  {volume === 0 ? <VolumeX size={16} aria-hidden="true" /> : <Volume2 size={16} aria-hidden="true" />}
+                </button>
+                <input className="music-volume-slider" type="range"
+                  min="0" max="1" step="0.01" value={volume} aria-label={`volume level for ${track.title}`}
+                  aria-valuetext={`${Math.round(volume * 100)}%`} style={{ '--volume-level': `${volume * 100}%` }}
+                  onChange={(event) => setVolume(Number(event.target.value))} />
+              </span>
             </span>
           )}
         </span>

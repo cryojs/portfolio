@@ -3,6 +3,7 @@ import { experience } from '../data/portfolio'
 import { PageIntro } from '../components/Editorial'
 import PageEmblem from '../components/PageEmblem'
 import Silhouette from '../components/Silhouette'
+import './Work.css'
 
 export default function Work({ headingRef }) {
   return (
@@ -22,7 +23,7 @@ export default function Work({ headingRef }) {
             <div className="experience-header">
               <div className="experience-identity">
                 <img src={item.logo} alt="" loading="lazy" />
-                <h2><a href={item.website} target="_blank" rel="noreferrer">{item.company}<span className="company-link-arrow" aria-hidden="true"> ↗</span><span className="sr-only"> (opens in a new tab)</span></a></h2>
+                <h2><a href={item.website} target="_blank" rel="noreferrer">{item.company}<span className="company-link-arrow" aria-hidden="true">{'\u00a0↗'}</span><span className="sr-only"> (opens in a new tab)</span></a></h2>
               </div>
               <div className="experience-details">
                 <p className="experience-role">{item.role}</p>
