@@ -79,9 +79,9 @@ export const aboutCopy = {
   learning:
     'Competitive programming gives me a different kind of challenge: finding the structure in a difficult problem. Building software asks me to turn that understanding into something someone can actually use.',
   next: [
-    'keep building things that make the web feel more comfortable.',
-    'keep learning by getting stuck on harder problems.',
-    'make more room for travel, photographs, and new places.',
+    'exploring backend development and ML',
+    'tackling harder algorithmic coding problems',
+    'making room for fun and the whimsical!',
   ],
   // Keep these easy to edit as more personal details become part of the site.
   outside: ['travel / photography', 'competitive programming', 'good questions'],
@@ -90,14 +90,14 @@ export const aboutCopy = {
 // These captions describe the existing project functionality, not unverified individual contributions.
 export const projectEditorial = {
   friction: {
-    category: '01 / Developer tooling',
+    category: '02 / Developer tooling',
     line: 'A second look.\nA better experience.',
     detail:
       'A visual control room for the QA loop: explore a live website, identify friction, verify a fix, and create a pull request. The interface brings routes and agent activity into one place.',
     contribution: '',
   },
   readify: {
-    category: '02 / Accessibility',
+    category: '01 / Accessibility',
     line: 'The web,\non your terms.',
     detail:
       'Readify brings reading controls and contextual AI assistance into the browser. Personalize typography, ask questions about the page, or get an explanation without breaking the flow of reading.',

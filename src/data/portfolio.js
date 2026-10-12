@@ -67,22 +67,6 @@ export const experience = [
 
 export const projects = [
   {
-    id: 'friction',
-    title: 'Friction',
-    dates: 'Sept. 2026',
-    description: 'An AI-powered QA control room that tests live websites, surfaces UX friction, verifies fixes, and creates pull requests.',
-    tech: ['React', 'TypeScript', 'Browserbase', 'OpenAI API', 'React Flow'],
-    github: 'https://github.com/CryoJS/friction',
-    live: 'https://friction-d95.pages.dev/',
-    media: {
-      image: '/projects/friction/cover.png',
-      width: 2190,
-      height: 1457,
-      alt: 'Friction Paths view showing site routes, assigned agents, and scan results',
-      position: 'center',
-    },
-  },
-  {
     id: 'readify',
     title: 'Readify',
     dates: 'Sept. 2026',
@@ -101,6 +85,22 @@ export const projects = [
       video: '/projects/readify/preview.webm',
       alt: 'Readify browser extension answering a question about a webpage',
       position: 'center top',
+    },
+  },
+  {
+    id: 'friction',
+    title: 'Friction',
+    dates: 'Sept. 2026',
+    description: 'An AI-powered QA control room that tests live websites, surfaces UX friction, verifies fixes, and creates pull requests.',
+    tech: ['React', 'TypeScript', 'Browserbase', 'OpenAI API', 'React Flow'],
+    github: 'https://github.com/CryoJS/friction',
+    live: 'https://friction-d95.pages.dev/',
+    media: {
+      image: '/projects/friction/cover.png',
+      width: 2190,
+      height: 1457,
+      alt: 'Friction Paths view showing site routes, assigned agents, and scan results',
+      position: 'center',
     },
   },
   {

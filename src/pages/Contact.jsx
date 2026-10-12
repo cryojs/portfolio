@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Copy, Check } from 'lucide-react'
 import { profile } from '../data/portfolio'
 import { BrandMark, ExternalLink } from '../components/Editorial'
 import PageEmblem, { MotifRule } from '../components/PageEmblem'
@@ -37,7 +38,7 @@ export default function Contact({ headingRef }) {
             aria-label={`copy email address: ${profile.email}`}
           >
             {profile.email}
-            <span aria-hidden="true">{status === 'copied!' ? '✓' : '⧉'}</span>
+            {status === 'copied!' ? <Check size={22} aria-hidden="true" /> : <Copy size={22} aria-hidden="true" />}
           </button>
           <p className="copy-status" role="status">
             {status || 'click to copy'}

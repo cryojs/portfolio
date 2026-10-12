@@ -8,6 +8,7 @@ import About from './pages/About'
 import Work from './pages/Work'
 import Projects from './pages/Projects'
 import Contact from './pages/Contact'
+import CustomCursor from './components/CustomCursor'
 
 const readRoute = () => ({
   ...resolveRoute(window.location.hash),
@@ -161,12 +162,13 @@ export default function App() {
       className={`site ${light ? 'theme-paper' : 'theme-dark'} route-${route.page}`}
       onClickCapture={navigate}
     >
+      <CustomCursor />
       <a className="skip-link" href="#content">
         skip to content
       </a>
       <header className="site-header">
         <a href="#home" className="wordmark" aria-label="Jason Sun · home">
-          <Star monogram />
+          <Star brand />
           <span>jason sun</span>
         </a>
         <nav ref={navRef} aria-label="Main navigation">

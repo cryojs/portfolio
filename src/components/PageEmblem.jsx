@@ -1,4 +1,5 @@
 import { useId } from 'react'
+import BobaEmblem from './BobaEmblem'
 
 // Original vector collages: optics, mechanical assemblies, cut-paper fins, and
 // correspondence. No reference artwork is embedded or traced.
@@ -7,6 +8,7 @@ export default function PageEmblem({ kind, className = '' }) {
   const ink = `url(#${id}-ink)`
   const dots = `url(#${id}-dots)`
   const checker = `url(#${id}-check)`
+  if (kind === 'about') return <BobaEmblem className={className} />
   return (
     <svg viewBox="0 0 400 400" className={`page-emblem emblem-${kind} ${className}`} aria-hidden="true" fill="none">
       <defs>
@@ -16,21 +18,6 @@ export default function PageEmblem({ kind, className = '' }) {
         <pattern id={`${id}-dots`} width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.25" fill="currentColor"/></pattern>
         <pattern id={`${id}-check`} width="20" height="20" patternUnits="userSpaceOnUse"><path d="M0 0h10v10H0zM10 10h10v10H10z" fill="currentColor"/></pattern>
       </defs>
-      {kind === 'about' && <>
-        <path d="M35 286L55 49l221 30 53 251Z" fill={dots} opacity=".6"/>
-        <path d="M62 309L84 71l221 23-22 238Z" stroke="currentColor" strokeWidth="2"/>
-        <g transform="translate(191 189) rotate(-18)">
-          <circle r="104" fill="var(--surface, #08090d)" stroke="currentColor" strokeWidth="2"/>
-          {Array.from({length: 32}, (_, i) => <path key={i} d="M0-99v13" stroke="currentColor" strokeWidth={i % 4 ? 2 : 5} transform={`rotate(${i * 11.25})`}/>)}
-          {Array.from({length: 6}, (_, i) => <path key={i} d="M-12-74L62-37 22 38-12 4Z" fill={i % 2 ? ink : 'currentColor'} transform={`rotate(${i * 60})`}/>)}
-          <circle r="23" fill="var(--surface, #08090d)"/>
-        </g>
-        <path d="M14 255C60 347 347 174 372 78C308 202 70 276 14 255Z" fill={ink}/>
-        <path d="M14 258C35 325 331 199 375 69" stroke="var(--foreground, #f1f1f4)" strokeWidth="1.4"/>
-        <path d="M37 68V35h55M309 348h54v-48" stroke="currentColor" strokeWidth="4"/>
-        <path d="M292 40h60v20h-60z" fill={checker}/>
-        <circle cx="323" cy="289" r="13" fill="currentColor"/><circle cx="323" cy="289" r="5" fill="var(--surface, #08090d)"/>
-      </>}
       {kind === 'work' && <>
         <path d="M12 202L211 19l177 173-210 189Z" fill={dots} opacity=".5"/>
         <g transform="translate(242 117)">

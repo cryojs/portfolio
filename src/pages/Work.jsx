@@ -19,15 +19,19 @@ export default function Work({ headingRef }) {
             key={item.id}
             className={`experience-panel experience-panel-${index}`}
           >
-            <div className="experience-identity">
-              <img src={item.logo} alt="" loading="lazy" />
-              <h2><a href={item.website} target="_blank" rel="noreferrer">{item.company}<span className="company-link-arrow" aria-hidden="true"> ↗</span><span className="sr-only"> (opens in a new tab)</span></a></h2>
+            <div className="experience-header">
+              <div className="experience-identity">
+                <img src={item.logo} alt="" loading="lazy" />
+                <h2><a href={item.website} target="_blank" rel="noreferrer">{item.company}<span className="company-link-arrow" aria-hidden="true"> ↗</span><span className="sr-only"> (opens in a new tab)</span></a></h2>
+              </div>
+              <div className="experience-details">
+                <p className="experience-role">{item.role}</p>
+                <p className="experience-meta">
+                  <span>{item.dates}</span>
+                  <span>{item.location}</span>
+                </p>
+              </div>
             </div>
-            <p className="experience-role">{item.role}</p>
-            <p className="experience-meta">
-              <span>{item.dates}</span>
-              <span>{item.location}</span>
-            </p>
             <div className="experience-body">
               {item.highlights.map((text) => (
                 <p key={text}>{text}</p>

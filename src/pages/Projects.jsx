@@ -1,11 +1,10 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { ChevronsRight } from 'lucide-react'
 import { projects } from '../data/portfolio'
 import { projectEditorial } from '../data/editorial'
 import { ExternalLink, PageIntro } from '../components/Editorial'
 import PageEmblem from '../components/PageEmblem'
 import Silhouette from '../components/Silhouette'
-import ProjectMark from '../components/ProjectMark'
 
 function ProjectImage({ src, alt, ...props }) {
   const [failed, setFailed] = useState(false)
@@ -21,6 +20,73 @@ function ProjectImage({ src, alt, ...props }) {
       onError={() => setFailed(true)}
       {...props}
     />
+  )
+}
+
+function ProjectBannerMedia({ media, title }) {
+  const videoRef = useRef(null)
+  const [isPlaying, setIsPlaying] = useState(false)
+
+  const playPreview = () => {
+    if (!videoRef.current) return
+    videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {})
+  }
+
+  const stopPreview = () => {
+    if (!videoRef.current) return
+    videoRef.current.pause()
+    videoRef.current.currentTime = 0
+    setIsPlaying(false)
+  }
+
+  if (media.variant === 'tidebreak') {
+    return (
+      <div
+        className="project-banner-media project-banner-media-tidebreak"
+        role="img"
+        aria-label={media.alt}
+      >
+        <figure className="project-banner-shot project-banner-shot-gameplay">
+          <ProjectImage src={media.gameplay} alt="" loading="lazy" />
+          <figcaption className="mono">gameplay</figcaption>
+        </figure>
+        <figure className="project-banner-shot project-banner-shot-editor">
+          <ProjectImage src={media.editor} alt="" loading="lazy" />
+          <figcaption className="mono">level editor</figcaption>
+        </figure>
+      </div>
+    )
+  }
+
+  return (
+    <div
+      className={`project-banner-media${isPlaying ? ' is-playing' : ''}`}
+      onMouseEnter={playPreview}
+      onMouseLeave={stopPreview}
+    >
+      <ProjectImage
+        className="project-banner-image"
+        src={media.image}
+        alt={media.alt}
+        width={media.width}
+        height={media.height}
+        loading="lazy"
+      />
+      {media.video && (
+        <video
+          ref={videoRef}
+          className="project-banner-video"
+          src={media.video}
+          poster={media.image}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-label={`${title} preview video`}
+        />
+      )}
+      {media.video && <span className="project-banner-video-label mono">live preview</span>}
+    </div>
   )
 }
 
@@ -53,14 +119,6 @@ export default function Projects({ headingRef }) {
                 <span>{item.dates}</span>
               </div>
               <div className="project-art">
-                {item.id === 'readify' && (
-                  <span className="reading-glyph" aria-hidden="true">
-                    Aa
-                  </span>
-                )}
-                {item.id === 'refrain' && (
-                  <div className="focus-dial" aria-hidden="true" />
-                )}
                 <div className="project-art-copy">
                   <p>
                     {editorial.line.split('\n').map((line, i) => (
@@ -70,7 +128,6 @@ export default function Projects({ headingRef }) {
                       </span>
                     ))}
                   </p>
-                  <ProjectMark kind={item.id} />
                 </div>
                 <a
                   className="project-screen"
@@ -79,12 +136,7 @@ export default function Projects({ headingRef }) {
                   rel="noreferrer"
                   aria-label={`Explore ${item.title} (opens in a new tab)`}
                 >
-                  <ProjectImage
-                    src={item.media.image || item.media.gameplay}
-                    alt={item.media.alt}
-                    width={item.media.width}
-                    height={item.media.height}
-                  />
+                  <ProjectBannerMedia media={item.media} title={item.title} />
                 </a>
               </div>
               <div className="project-info">

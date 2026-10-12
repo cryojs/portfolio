@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import { ChevronsRight } from 'lucide-react'
 import { aboutCopy, photographs } from '../data/editorial'
 import { education, experience, profile } from '../data/portfolio'
@@ -38,11 +39,16 @@ export default function About({ headingRef }) {
           <ul className="about-bullet-list about-current-list">
             <li>
               studying computer science at{' '}
-              <span className="about-chip about-chip-blue">
+              <a
+                className="about-chip about-chip-waterloo"
+                href="https://uwaterloo.ca/"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <BrandMark brand="waterloo" />
                 the University of Waterloo
-              </span>
-              .
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
             </li>
             <li>
               building{' '}
@@ -53,7 +59,7 @@ export default function About({ headingRef }) {
                 <BrandMark brand="readify" />
                 Readify
               </a>
-              , a browser extension for a more personal reading experience.
+              , a browser extension for a more personal reading experience
             </li>
             <li>
               practicing competitive programming on{' '}
@@ -99,27 +105,31 @@ export default function About({ headingRef }) {
         </div>
         <div className="about-experience-list">
           {experience.map((item, index) => (
-            <article className="about-experience-item" key={item.id}>
-              <span className="about-experience-mark" aria-hidden="true">
-                •
-              </span>
-              <p className="about-experience-line">
-                {item.id === 'career-education-council' && (
-                  <>built 10 iOS apps at <CompanyChip item={item} index={index} />.</>
-                )}
-                {item.id === 'usaco-guide' && (
-                  <>contributed 6 pull requests with algorithm explanations and solutions to <CompanyChip item={item} index={index} />.</>
-                )}
-                {item.id === 'three-flavors' && (
-                  <>taught python and programming fundamentals to 15+ students at <CompanyChip item={item} index={index} />.</>
-                )}
-              </p>
-            </article>
+            <Fragment key={item.id}>
+              <article className="about-experience-item">
+                <span className="about-experience-mark" aria-hidden="true">
+                  •
+                </span>
+                <p className="about-experience-line">
+                  {item.id === 'career-education-council' && (
+                    <>built 10 iOS apps at <CompanyChip item={item} index={index} /></>
+                  )}
+                  {item.id === 'usaco-guide' && (
+                    <>contributed 6 pull requests with algorithm explanations and solutions to <CompanyChip item={item} index={index} /></>
+                  )}
+                  {item.id === 'three-flavors' && (
+                    <>taught python and programming fundamentals to 15+ students at <CompanyChip item={item} index={index} /></>
+                  )}
+                </p>
+              </article>
+              {index === 0 && (
+                <article className="about-experience-item" key="governor-general">
+                  <span className="about-experience-mark" aria-hidden="true">•</span>
+                  <p className="about-experience-line">won the Governor General&apos;s Academic Medal from my high school</p>
+                </article>
+              )}
+            </Fragment>
           ))}
-          <article className="about-experience-item" key="governor-general">
-            <span className="about-experience-mark" aria-hidden="true">•</span>
-            <p className="about-experience-line">won the Governor General&apos;s Academic Medal from my high school.</p>
-          </article>
         </div>
       </section>
 
@@ -136,10 +146,10 @@ export default function About({ headingRef }) {
         <section className="about-section about-outside" id="outside">
           <span className="about-section-kicker">interests:</span>
           <ul className="about-bullet-list">
-            <li>reading and philosophy (like camus and lacan).</li>
-            <li>enjoys photography and motion graphics.</li>
-            <li>inspired by euler’s work ethic and curiosity.</li>
-            <li>currently listening to <MusicPreview /> by quadeca.</li>
+            <li>reading and philosophy (like camus and lacan)</li>
+            <li>enjoys photography and eating chocolate</li>
+            <li>currently listening to <MusicPreview /> by quadeca</li>
+            <li>inspired by euler&apos;s work ethic and brilliance</li>
           </ul>
         </section>
       </div>

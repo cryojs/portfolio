@@ -1,1 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="#08090d"/><path d="M50 7C55 38 62 45 93 50C62 55 55 62 50 93C45 62 38 55 7 50C38 45 45 38 50 7Z" fill="#176bfa"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <mask id="star-core-cutout" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
+      <rect width="200" height="200" fill="#fff"/>
+      <path d="M113 6Q114 78 188 88Q116 104 87 194Q91 121 12 112Q86 95 113 6Z" fill="#000" transform="translate(100 100) scale(.40) translate(-100 -100)"/>
+    </mask>
+  </defs>
+  <path d="M20 0H200L180 200H0Z" fill="#172ce8"/>
+  <g transform="translate(100 100) scale(1.06) translate(-100 -100)">
+    <path d="M113 6Q114 78 188 88Q116 104 87 194Q91 121 12 112Q86 95 113 6Z" fill="#050609" stroke="#050609" stroke-width="16" stroke-linejoin="round"/>
+    <path d="M113 6Q114 78 188 88Q116 104 87 194Q91 121 12 112Q86 95 113 6Z" fill="#f1f1f4" mask="url(#star-core-cutout)"/>
+  </g>
+</svg>

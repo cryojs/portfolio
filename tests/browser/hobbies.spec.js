@@ -1,5 +1,28 @@
 import { test, expect } from '@playwright/test'
 
+test('both archives retain bottom spacing after opening and resizing', async ({ page }) => {
+  await page.goto('/#about')
+  for (const section of await page.locator('.hobby-collection').all()) {
+    await section.locator('.hobby-heading-trigger').click()
+  }
+  for (const width of [1440, 390, 1024]) {
+    await page.setViewportSize({ width, height: 1000 })
+    await page.waitForTimeout(650)
+    for (const panel of await page.locator('.hobby-panel').all()) {
+      const spacing = await panel.evaluate((element) => {
+        const inner = element.firstElementChild
+        const gallery = inner.firstElementChild
+        return {
+          bottom: element.getBoundingClientRect().bottom - gallery.getBoundingClientRect().bottom,
+          expected: parseFloat(getComputedStyle(inner).paddingBottom),
+        }
+      })
+      expect(spacing.bottom).toBeGreaterThanOrEqual(spacing.expected - 1)
+      expect(spacing.bottom).toBeLessThanOrEqual(spacing.expected + 2)
+    }
+  }
+})
+
 test('music card exposes compact native controls and stays within a narrow page', async ({ page }) => {
   await page.goto('/#about')
   const cards = page.locator('.music-card')
@@ -44,9 +67,9 @@ test('hobby previews mount on intent and expanded media closes with focus restor
   await expect(page.getByRole('dialog')).toHaveCount(0)
   await expect(edit).toBeFocused()
   await photographySection.locator('.hobby-heading-trigger').click()
-  const photo = page.getByRole('button', { name: 'view photograph: japan' })
+  const photo = page.getByRole('button', { name: 'view photograph: A building framed by a park in Japan' })
   await photo.click()
-  await expect(page.locator('.hobby-dialog img')).toHaveAttribute('src', '/photos/japan.jpg')
+  await expect(page.locator('.hobby-dialog img')).toHaveAttribute('src', '/photos/gallery/japan/japan1.jpg')
   await page.getByRole('button', { name: 'close ×' }).click()
   await expect(photo).toBeFocused()
   expect(await page.evaluate(() => document.body.style.overflow)).not.toBe('hidden')
@@ -90,7 +113,7 @@ test('reduced motion suppresses hover playback while explicit playback remains a
   await edit.hover()
   await page.waitForTimeout(600)
   await expect(edit.locator('iframe')).toHaveCount(0)
-  const chip = page.locator('.about-chip-blue')
+  const chip = page.locator('.about-chip-waterloo')
   await chip.hover()
   await expect(chip).toHaveCSS('transform', 'none')
   await expect(chip).toHaveCSS('filter', 'none')

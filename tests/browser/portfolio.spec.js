@@ -109,7 +109,10 @@ test('mobile, tablet, short desktop: no horizontal overflow', async ({
   for (const [width, height] of [
     [390, 844],
     [320, 740],
+    [480, 900],
+    [600, 900],
     [768, 1024],
+    [1024, 768],
     [1280, 600],
   ]) {
     await page.setViewportSize({ width, height })
@@ -124,6 +127,16 @@ test('mobile, tablet, short desktop: no horizontal overflow', async ({
         ),
         `${route} at ${width}px`,
       ).toBeTruthy()
+      if (route === 'home' && width <= 760) {
+        await expect(page.locator('.home-scene > .scene-object:visible')).toHaveCount(6)
+      }
+      if (route === 'projects' && width <= 760) {
+        for (const art of await page.locator('.project-art').all()) {
+          const copy = await art.locator('.project-art-copy').boundingBox()
+          const screen = await art.locator('.project-screen').boundingBox()
+          expect(screen.y).toBeGreaterThanOrEqual(copy.y + copy.height)
+        }
+      }
       if (width === 390) {
         for (const img of await page.locator('img:visible').all()) {
           await img.scrollIntoViewIfNeeded()

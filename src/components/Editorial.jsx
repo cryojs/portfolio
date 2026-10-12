@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { MotifRule } from './PageEmblem'
 import { GithubIcon, LinkedinIcon } from './Icons'
 
-export function Star({ className = '', monogram = false, ...props }) {
+export function Star({ className = '', brand = false, ...props }) {
+  const id = useId()
   return (
     <svg
       viewBox="0 0 200 200"
@@ -11,10 +12,20 @@ export function Star({ className = '', monogram = false, ...props }) {
       aria-hidden="true"
       {...props}
     >
-      <path d="M100 0L123 76L200 100L124 123L100 200L76 124L0 100L76 76Z" />
-      {monogram && <g fill="none" stroke="var(--graphic-cutout)" strokeWidth="6" strokeLinecap="square" strokeLinejoin="miter">
-        <path d="M79 87h12v24l-5 5h-9v-7M119 87h-16v12h15v16h-17" />
-      </g>}
+      {brand ? <>
+        <defs>
+          <clipPath id={`${id}-ring-front`}>
+            <rect x="0" y="100" width="200" height="100" />
+          </clipPath>
+          <mask id={`${id}-star-core-cutout`} maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
+            <rect width="200" height="200" fill="white" />
+            <path d="M113 6Q114 78 188 88Q116 104 87 194Q91 121 12 112Q86 95 113 6Z" fill="black" transform="translate(100 100) scale(.40) translate(-100 -100)" />
+          </mask>
+        </defs>
+        <ellipse cx="100" cy="100" rx="84" ry="51" transform="rotate(-26 100 100)" fill="none" stroke="#172ce8" strokeWidth="6" />
+        <path d="M113 6Q114 78 188 88Q116 104 87 194Q91 121 12 112Q86 95 113 6Z" mask={`url(#${id}-star-core-cutout)`} />
+        <ellipse cx="100" cy="100" rx="84" ry="51" transform="rotate(-26 100 100)" fill="none" stroke="#172ce8" strokeWidth="6" clipPath={`url(#${id}-ring-front)`} />
+      </> : <path d="M100 0L130 70L200 100L130 130L100 200L70 130L0 100L70 70Z" />}
     </svg>
   )
 }
@@ -156,13 +167,22 @@ const brandLabels = {
   youtube: '▶',
 }
 
+const brandImages = {
+  waterloo: '/logos/uw-transparent.png',
+  readify: '/logos/readify.png',
+  dmoj: '/logos/dmoj.png',
+  leetcode: '/logos/leetcode.png',
+  github: '/logos/github.svg',
+  linkedin: '/logos/linkedin.webp',
+}
+
 export function BrandMark({ brand }) {
   const Icon = brand === 'github' ? GithubIcon : brand === 'linkedin' ? LinkedinIcon : null
-  return (
-    <span className={`brand-mark brand-mark-${brand}`} aria-hidden="true">
-      {Icon ? <Icon size={13} strokeWidth={2.2} /> : brandLabels[brand] || brand.slice(0, 1).toUpperCase()}
-    </span>
-  )
+  const image = brandImages[brand]
+  const className = `brand-mark brand-mark-${brand}${image ? ' brand-mark-image' : ''}`
+  return <span className={className} aria-hidden="true">
+    {image ? <img src={image} alt="" /> : Icon ? <Icon size={13} strokeWidth={2.2} /> : brandLabels[brand] || brand.slice(0, 1).toUpperCase()}
+  </span>
 }
 
 export function PageIntro({ children, description, headingRef, motif }) {

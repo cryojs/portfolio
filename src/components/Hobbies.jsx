@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Minus, Plus } from 'lucide-react'
 import { photography, motionEdits } from '../data/hobbies'
-import { BrandMark, ExternalLink } from './Editorial'
+import { ExternalLink } from './Editorial'
 import { MotifRule } from './PageEmblem'
 
 function embedUrl(id, muted) {
@@ -21,16 +21,27 @@ function usePanelMotion(isOpen) {
     const panel = panelRef.current
     if (!panel) return
     let frame
+    const inner = panel.firstElementChild
+    function measure() {
+      const styles = getComputedStyle(panel)
+      const border = parseFloat(styles.borderTopWidth) + parseFloat(styles.borderBottomWidth)
+      panel.style.height = isOpen ? `${inner.getBoundingClientRect().height + border}px` : '0px'
+    }
 
     // Let the new open/closed styles paint first, then change the measured
     // height on the following frame. Without that separation, closing can
     // collapse before the browser has a previous height to interpolate from.
     frame = requestAnimationFrame(() => {
       if (!panelRef.current) return
-      panel.style.height = isOpen ? `${panel.scrollHeight}px` : '0px'
+      measure()
     })
 
-    return () => cancelAnimationFrame(frame)
+    const observer = new ResizeObserver(() => {
+      cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(measure)
+    })
+    observer.observe(inner)
+    return () => { cancelAnimationFrame(frame); observer.disconnect() }
   }, [isOpen])
 
   return panelRef
@@ -102,23 +113,22 @@ export default function Hobbies() {
           <button type="button" className="hobby-heading-trigger" aria-expanded={photographyOpen}
             aria-controls="photography-panel" onClick={() => toggleCollection(setPhotographyOpen)}>
           <span className="hobby-heading-label">
-            <h3 id="photography-heading">photography</h3>
+            <span><h3 id="photography-heading">photography</h3><p>click to expand · enjoy!</p></span>
             <span className="hobby-toggle" aria-hidden="true">
               <Plus className="hobby-toggle-plus" size={17} strokeWidth={2.2} />
               <Minus className="hobby-toggle-minus" size={17} strokeWidth={2.2} />
             </span>
           </span>
           </button>
-          <ExternalLink href="https://www.instagram.com/cryojs/"><BrandMark brand="instagram" />@cryojs on insta</ExternalLink>
+          <ExternalLink href="https://www.instagram.com/cryojs/">@cryojs on insta</ExternalLink>
         </div>
         <div ref={photographyPanelRef} id="photography-panel" className={`hobby-panel${photographyOpen ? ' is-open' : ''}`}
           role="region" aria-labelledby="photography-heading" aria-hidden={!photographyOpen}>
           <div className="hobby-panel-inner">
             <div className="photography-gallery">
               {photography.map((photo) => (
-                <button type="button" className="photography-frame" key={photo.src} onClick={() => open(photo)} aria-label={`view photograph: ${photo.caption}`}>
+                <button type="button" className="photography-frame" key={photo.src} onClick={() => open(photo)} aria-label={`view photograph: ${photo.alt}`}>
                   <img src={photo.src} alt={photo.alt} loading="lazy" />
-                  <span>{photo.caption} <span aria-hidden="true">↗</span></span>
                 </button>
               ))}
             </div>
@@ -140,7 +150,7 @@ export default function Hobbies() {
             </span>
           </span>
           </button>
-          <ExternalLink href="https://www.youtube.com/@VastAMV"><BrandMark brand="youtube" />@vastamv on yt</ExternalLink>
+          <ExternalLink href="https://www.youtube.com/@VastAMV">@vastamv on yt</ExternalLink>
         </div>
         <div ref={motionPanelRef} id="motion-panel" className={`hobby-panel${motionOpen ? ' is-open' : ''}`}
           role="region" aria-labelledby="motion-heading" aria-hidden={!motionOpen}>
