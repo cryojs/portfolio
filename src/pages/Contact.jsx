@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { profile } from '../data/portfolio'
-import { ExternalLink, Star, Trajectories } from '../components/Editorial'
+import { BrandMark, ExternalLink } from '../components/Editorial'
+import PageEmblem, { MotifRule } from '../components/PageEmblem'
 
 export default function Contact({ headingRef }) {
   const [status, setStatus] = useState('')
@@ -12,21 +13,22 @@ export default function Contact({ headingRef }) {
       await navigator.clipboard.writeText(profile.email)
       setStatus('copied!')
     } catch {
-      setStatus('couldn’t copy automatically — select the address to copy it.')
+      setStatus('couldn’t copy automatically · select the address to copy it.')
     }
     timer.current = setTimeout(() => setStatus(''), 5500)
   }
   return (
     <section className="contact-page">
-      <Trajectories />
+      <div className="contact-postmark" aria-hidden="true"><span /><span /><span /></div>
       <div className="contact-heading">
         <h1 ref={headingRef} tabIndex={-1}>
           let’s make
           <br />
           <em>something.</em>
-          <Star />
+          <PageEmblem kind="contact" />
         </h1>
       </div>
+      <MotifRule variant="contact" />
       <div className="contact-bottom">
         <div className="contact-email">
           <button
@@ -42,8 +44,8 @@ export default function Contact({ headingRef }) {
           </p>
         </div>
         <div className="contact-socials">
-          <ExternalLink href={profile.links.github}>github</ExternalLink>
-          <ExternalLink href={profile.links.linkedin}>linkedin</ExternalLink>
+          <ExternalLink href={profile.links.github}><BrandMark brand="github" />GitHub</ExternalLink>
+          <ExternalLink href={profile.links.linkedin}><BrandMark brand="linkedin" />LinkedIn</ExternalLink>
         </div>
       </div>
     </section>

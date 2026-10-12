@@ -85,26 +85,20 @@ test('navigation transitions, keyboard focus, history, and deep links', async ({
   await page.goto('/#home')
   await page.locator('.projects-object').click()
   await expect(page).toHaveURL(/#projects$/)
-  await expect(page.locator('h1')).toContainText('from a thought')
+  await expect(page.locator('h1')).toContainText('from thought')
   await expect(page.locator('h1')).toBeFocused()
   await expect(page.locator('.page-wipe')).toHaveCount(0)
-  await page.locator('.project-index a').filter({ hasText: 'Readify' }).click()
-  await expect(page.locator('#project-readify details')).toHaveAttribute(
-    'open',
-    '',
-  )
+  await page.goto('/#projects/readify')
+  await expect(page.locator('#project-readify details')).toHaveCount(0)
   await expect(page.locator('#project-readify h2')).toBeFocused()
   await page.reload()
-  await expect(page.locator('#project-readify details')).toHaveAttribute(
-    'open',
-    '',
-  )
+  await expect(page.locator('#project-readify details')).toHaveCount(0)
   await page.goBack()
   await expect(page).toHaveURL(/#projects$/)
   await page.goBack()
   await expect(page.locator('.home-scene')).toBeVisible()
   await page.goForward()
-  await expect(page.locator('.project-index')).toBeVisible()
+  await expect(page.locator('.project-spreads')).toBeVisible()
   await page.locator('.home-control').click()
   await expect(page.locator('.home-scene')).toBeVisible()
 })

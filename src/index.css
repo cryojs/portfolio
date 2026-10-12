@@ -1,5 +1,6 @@
 @import '@fontsource/cormorant-garamond/latin-400.css';
 @import '@fontsource/cormorant-garamond/latin-400-italic.css';
+@import '@fontsource-variable/jetbrains-mono';
 @font-face {
   font-family: 'Inter Variable';
   font-style: normal;
@@ -7,6 +8,20 @@
   font-display: swap;
   src: url('@fontsource-variable/inter/files/inter-latin-wght-normal.woff2')
     format('woff2');
+}
+@font-face {
+  font-family: 'Geist Pixel Square';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/GeistPixel-Square.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Minecraft Local';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Minecraft.ttf') format('truetype');
 }
 
 :root {
@@ -22,7 +37,7 @@
   --muted: #a6aab7;
   --line: rgba(185, 192, 220, 0.22);
   --serif: 'Cormorant Garamond', 'Times New Roman', serif;
-  --mono: 'Courier New', monospace;
+  --mono: 'JetBrains Mono Variable', 'Courier New', monospace;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 * {
@@ -892,6 +907,11 @@ summary {
   font-size: clamp(30px, 4.5vw, 65px);
   letter-spacing: -0.035em;
 }
+.next-page > span:first-child {
+  font-family: var(--serif);
+  font-size: clamp(30px, 4.5vw, 65px);
+  letter-spacing: -0.035em;
+}
 .next-page i {
   display: inline-block;
   font-style: normal;
@@ -1093,10 +1113,10 @@ summary {
 .text-link:hover {
   color: #7c9eff;
 }
-.text-link > span[aria-hidden] {
+.text-link > .external-link-arrow {
   transition: transform 0.3s;
 }
-.text-link:hover > span[aria-hidden] {
+.text-link:hover > .external-link-arrow {
   transform: translate(2px, -2px);
 }
 details {
@@ -3867,10 +3887,15 @@ summary {
   opacity: 0.21;
 }
 .theme-paper .home-scene .scene-light {
-  background: none;
+  background: radial-gradient(
+    circle at 50% 50%,
+    #172ce82e 0,
+    #172ce81c 20%,
+    transparent 70%
+  );
 }
 .theme-paper .home-scene .scene-light:before {
-  opacity: 0.15;
+  opacity: 0.18;
 }
 
 @media (max-width: 760px) {
@@ -3881,5 +3906,2218 @@ summary {
   .about-object:hover .about-photo-stack,
   .about-object:focus-within .about-photo-stack {
     transform: translateY(-11px);
+  }
+}
+
+/* About page: a quieter personal index with inline context chips, like a
+   printed profile annotated directly in the margin. */
+.about-page {
+  max-width: 1240px;
+  padding-bottom: 20px;
+}
+.about-page .page-intro {
+  margin-bottom: 78px;
+}
+.about-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.22fr);
+  gap: clamp(48px, 8vw, 128px);
+  align-items: center;
+  position: relative;
+}
+.about-portrait {
+  width: min(100%, 410px);
+  margin: 0;
+  padding: 0 18px 30px 10px;
+  transform: rotate(-4deg);
+}
+.about-portrait .photo {
+  height: 470px;
+  border: 10px solid var(--paper);
+  box-shadow: 12px 14px 0 var(--blue);
+}
+.theme-paper .about-portrait .photo {
+  border-color: var(--ink);
+}
+.about-portrait > .star {
+  right: -35px;
+  top: -42px;
+  width: 125px;
+  height: 170px;
+  opacity: 0.78;
+}
+.about-photo-caption {
+  position: absolute;
+  left: 10px;
+  right: 28px;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  font: 11px/1.4 var(--mono);
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  transform: rotate(4deg);
+}
+.about-current {
+  padding-top: 22px;
+  border-top: 2px solid var(--blue);
+}
+.about-section-kicker {
+  display: block;
+  color: var(--muted);
+  font: 700 14px/1.4 var(--mono);
+  letter-spacing: 0.04em;
+}
+.about-current-line {
+  margin-top: 25px;
+  max-width: 760px;
+  font: 400 clamp(34px, 4.2vw, 64px)/1.02 var(--serif);
+  letter-spacing: -0.04em;
+}
+.about-body {
+  max-width: 610px;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.75;
+}
+.about-current-intro {
+  margin-top: 28px;
+}
+.about-bullet-list {
+  display: grid;
+  gap: 13px;
+  margin: 26px 0 0;
+  padding-left: 23px;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.7;
+}
+.about-bullet-list li::marker {
+  color: var(--blue);
+}
+.about-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 9px 4px;
+  color: var(--ink);
+  font-size: 0.88em;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  text-transform: none;
+  vertical-align: 0.08em;
+  clip-path: polygon(0 0, 97% 0, 100% 82%, 3% 100%);
+  transition: transform 0.25s var(--ease), filter 0.25s ease;
+}
+.about-chip:hover,
+.about-chip:focus-visible {
+  transform: translateY(-2px) rotate(-1deg);
+  filter: brightness(1.12);
+}
+.about-chip-blue {
+  background: var(--blue);
+  color: white;
+}
+.about-chip-lilac {
+  background: #cbd4ff;
+}
+.theme-dark .about-chip-lilac {
+  background: #aebcf4;
+}
+.about-link-rail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 17px 25px;
+  margin-top: 32px;
+}
+.about-link-rail .text-link {
+  color: var(--foreground);
+  font-size: 14px;
+  border-bottom: 1px solid var(--blue);
+  padding-bottom: 5px;
+}
+.about-link-rail .text-link:hover,
+.about-link-rail .text-link:focus-visible {
+  color: var(--blue);
+}
+.about-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10%;
+  margin-top: 105px;
+  padding-top: 29px;
+  border-top: 2px solid var(--blue);
+}
+.about-info-card {
+  min-width: 0;
+}
+.about-info-card h2 {
+  margin: 23px 0 12px;
+  font: 400 clamp(32px, 3.2vw, 48px)/1.05 var(--serif);
+  letter-spacing: -0.035em;
+  text-transform: none;
+}
+.about-info-card > p {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.7;
+}
+.about-meta {
+  margin-top: 15px;
+  color: var(--muted);
+  font: 13px/1.7 var(--mono);
+  text-transform: none;
+}
+.about-skill-line {
+  margin-top: 22px;
+}
+.about-skill-line h3 {
+  margin-bottom: 7px;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: lowercase;
+}
+.about-skill-line p {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.7;
+  text-transform: lowercase;
+}
+.about-previous {
+  margin-top: 105px;
+  padding-top: 29px;
+  border-top: 2px solid var(--blue);
+}
+.about-section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 25px;
+}
+.about-section-code {
+  color: var(--blue);
+  font: 12px/1.5 var(--mono);
+  text-transform: none;
+}
+.about-experience-list {
+  margin-top: 18px;
+}
+.about-experience-item {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr);
+  gap: 12px;
+  padding: 25px 0 30px;
+  border-bottom: 1px solid var(--line);
+}
+.about-experience-mark {
+  color: var(--blue);
+  font: 15px/1.7 'Geist Pixel Square', 'Geist Pixel', var(--mono);
+  letter-spacing: 0.06em;
+}
+.about-experience-line {
+  color: var(--foreground);
+  font-size: clamp(17px, 1.7vw, 23px);
+  line-height: 1.65;
+  text-transform: lowercase;
+}
+.about-chip-company {
+  font-size: 0.82em;
+  font-weight: 600;
+}
+.about-chip-company img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  background: white;
+}
+.about-chip-0 {
+  background: #cbd4ff;
+}
+.about-chip-1 {
+  background: #d5e8ff;
+}
+.about-chip-2 {
+  background: #c9f3e0;
+}
+.about-experience-details {
+  max-width: 840px;
+  margin-top: 17px;
+}
+.about-experience-details p {
+  margin-top: 9px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.75;
+  text-transform: none;
+}
+.about-lower-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10%;
+  margin-top: 105px;
+}
+.about-next,
+.about-outside {
+  min-width: 0;
+  padding-top: 25px;
+  border-top: 2px solid var(--blue);
+}
+.about-next .about-bullet-list {
+  margin-top: 24px;
+}
+.about-outside-lede {
+  max-width: 460px;
+  margin-top: 24px;
+  color: var(--foreground);
+  font: 400 clamp(28px, 3vw, 44px)/1.04 var(--serif);
+  letter-spacing: -0.035em;
+  text-transform: lowercase;
+}
+.about-interest-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 25px;
+}
+.about-interest {
+  padding: 8px 11px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font: 13px/1.4 var(--mono);
+  text-transform: lowercase;
+}
+.about-edit-note {
+  margin-top: 24px;
+  color: var(--muted);
+  font: 11px/1.5 var(--mono);
+  text-transform: lowercase;
+}
+.about-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 70px;
+}
+.about-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  min-height: 48px;
+  padding: 10px 17px;
+  border: 1px solid var(--line);
+  color: var(--foreground);
+  font: 14px/1.4 var(--mono);
+  text-transform: lowercase;
+  clip-path: polygon(0 0, 97% 0, 100% 80%, 3% 100%);
+  transition: color 0.25s ease, background 0.25s ease, transform 0.25s var(--ease);
+}
+.about-button span {
+  font-size: 18px;
+}
+.about-button:hover,
+.about-button:focus-visible {
+  color: white;
+  background: var(--blue);
+  transform: translateY(-3px);
+}
+.about-button-primary {
+  border-color: var(--blue);
+}
+
+/* The theme control now fills the glyph itself, without creating another
+   slanted panel in the header. */
+.theme-toggle:before {
+  transform: skew(15deg) scale(0);
+  background: transparent;
+}
+.theme-toggle:is(:hover, :focus-visible):before {
+  transform: skew(15deg) scale(0);
+  background: transparent;
+}
+.theme-toggle:is(:hover, :focus-visible) {
+  color: var(--blue);
+}
+.theme-toggle:is(:hover, :focus-visible) svg {
+  fill: currentColor;
+}
+
+@media (max-width: 1100px) {
+  .about-hero-grid {
+    gap: 55px;
+  }
+  .about-portrait .photo {
+    height: 410px;
+  }
+}
+
+@media (max-width: 760px) {
+  .about-page .page-intro {
+    margin-bottom: 58px;
+  }
+  .about-hero-grid,
+  .about-info-grid,
+  .about-lower-grid {
+    grid-template-columns: 1fr;
+    gap: 58px;
+  }
+  .about-portrait {
+    width: min(88vw, 380px);
+    margin: 0 auto;
+  }
+  .about-portrait .photo {
+    height: min(440px, 112vw);
+  }
+  .about-current-line {
+    font-size: clamp(35px, 10vw, 55px);
+  }
+  .about-body,
+  .about-bullet-list,
+  .about-info-card > p,
+  .about-skill-line p {
+    font-size: 16px;
+  }
+  .about-section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .about-experience-item {
+    grid-template-columns: 36px minmax(0, 1fr);
+    gap: 7px;
+  }
+  .about-experience-line {
+    font-size: 17px;
+  }
+  .about-chip-company {
+    white-space: normal;
+  }
+  .about-experience-details p {
+    font-size: 15px;
+  }
+  .about-actions {
+    margin-top: 55px;
+  }
+  .about-button {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+/* Inline profile links read like small code labels, so useful destinations
+   stay visible inside the sentence that gives them context. */
+.about-code-link,
+.about-code-link.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin: 0 2px;
+  padding: 3px 7px 4px;
+  border: 1px solid color-mix(in srgb, var(--blue) 76%, white);
+  background: var(--blue);
+  color: white;
+  font: 800 0.78em/1.2 var(--mono);
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  text-transform: none;
+  white-space: nowrap;
+  clip-path: polygon(0 0, 96% 0, 100% 76%, 4% 100%);
+  transition: transform 0.25s var(--ease), filter 0.25s ease;
+}
+.about-code-link:hover,
+.about-code-link:focus-visible,
+.about-code-link.text-link:hover,
+.about-code-link.text-link:focus-visible {
+  color: white;
+  filter: brightness(1.16);
+  transform: translateY(-2px) rotate(-1deg);
+}
+.about-experience-mark {
+  font-size: 24px;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+
+/* Keep profile destinations legible as part of the sentence rather than
+   turning every link into a separate bright badge. */
+.about-code-link,
+.about-code-link.text-link {
+  display: inline;
+  margin: 0 0.16em;
+  padding: 1px 4px 2px;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  background: color-mix(in srgb, var(--blue) 9%, transparent);
+  color: var(--blue);
+  font: 700 0.82em/1.3 var(--mono);
+  letter-spacing: 0.015em;
+  border-radius: 0;
+  clip-path: inset(0);
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.about-code-link > .external-link-arrow {
+  display: none;
+}
+.about-code-link:hover,
+.about-code-link:focus-visible,
+.about-code-link.text-link:hover,
+.about-code-link.text-link:focus-visible {
+  color: white;
+  background: var(--blue);
+  border-bottom-color: var(--blue);
+  filter: none;
+  transform: none;
+}
+
+/* Previously is a jot list, not a stack of separated cards. */
+.about-experience-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+}
+.about-experience-item {
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 8px;
+  padding: 0;
+  border-bottom: 0;
+}
+.about-experience-mark {
+  color: var(--blue);
+  font: 700 20px/1.7 var(--mono);
+}
+.about-experience-line {
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.about-chip-company {
+  border-radius: 0;
+  clip-path: inset(0);
+}
+.about-chip-company:hover,
+.about-chip-company:focus-visible {
+  transform: translateY(-2px);
+  filter: brightness(1.12);
+}
+
+/* Keep every inline destination on the same baseline as its sentence. */
+.about-chip-company,
+.about-code-link,
+.about-code-link.text-link {
+  vertical-align: middle;
+}
+
+/* Profile links use the same rectangular label language as the role chips. */
+.about-code-link,
+.about-code-link.text-link {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 0.16em;
+  padding: 3px 7px 4px;
+  border: 0;
+  border-radius: 0;
+  background: var(--blue);
+  color: white;
+  font: 700 0.82em/1.2 var(--mono);
+  letter-spacing: 0.015em;
+  text-decoration: none;
+  white-space: nowrap;
+  clip-path: inset(0);
+  transition: color 0.2s ease, background 0.2s ease, transform 0.2s var(--ease);
+}
+.about-code-link:hover,
+.about-code-link:focus-visible,
+.about-code-link.text-link:hover,
+.about-code-link.text-link:focus-visible {
+  color: white;
+  background: var(--luminous);
+  transform: translateY(-2px);
+}
+
+/* The profile destinations share the same soft label language as the
+   organizations in the contribution list. */
+.about-code-link,
+.about-code-link.text-link {
+  padding: 3px 9px 4px;
+  background: #d8ddff;
+  color: var(--ink);
+  font: 600 0.82em/1.2 'Inter Variable', sans-serif;
+  letter-spacing: 0;
+}
+.about-code-link.about-code-link-readify {
+  background: #d2dcff;
+}
+.about-code-link.about-code-link-dmoj {
+  background: #cfe8ff;
+}
+.about-code-link.about-code-link-leetcode {
+  background: #f3d5dc;
+}
+.about-code-link.about-code-link-github {
+  background: #ddd6ff;
+}
+.about-code-link.about-code-link-linkedin {
+  background: #c9efd9;
+}
+.about-code-link:hover,
+.about-code-link:focus-visible,
+.about-code-link.text-link:hover,
+.about-code-link.text-link:focus-visible {
+  color: var(--ink);
+  filter: brightness(1.06);
+  transform: translateY(-2px);
+}
+.about-code-link.about-code-link-readify:is(:hover, :focus-visible) {
+  background: #d2dcff;
+}
+.about-code-link.about-code-link-dmoj:is(:hover, :focus-visible) {
+  background: #cfe8ff;
+}
+.about-code-link.about-code-link-leetcode:is(:hover, :focus-visible) {
+  background: #f3d5dc;
+}
+.about-code-link.about-code-link-github:is(:hover, :focus-visible) {
+  background: #ddd6ff;
+}
+.about-code-link.about-code-link-linkedin:is(:hover, :focus-visible) {
+  background: #c9efd9;
+}
+
+/* Keep every current link at the same compact height as Readify. */
+.about-code-link,
+.about-code-link.text-link {
+  min-height: 0;
+  height: auto;
+}
+
+/* Waterloo is the primary destination, so it keeps the same rectangular chip
+   geometry while carrying the site's cobalt blue. */
+.about-chip-blue {
+  min-height: 0;
+  padding: 3px 9px 4px;
+  border-radius: 0;
+  color: white;
+  font: 600 0.82em/1.2 'Inter Variable', sans-serif;
+  letter-spacing: 0;
+  vertical-align: middle;
+  clip-path: inset(0);
+}
+
+/* The portrait now sits beside the shorter dot-jot column as a near-square
+   editorial frame. */
+.about-portrait .photo {
+  height: 390px;
+  aspect-ratio: 1 / 1;
+}
+
+/* Use the bundled square pixel face so the counter reads like a tiny game UI
+   detail instead of a regular monospace label. */
+.photo-stack-count {
+  min-width: 34px;
+  font-family: 'Geist Pixel Square', monospace;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  -webkit-font-smoothing: none;
+  text-rendering: geometricPrecision;
+}
+
+@media (max-width: 760px) {
+  .about-portrait .photo {
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+}
+
+/* Chapter-specific editorial marks and the personal media archive. */
+.about-page span.about-chip:hover {
+  transform: none;
+  filter: none;
+}
+.page-emblem {
+  width: 200px;
+  height: 200px;
+  color: var(--blue);
+  pointer-events: none;
+}
+.page-intro h1 > .page-emblem {
+  position: absolute;
+  right: 0;
+  bottom: 8%;
+  width: clamp(100px, 15vw, 210px);
+  height: auto;
+  opacity: .7;
+  transform: rotate(-12deg);
+}
+.about-portrait > .page-emblem {
+  position: absolute;
+  width: 96px;
+  height: 96px;
+  right: -25px;
+  bottom: -15px;
+  transform: rotate(4deg);
+}
+.project-art-copy > .page-emblem {
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  left: -55px;
+  bottom: -90px;
+  color: currentColor;
+  opacity: .22;
+  transform: rotate(-18deg);
+}
+.experience-panel {
+  border-left: 3px solid var(--blue);
+}
+.experience-panel::after {
+  content: '';
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  right: 20px;
+  top: 20px;
+  border-top: 1px solid var(--blue);
+  border-right: 1px solid var(--blue);
+  pointer-events: none;
+}
+.contact-heading h1 > .page-emblem {
+  position: absolute;
+  right: 3%;
+  top: -80px;
+  width: clamp(110px, 18vw, 250px);
+  height: auto;
+  transform: rotate(-12deg);
+  opacity: .65;
+}
+.contact-postmark {
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  bottom: 19%;
+  height: 180px;
+  transform: rotate(-10deg);
+  pointer-events: none;
+  opacity: .18;
+}
+.contact-postmark span {
+  display: block;
+  height: 32px;
+  border-top: 2px solid var(--blue);
+  border-radius: 50%;
+}
+.about-info-grid { grid-template-columns: 1fr; }
+.hobbies-section { margin-top: 100px; }
+.hobbies-section > h2 {
+  margin: 0 0 60px;
+  font: 400 clamp(44px, 6vw, 82px)/1 var(--serif);
+  letter-spacing: -.035em;
+}
+.hobbies-section > h2 em { color: var(--blue); }
+.hobby-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+.hobby-heading h3 {
+  font-size: clamp(20px, 2.5vw, 30px);
+  font-weight: 500;
+}
+.hobby-heading p { font-size: 14px; line-height: 1.6; color: var(--muted); margin-top: 10px; }
+.photography-gallery {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+.photography-frame {
+  background: transparent;
+  color: var(--foreground);
+  padding: 0;
+  text-align: left;
+  min-width: 0;
+}
+.photography-frame:nth-child(2n) { margin-top: 65px; }
+.photography-frame img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: filter .3s ease;
+}
+.photography-frame:nth-child(2) img { aspect-ratio: 1 / 1; }
+.photography-frame:nth-child(3) img { aspect-ratio: 5 / 4; }
+.photography-frame > span {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  font: 15px/1.5 var(--mono);
+}
+.photography-frame:hover img { filter: saturate(1.12); }
+.photography-frame:hover > span { color: var(--blue); }
+.motion-heading { margin-top: 90px; }
+.motion-gallery { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 20px; }
+.motion-tile {
+  grid-column: span 2;
+  position: relative;
+  min-width: 0;
+  aspect-ratio: 16 / 10;
+  background: #10182c;
+  overflow: hidden;
+  color: white;
+  padding: 0;
+  isolation: isolate;
+}
+.motion-tile:first-child { grid-column: span 4; grid-row: span 2; }
+.motion-tile:nth-child(n + 4) { grid-column: span 3; }
+.motion-thumbnail, .motion-tile iframe, .motion-tile video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  border: 0;
+  pointer-events: none;
+  object-fit: cover;
+}
+.motion-thumbnail { opacity: .8; }
+.motion-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 26px 14px 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font: 13px/1.3 var(--mono);
+  background: linear-gradient(transparent, #08090dee);
+}
+.motion-caption > span { color: #b7c7ff; }
+.motion-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  background: var(--blue);
+  border-radius: 50%;
+  padding-left: 3px;
+  transition: opacity .2s;
+}
+.motion-tile:has(iframe) .motion-play, .motion-tile:has(video) .motion-play { opacity: 0; }
+.hobby-dialog {
+  max-width: none;
+  max-height: none;
+  width: 100vw;
+  height: 100dvh;
+  border: 0;
+  padding: 50px 5vw;
+  background: #08090df5;
+  color: #f1f1f4;
+  margin: 0;
+}
+.hobby-dialog::backdrop { background: #08090dcc; backdrop-filter: blur(12px); }
+.hobby-dialog-content { width: min(1100px, 100%); margin: auto; }
+.hobby-close {
+  display: block;
+  margin: 0 0 20px auto;
+  padding: 10px 16px;
+  background: #172ce8;
+  color: white;
+  font-size: 17px;
+}
+.hobby-dialog iframe { width: 100%; aspect-ratio: 16 / 9; max-height: 75dvh; border: 0; background: black; }
+.hobby-dialog img { width: 100%; max-height: 75dvh; object-fit: contain; }
+.hobby-dialog-content > a { display: inline-block; margin-top: 15px; text-decoration: underline; }
+@media (max-width: 760px) {
+  .page-intro h1 > .page-emblem { right: -15px; bottom: -45px; width: 85px; opacity: .3; }
+  .contact-heading h1 > .page-emblem { top: -80px; right: 0; width: 100px; }
+  .hobbies-section { margin-top: 65px; }
+  .hobby-heading { align-items: start; flex-wrap: wrap; gap: 10px; }
+  .photography-gallery { gap: 15px; grid-template-columns: 1fr 1fr; }
+  .photography-frame:nth-child(2n) { margin-top: 35px; }
+  .photography-frame > span { font-size: 12px; }
+  .motion-gallery { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .motion-tile, .motion-tile:nth-child(n + 4) { grid-column: span 1; }
+  .motion-tile:first-child { grid-column: span 2; grid-row: auto; }
+  .motion-caption { font-size: 11px; }
+  .motion-caption > span { display: none; }
+  .hobby-dialog { padding: 25px 4vw; }
+}
+
+/* Motion edits: feature the two newest together, then keep the archive in
+   clean rows of three. */
+.motion-gallery {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.motion-tile,
+.motion-tile:first-child,
+.motion-tile:nth-child(n + 3) {
+  grid-column: span 2;
+  grid-row: auto;
+  aspect-ratio: 16 / 9;
+}
+
+.motion-tile:nth-child(1),
+.motion-tile:nth-child(2) {
+  grid-column: span 3;
+}
+
+@media (max-width: 760px) {
+  .motion-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .motion-tile,
+  .motion-tile:first-child,
+  .motion-tile:nth-child(2),
+  .motion-tile:nth-child(n + 3) {
+    grid-column: span 1;
+    grid-row: auto;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .photography-frame img, .motion-play { transition: none; }
+}
+
+/* Expandable hobby archives: the cobalt summary is the tab, while the framed
+   panel below makes the media feel like one deliberate collection. */
+.hobby-collection {
+  margin: 0;
+  border: 1px solid color-mix(in srgb, var(--blue) 68%, transparent);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--blue) 8%, transparent), transparent 58%);
+}
+
+.hobby-collection + .hobby-collection {
+  margin-top: 28px;
+}
+
+.hobby-collection > summary {
+  list-style: none;
+}
+
+.hobby-collection > summary::-webkit-details-marker {
+  display: none;
+}
+
+.hobby-collection > summary:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: -5px;
+}
+
+.hobby-heading {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 76px;
+  margin: 0;
+  padding: 13px 18px;
+  border-left: 4px solid #fff;
+  background: linear-gradient(105deg, #172ce8 0%, #2d4df1 62%, #101a40 100%);
+  color: #fff;
+  cursor: pointer;
+  user-select: none;
+}
+
+.hobby-heading-label {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.hobby-heading-label > span:first-child:not(.hobby-toggle) {
+  min-width: 0;
+}
+
+.hobby-heading h3,
+.hobby-heading .text-link,
+.hobby-heading .text-link:hover {
+  color: #fff;
+}
+
+.hobby-heading h3 {
+  margin: 0;
+  font-size: clamp(22px, 2.7vw, 32px);
+  font-weight: 600;
+  letter-spacing: -.025em;
+}
+
+.hobby-heading p {
+  margin: 6px 0 0;
+  color: #dbe2ff;
+}
+
+.hobby-heading .text-link {
+  flex: 0 0 auto;
+  border-bottom-color: #fff;
+  font-size: 14px;
+}
+
+.hobby-toggle {
+  display: grid;
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 1px solid #ffffffb8;
+  border-radius: 50%;
+  color: #fff;
+  font: 400 22px/1 var(--mono);
+  transition: transform .35s var(--ease), background-color .25s ease;
+}
+
+.hobby-collection[open] .hobby-toggle {
+  transform: rotate(45deg);
+  background: #ffffff22;
+}
+
+.hobby-panel {
+  padding: 24px 18px 20px;
+  border-top: 1px solid #172ce8;
+  background: linear-gradient(145deg, #0b0f23 0%, #08090d 76%);
+}
+
+.theme-paper .hobby-panel {
+  background: linear-gradient(145deg, #e2e7f7 0%, #f1f1f4 76%);
+}
+
+.hobby-panel .photography-gallery,
+.hobby-panel .motion-gallery {
+  margin: 0;
+}
+
+.motion-heading {
+  margin-top: 0;
+}
+
+@media (max-width: 760px) {
+  .hobby-collection + .hobby-collection {
+    margin-top: 20px;
+  }
+
+  .hobby-heading {
+    align-items: flex-start;
+    min-height: 68px;
+    padding: 12px 14px;
+  }
+
+  .hobby-heading-label {
+    align-items: flex-start;
+    gap: 11px;
+  }
+
+  .hobby-heading .text-link {
+    font-size: 12px;
+  }
+
+  .hobby-panel {
+    padding: 18px 12px 14px;
+  }
+}
+
+/* Inner-page collage system. The home composition intentionally retains its
+   original vocabulary and positioning. */
+.page-intro h1 > .page-emblem {
+  width: clamp(220px, 29vw, 380px);
+  height: auto;
+  right: -30px;
+  top: -50px;
+  bottom: auto;
+  opacity: .94;
+  transform: rotate(-7deg);
+}
+.about-page .page-intro h1 { padding-right: 240px; }
+.work-page .page-intro h1 > .page-emblem { transform: rotate(9deg); }
+.projects-page .page-intro h1 > .page-emblem { transform: rotate(-12deg); }
+.page-intro:after { display: none; }
+.page-intro > .motif-rule { margin-top: 45px; }
+.motif-rule { color: var(--blue); width: 100%; margin: 30px 0; pointer-events: none; }
+.motif-rule svg { display: block; width: 100%; height: 32px; }
+.motif-rule-work svg { transform: scaleX(-1); }
+.motif-rule-projects { color: var(--foreground); opacity: .55; }
+.motif-rule-contact svg { transform: scaleX(-1); }
+.about-previous { border-top: 0; padding-top: 0; }
+.about-portrait > .page-emblem { width: 120px; height: 120px; bottom: -30px; right: -28px; }
+.about-portrait { isolation: isolate; }
+.about-portrait::before {
+  content: '';
+  position: absolute;
+  inset: 14px -12px 5px 14px;
+  border: 1px solid var(--blue);
+  transform: rotate(8deg);
+  z-index: -1;
+}
+.about-experience-list { gap: 20px; }
+.about-experience-line { max-width: 940px; }
+.about-chip-company { white-space: normal; }
+.about-chip-company:hover, .about-chip-company:focus-visible { background: #e4ebff; }
+.company-link-arrow { font: 17px/1 'Inter Variable', sans-serif; vertical-align: middle; }
+.experience-identity a:hover { color: #a2b6ff; }
+.theme-paper .experience-identity a:hover { color: var(--blue); }
+.experience-gallery { position: relative; }
+.experience-gallery::before {
+  content: '';
+  position: absolute;
+  inset: 20px 40% 110px 8%;
+  border: 1px solid var(--blue);
+  transform: skewY(-12deg);
+  opacity: .32;
+  z-index: -1;
+  pointer-events: none;
+}
+.experience-panel::after {
+  width: 62px;
+  height: 12px;
+  top: -7px;
+  right: 24px;
+  border: 0;
+  background: repeating-conic-gradient(var(--blue) 0 25%, transparent 0 50%) 0 0 / 12px 12px;
+}
+.project-art { isolation: isolate; }
+.project-art::after {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 1px solid #ffffff30;
+  z-index: 3;
+  pointer-events: none;
+  clip-path: polygon(0 0, 26% 0, 26% 2%, 1% 2%, 1% 24%, 0 24%, 0 0, 100% 100%, 74% 100%, 74% 98%, 99% 98%, 99% 76%, 100% 76%, 100% 100%);
+}
+.project-art-copy > .page-emblem {
+  width: 300px;
+  height: 300px;
+  left: -62px;
+  bottom: -104px;
+  opacity: .5;
+}
+.project-screen { z-index: 2; }
+.project-readify .project-art-copy > .page-emblem { opacity: .28; }
+.project-refrain .project-art-copy > .page-emblem { transform: rotate(28deg); }
+.photography-frame { position: relative; }
+.photography-frame::after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 18px;
+  right: -5px;
+  top: -8px;
+  background: repeating-conic-gradient(var(--blue) 0 25%, transparent 0 50%) 0 0 / 12px 12px;
+  pointer-events: none;
+}
+.motion-heading { border-left: 4px solid var(--blue); padding-left: 18px; }
+.contact-heading h1 > .page-emblem {
+  width: clamp(250px, 30vw, 420px);
+  top: -65px;
+  right: -25px;
+  opacity: 1;
+  transform: rotate(-8deg);
+}
+.contact-page > .motif-rule { margin: 45px 0 10px; }
+.contact-bottom { border-top: 0; }
+.cyber-backdrop:not(.cyber-backdrop--home) .fragment-orbit { opacity: .12; }
+.cyber-backdrop:not(.cyber-backdrop--home) .fragment-blue { opacity: .2; }
+.theme-paper .page-emblem { opacity: .82; }
+@media (max-width: 1100px) {
+  .page-intro h1 > .page-emblem { width: 250px; right: -30px; top: -35px; }
+  .about-page .page-intro h1 { padding-right: 170px; }
+}
+@media (max-width: 760px) {
+  .page-intro h1 > .page-emblem { width: 150px; top: -35px; right: -24px; opacity: .52; z-index: -1; }
+  .about-page .page-intro h1 { padding-right: 0; }
+  .page-intro > .motif-rule { margin-top: 30px; }
+  .motif-rule svg { height: 24px; }
+  .contact-heading h1 > .page-emblem { width: 155px; right: -30px; top: -90px; opacity: .65; }
+  .contact-page > .motif-rule { margin-top: 35px; }
+  .about-portrait > .page-emblem { width: 96px; height: 96px; right: -12px; }
+  .project-art-copy > .page-emblem { width: 175px; height: 175px; bottom: -70px; }
+}
+
+/* Let spacing separate the about sections; retain one ornament at hobbies. */
+.about-current,
+.about-next,
+.about-outside,
+.about-info-grid {
+  border-top: 0;
+}
+
+/* The iOS role leads the gallery across both desktop columns. */
+.experience-panel-0 {
+  grid-column: 1 / -1;
+}
+@media (min-width: 761px) {
+  .experience-panel-0 { transform: none; }
+  .experience-panel-1 { margin-top: 0; }
+}
+
+/* Keep the inner pages composed without repeating the same artwork. */
+.about-page { --about-copy-size: 17px; }
+.about-hero-grid {
+  grid-template-columns: minmax(0, .65fr) minmax(0, 1.35fr);
+  gap: clamp(32px, 5vw, 72px);
+}
+.about-portrait { width: min(100%, 300px); justify-self: center; padding: 0 8px 15px; }
+.about-page .about-portrait .photo { height: auto; aspect-ratio: 1; }
+.about-section-kicker { font: 600 clamp(18px, 1.7vw, 22px)/1.4 var(--mono); }
+.about-page .about-bullet-list,
+.about-page .about-experience-line { font-size: var(--about-copy-size); line-height: 1.75; }
+.about-page .about-bullet-list { margin-top: 22px; gap: 16px; }
+.about-page .about-chip,
+.about-page .about-code-link { white-space: normal; max-width: 100%; }
+.about-current, .about-outside, .about-info-card { min-width: 0; }
+.about-page .about-info-grid { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); align-items: center; gap: 50px; }
+.education-details {
+  display: grid;
+  gap: 10px;
+  justify-self: end;
+  max-width: 34rem;
+  text-align: right;
+}
+.education-degree {
+  margin: 0;
+  color: var(--foreground);
+  font: 600 clamp(20px, 2.2vw, 30px)/1.25 'Inter Variable', Arial, sans-serif;
+}
+.education-dates {
+  margin: 0;
+  color: var(--muted);
+  font: 500 clamp(15px, 1.3vw, 19px)/1.35 'Inter Variable', Arial, sans-serif;
+}
+.music-preview {
+  display: inline;
+  vertical-align: middle;
+}
+.music-joiner {
+  display: inline-block;
+  margin: 0 5px;
+  color: var(--muted);
+  font: inherit;
+  line-height: 1;
+  white-space: nowrap;
+}
+.music-card {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  padding: 3px 6px 6px;
+  background: linear-gradient(105deg, #cbd4ff, #e4e9ff);
+  color: var(--ink);
+  vertical-align: middle;
+}
+.music-track-title {
+  min-width: 0;
+  overflow: hidden;
+  font: 600 .72em/1.2 'Inter Variable', Arial, sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.music-card-controls {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 1px;
+}
+.music-card-controls button {
+  display: grid;
+  width: 14px;
+  height: 14px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+  color: var(--blue);
+  line-height: 0;
+  cursor: pointer;
+}
+.music-card-controls button:hover,
+.music-card-controls button:focus-visible { color: var(--luminous); }
+.music-card-controls button:disabled {
+  cursor: not-allowed;
+  opacity: .55;
+}
+.music-volume-control {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.music-volume-toggle {
+  width: 14px !important;
+  min-width: 14px !important;
+}
+.music-volume-popover {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  z-index: 5;
+  display: flex;
+  width: 28px;
+  height: 104px;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 5px;
+  border: 1px solid var(--blue);
+  background: var(--paper);
+  box-shadow: 3px 3px 0 var(--blue);
+  transform: translateX(-50%);
+}
+.music-volume-slider {
+  width: 17px;
+  height: 86px;
+  margin: 0;
+  accent-color: var(--blue);
+  writing-mode: vertical-lr;
+  direction: rtl;
+}
+.music-card-tracks {
+  display: none;
+}
+.music-progress {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  overflow: hidden;
+  background: #8e9bea80;
+}
+.music-progress > span {
+  display: block;
+  height: 100%;
+  background: var(--blue);
+  transition: width .12s linear;
+}
+.music-card audio { display: none; }
+.music-card {
+  justify-content: flex-start;
+}
+.music-card-controls {
+  order: 1;
+}
+.music-track-title {
+  order: 2;
+  flex: 1 1 auto;
+}
+.music-card-right-controls {
+  display: inline-flex;
+  order: 3;
+  align-items: center;
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+.music-card-right-controls button {
+  display: grid;
+  width: 14px;
+  height: 14px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--blue);
+  line-height: 0;
+  cursor: pointer;
+}
+.music-card-right-controls button:hover,
+.music-card-right-controls button:focus-visible {
+  color: var(--luminous);
+}
+.music-card-right-controls button:disabled {
+  cursor: not-allowed;
+  opacity: .55;
+}
+.music-volume-toggle {
+  display: grid !important;
+  width: 14px !important;
+  min-width: 14px !important;
+  height: 14px !important;
+}
+.project-mark { position: absolute; width: 210px; height: 158px; left: 0; bottom: -55px; opacity: .4; }
+.project-overview .project-description { margin-top: 22px; }
+.project-info > div > .tags { margin-top: 0; }
+.photo-motif-toronto { width: 112%; height: 112%; inset: -6%; transform: rotate(4deg); opacity: .55; }
+.scene-photo:hover .photo-motif-toronto,
+.scene-photo:focus-within .photo-motif-toronto { transform: rotate(0deg) scale(1.03); opacity: .8; }
+
+/* Both personal-media sections use the same cobalt index banner. */
+.hobby-heading,
+.motion-heading {
+  position: relative;
+  margin-bottom: 24px;
+  padding: 14px 18px;
+  border-left: 4px solid #fff;
+  background: linear-gradient(105deg, #172ce8 0%, #2d4df1 62%, #101a40 100%);
+  color: #fff;
+}
+.motion-heading { margin-top: 90px; }
+.hobby-heading h3,
+.hobby-heading .text-link,
+.hobby-heading .text-link:hover { color: #fff; }
+.hobby-heading .text-link { border-bottom-color: #fff; }
+.motion-heading p { color: #dbe2ff; }
+
+@media (max-width: 1000px) {
+  .about-page .about-hero-grid { grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); gap: 30px; }
+  .about-page .about-lower-grid { grid-template-columns: 1fr; gap: 48px; }
+  .about-page .page-intro h1 { padding-right: 0; font-size: clamp(48px, 7.5vw, 95px); }
+  .about-page .page-intro h1 > .page-emblem { width: 180px; opacity: .32; z-index: -1; }
+}
+@media (max-width: 700px) {
+  .about-page .about-hero-grid { grid-template-columns: 1fr; gap: 40px; }
+  .about-page .about-portrait { width: min(70vw, 260px); }
+  .about-page .about-info-grid { grid-template-columns: 1fr; gap: 28px; }
+  .education-dates { justify-self: stretch; text-align: left; font-size: 17px; }
+  .project-mark { width: 130px; height: 100px; bottom: -35px; }
+}
+.about-current,
+.about-previous,
+.about-next,
+.about-outside,
+.about-info-grid {
+  border-top: 0;
+}
+
+.about-current,
+.about-next,
+.about-outside {
+  padding-top: 0;
+}
+
+.about-bullet-list {
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.about-experience-list {
+  display: grid;
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.about-experience-item {
+  padding: 0;
+  border-bottom: 0;
+}
+
+.about-previous,
+.about-lower-grid {
+  margin-top: 88px;
+}
+
+.about-info-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);
+  gap: clamp(45px, 10vw, 150px);
+  margin-top: 88px;
+  padding-top: 0;
+}
+
+.about-info-card h2 {
+  margin-top: 18px;
+}
+
+.education-visual {
+  position: relative;
+  min-height: 220px;
+  display: flex;
+  align-items: flex-end;
+  gap: 22px;
+  padding: 28px 30px;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, transparent 0 48%, var(--blue) 48% 49%, transparent 49%),
+    radial-gradient(circle, var(--blue) 1px, transparent 1.6px) 0 0 / 9px 9px,
+    var(--surface);
+  border: 1px solid var(--line);
+}
+
+.education-visual::before,
+.education-visual::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+
+.education-visual::before {
+  inset: 15px;
+  border: 1px solid var(--blue);
+  opacity: 0.55;
+}
+
+.education-visual::after {
+  width: 96px;
+  height: 12px;
+  top: 15px;
+  right: 15px;
+  background: repeating-conic-gradient(var(--blue) 0 25%, transparent 0 50%) 0 0 / 12px 12px;
+}
+
+.education-monogram {
+  position: relative;
+  z-index: 1;
+  color: var(--blue);
+  font: 700 clamp(92px, 12vw, 180px)/0.7 var(--serif);
+  letter-spacing: -0.12em;
+}
+
+.education-visual-copy {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 5px;
+  padding-bottom: 2px;
+  color: var(--foreground);
+  font: 11px/1.35 var(--mono);
+  text-transform: lowercase;
+}
+
+.education-visual-copy span:last-child {
+  color: var(--muted);
+}
+
+.education-visual-index {
+  position: absolute;
+  top: 30px;
+  left: 31px;
+  z-index: 1;
+  color: var(--foreground);
+  font: 700 12px/1 var(--mono);
+}
+
+/* Each Work entry is a quiet variation of the same cobalt paper, with no
+   competing rotations or alternating fills. */
+.experience-panel,
+.experience-panel-0,
+.experience-panel-1,
+.experience-panel-2 {
+  transform: none;
+  margin-top: 0;
+  background: linear-gradient(135deg, #0b0d14 0%, #11172a 100%);
+  color: var(--foreground);
+  box-shadow: 7px 7px 0 #172ce8a8;
+}
+
+.theme-paper .experience-panel,
+.theme-paper .experience-panel-0,
+.theme-paper .experience-panel-1,
+.theme-paper .experience-panel-2 {
+  background: linear-gradient(135deg, #dfe3ec 0%, #cfd8f2 100%);
+}
+
+.experience-panel-0 {
+  grid-column: 1 / -1;
+}
+
+.experience-panel-1,
+.experience-panel-2 {
+  grid-column: auto;
+  margin: 0;
+  width: auto;
+  max-width: none;
+}
+
+.experience-panel::after {
+  transform: none;
+}
+
+/* Next-page links are small editorial handoff scenes rather than plain
+   dividers. Each destination gets a different object. */
+.next-page {
+  position: relative;
+  min-height: 0;
+  padding: 22px 210px 20px 0;
+  overflow: visible;
+}
+
+.next-page > span:first-child {
+  position: relative;
+  z-index: 2;
+}
+
+.next-page-chevron {
+  display: inline-block;
+  margin-left: 8px;
+  vertical-align: middle;
+  transition: transform .35s var(--ease);
+}
+
+.next-page:hover .next-page-chevron,
+.next-page:focus-visible .next-page-chevron {
+  transform: translateX(6px);
+}
+
+.next-page > .next-page-silhouette,
+.next-page > .next-page-emblem {
+  position: absolute;
+  right: 22px;
+  bottom: -2px;
+  z-index: 1;
+  width: 190px;
+  height: 190px;
+  color: var(--blue);
+  opacity: 0.9;
+  pointer-events: none;
+  transition: transform 0.55s var(--ease), opacity 0.35s ease;
+}
+
+.next-page > .next-page-emblem {
+  width: 220px;
+  height: 220px;
+  right: 0;
+  bottom: -42px;
+  transform: rotate(8deg);
+}
+
+.next-page:hover > .next-page-silhouette,
+.next-page:focus-visible > .next-page-silhouette {
+  transform: translate(-8px, -8px) rotate(-5deg);
+}
+
+.next-page:hover > .next-page-emblem,
+.next-page:focus-visible > .next-page-emblem {
+  transform: translate(-8px, -8px) rotate(14deg);
+}
+
+@media (max-width: 760px) {
+  .about-info-grid {
+    grid-template-columns: 1fr;
+    gap: 38px;
+  }
+
+  .education-visual {
+    min-height: 170px;
+  }
+
+  .next-page {
+    min-height: 0;
+    padding: 20px 115px 20px 0;
+  }
+
+  .next-page > .next-page-silhouette {
+    width: 125px;
+    height: 125px;
+    right: 4px;
+    bottom: -2px;
+  }
+
+  .next-page > .next-page-emblem {
+    width: 145px;
+    height: 145px;
+    right: -8px;
+    bottom: -28px;
+  }
+}
+
+/* A deliberately tiny bitmap face for the orbit photo indexes. */
+.photo-stack-count {
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 22px;
+  font-family: 'Minecraft Local', monospace;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: .02em;
+  line-height: 1;
+  padding: 0 5px;
+  background: #f1f1f4;
+  color: var(--blue);
+  text-align: center;
+  clip-path: none;
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+  overflow: hidden;
+  -webkit-font-smoothing: none;
+  text-rendering: geometricPrecision;
+}
+
+.photo-stack-count-text {
+  display: block;
+  transform: translateY(1px);
+}
+
+.photo-stack-count::before,
+.photo-stack-count::after {
+  display: none;
+}
+
+.photo-stack-frame > .photo-stack-count {
+  animation: photo-stack-enter .6s var(--ease) both;
+}
+
+@media (min-width: 761px) {
+  .experience-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(28px, 5vw, 72px);
+    align-items: stretch;
+  }
+
+  .experience-panel-0 {
+    grid-column: 1 / -1;
+  }
+
+  .experience-panel-1,
+  .experience-panel-2 {
+    grid-column: span 1;
+  }
+}
+
+/* Keep the expandable summaries flush with their panels after the broader
+   inner-page heading rules above. */
+.hobby-collection > summary.hobby-heading,
+.hobby-collection > summary.motion-heading {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.hobby-collection[open] > .hobby-panel {
+  animation: hobby-panel-in .34s var(--ease) both;
+}
+
+@keyframes hobby-panel-in {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hobby-collection[open] > .hobby-panel { animation: none; }
+}
+
+/* The archive tabs stay still when opened; only the symbol changes from plus
+   to minus. A complete frame around the panel keeps every image inside its
+   parent collection. */
+.hobby-collection > summary.hobby-heading,
+.hobby-collection > summary.motion-heading {
+  background: linear-gradient(105deg, #070b2b 0%, #0d1768 58%, #050816 100%);
+}
+
+.hobby-toggle {
+  font-size: 0;
+  transform: none;
+}
+
+.hobby-toggle::before {
+  content: '+';
+  font-size: 22px;
+}
+
+.hobby-collection[open] .hobby-toggle,
+.hobby-collection[open] .hobby-toggle::before {
+  transform: none;
+}
+
+.hobby-collection[open] .hobby-toggle::before {
+  content: '−';
+}
+
+.hobby-panel {
+  border: 1px solid var(--blue);
+  border-top: 0;
+}
+
+@media (max-width: 700px) {
+  .education-details {
+    justify-self: stretch;
+    max-width: none;
+    text-align: left;
+  }
+
+  .education-dates {
+    text-align: left;
+  }
+}
+
+/* Education reads as one horizontal entry on desktop: school on the left,
+   degree and dates stacked on the right. */
+.about-page .about-info-grid {
+  grid-template-columns: minmax(0, 1.25fr) minmax(260px, .75fr);
+  gap: clamp(28px, 6vw, 86px);
+  align-items: center;
+}
+
+.about-page .about-info-card h2 {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font: 400 clamp(42px, 5vw, 72px)/1.02 var(--serif);
+}
+
+.about-page .education-details {
+  justify-self: stretch;
+  max-width: none;
+  text-align: left;
+}
+
+.about-page .education-degree {
+  color: var(--muted);
+  font-size: clamp(17px, 1.55vw, 23px);
+  font-weight: 500;
+}
+
+.about-page .education-dates {
+  color: var(--muted);
+  font-size: clamp(15px, 1.3vw, 19px);
+}
+
+.about-page .about-section-kicker {
+  color: #000;
+}
+
+.theme-dark .about-page .about-section-kicker {
+  color: var(--foreground);
+}
+
+/* The global details rule rotates direct summary spans for older accordions.
+   These archive tabs use a separate plus/minus control, so their labels stay
+   level when a collection opens. */
+.hobby-collection[open] > summary > span {
+  transform: none;
+}
+
+/* Keep the about page jot lists compact enough to scan as a single rhythm. */
+.about-page .about-bullet-list {
+  gap: 12px;
+  line-height: 1.6;
+}
+
+.about-page .about-experience-list {
+  gap: 10px;
+}
+
+.about-page .about-experience-line {
+  line-height: 1.55;
+}
+
+@media (max-width: 700px) {
+  .about-page .about-info-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .about-page .education-details {
+    text-align: left;
+  }
+}
+
+/* Expand and collapse the hobby archives in both directions. Keeping the
+   panel in the layout lets the close animation finish before it disappears. */
+.hobby-collection > .hobby-panel {
+  display: grid !important;
+  grid-template-rows: 0fr;
+  max-height: none;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  animation: none !important;
+  transition:
+    grid-template-rows .46s var(--ease),
+    padding .46s var(--ease),
+    border-color .46s ease,
+    opacity .24s ease;
+}
+
+.hobby-collection > .hobby-panel > .hobby-panel-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.hobby-collection[open] > .hobby-panel {
+  grid-template-rows: 1fr;
+  padding: 24px 18px 20px;
+  border: 1px solid var(--blue);
+  border-top: 0;
+  opacity: 1;
+}
+
+.hobby-toggle {
+  position: relative;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid #ffffffb8;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 0;
+  line-height: 0;
+  transform: none !important;
+}
+
+.hobby-toggle::before {
+  content: none !important;
+  display: none !important;
+}
+
+.hobby-toggle svg {
+  grid-area: 1 / 1;
+  display: block;
+}
+
+.hobby-toggle-minus {
+  display: none !important;
+}
+
+.hobby-collection[open] .hobby-toggle-plus {
+  display: none;
+}
+
+.hobby-collection[open] .hobby-toggle-minus {
+  display: block !important;
+}
+
+@media (max-width: 760px) {
+  .hobby-collection[open] > .hobby-panel {
+    padding: 18px 12px 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hobby-collection > .hobby-panel {
+    transition: none;
+  }
+}
+
+/* Use a fresh height transition for every toggle. Native details keeps the
+   panel mounted here so closing can animate instead of disappearing at once. */
+.hobby-collection > .hobby-panel {
+  display: block !important;
+  max-height: 0;
+  grid-template-rows: none;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition:
+    max-height .48s var(--ease),
+    padding .48s var(--ease),
+    border-color .48s ease,
+    opacity .24s ease,
+    visibility 0s linear .48s;
+}
+
+.hobby-collection[open] > .hobby-panel {
+  max-height: 2400px;
+  padding: 24px 18px 20px;
+  border: 1px solid var(--blue);
+  border-top: 0;
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+@media (max-width: 760px) {
+  .hobby-collection[open] > .hobby-panel {
+    padding: 18px 12px 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hobby-collection > .hobby-panel,
+  .hobby-collection[open] > .hobby-panel {
+    transition: none;
+  }
+}
+
+.hobby-heading .text-link,
+.hobby-heading .text-link:hover,
+.hobby-heading .text-link:focus-visible {
+  border-bottom: 0;
+  color: #ffffff80;
+  opacity: 1;
+  text-decoration: none;
+}
+
+.hobby-heading .text-link:hover,
+.hobby-heading .text-link:focus-visible {
+  color: #ffffffc7;
+}
+
+/* The archive tabs use the cobalt field itself; no white rail on the edge. */
+.hobby-heading,
+.motion-heading {
+  border: 1px solid color-mix(in srgb, var(--blue) 68%, transparent);
+  border-left: 1px solid color-mix(in srgb, var(--blue) 68%, transparent) !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--blue) 68%, transparent);
+}
+
+.hobby-collection {
+  border: 0;
+}
+
+.hobby-collection[open] > summary.hobby-heading {
+  border-bottom-color: transparent;
+}
+
+/* The panel state is controlled in React so native details timing cannot
+   swallow the close transition. The class changes on every click. */
+.hobby-collection > .hobby-panel {
+  display: block !important;
+  max-height: 0;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  will-change: max-height, opacity, padding;
+  transition:
+    max-height .48s var(--ease),
+    padding .48s var(--ease),
+    border-color .48s ease,
+    opacity .24s ease,
+    visibility 0s linear .48s;
+}
+
+.hobby-collection > .hobby-panel.is-open {
+  max-height: 2400px;
+  padding: 24px 18px 20px;
+  border: 1px solid color-mix(in srgb, var(--blue) 68%, transparent);
+  border-top: 0;
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+@media (max-width: 760px) {
+  .hobby-collection > .hobby-panel.is-open {
+    padding: 18px 12px 14px;
+  }
+}
+
+@media (min-width: 701px) {
+  .about-page .education-details {
+    transform: translateY(22px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hobby-collection > .hobby-panel,
+  .hobby-collection > .hobby-panel.is-open {
+    transition: none;
+  }
+}
+
+/* Animate the measured panel height so every open and close is visible. A
+   fixed max-height makes shorter panels appear to snap, especially on repeat
+   toggles. The React hook supplies the exact inline height for this frame. */
+.hobby-collection > .hobby-panel,
+.hobby-collection > .hobby-panel.is-open {
+  height: 0;
+  max-height: none !important;
+  will-change: height, opacity, padding;
+  transition:
+    height .48s var(--ease),
+    padding .48s var(--ease),
+    border-color .48s ease,
+    opacity .24s ease,
+    visibility 0s linear .48s;
+}
+
+.hobby-collection > .hobby-panel.is-open {
+  /* height is set from scrollHeight by usePanelMotion */
+  height: var(--hobby-panel-height, auto);
+  transition:
+    height .48s var(--ease),
+    padding .48s var(--ease),
+    border-color .48s ease,
+    opacity .24s ease,
+    visibility 0s linear 0s;
+}
+
+/* Keep the close frame visible long enough for the measured height to travel
+   back to zero. */
+.hobby-collection > .hobby-panel:not(.is-open) {
+  transition:
+    height .48s var(--ease),
+    padding .48s var(--ease),
+    border-color .48s ease,
+    opacity .3s ease .12s,
+    visibility 0s linear .48s;
+}
+
+/* The archive headers are controlled buttons now, so the links can remain
+   real links without nesting interactive elements inside a native summary. */
+.hobby-heading-trigger {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.hobby-heading-trigger:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: -4px;
+}
+
+.hobby-collection.is-open > .hobby-heading {
+  border-bottom-color: transparent;
+}
+
+.hobby-collection.is-open .hobby-toggle-plus {
+  display: none !important;
+}
+
+.hobby-collection.is-open .hobby-toggle-minus {
+  display: block !important;
+}
+
+/* The header and panel are one continuous archive frame. The older details
+   spacing rules left a title-sized gap above the panel and pushed the second
+   archive far below the first one. */
+.hobby-heading,
+.motion-heading {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.hobby-collection + .hobby-collection {
+  margin-top: 28px;
+}
+
+.motion-collection > .hobby-panel.is-open {
+  padding-bottom: clamp(30px, 3.2vw, 44px);
+}
+
+@media (max-width: 760px) {
+  .hobby-collection + .hobby-collection {
+    margin-top: 20px;
+  }
+
+  .motion-collection > .hobby-panel.is-open {
+    padding-bottom: 26px;
+  }
+}
+
+.about-page .education-dates {
+  font-weight: 400;
+}
+
+.brand-mark {
+  display: inline-grid;
+  width: 1.28em;
+  height: 1.28em;
+  flex: 0 0 1.28em;
+  place-items: center;
+  border-radius: 2px;
+  background: #172039;
+  color: #fff;
+  font: 800 .62em/1 var(--mono);
+  letter-spacing: -.06em;
+  text-align: center;
+  vertical-align: -.14em;
+}
+
+.brand-mark svg {
+  display: block;
+  width: 78%;
+  height: 78%;
+}
+
+.brand-mark-waterloo {
+  background: #f3cc4b;
+  color: #4d1a2d;
+  clip-path: polygon(50% 0, 92% 16%, 84% 72%, 50% 100%, 16% 72%, 8% 16%);
+}
+
+.brand-mark-readify {
+  background: #1c52e8;
+}
+
+.brand-mark-dmoj {
+  background: #7046d8;
+}
+
+.brand-mark-leetcode {
+  background: #f09a32;
+  color: #20150a;
+  letter-spacing: -.1em;
+}
+
+.brand-mark-github {
+  background: #25283a;
+}
+
+.brand-mark-linkedin {
+  background: #0a66c2;
+}
+
+.brand-mark-instagram {
+  background: #d94678;
+}
+
+.brand-mark-youtube {
+  background: #f04455;
+  font-size: .56em;
+  letter-spacing: -.12em;
+}
+
+.about-code-link .brand-mark,
+.about-chip-blue .brand-mark {
+  margin-right: 2px;
+}
+
+.hobby-heading .brand-mark {
+  width: 1.05em;
+  height: 1.05em;
+  flex-basis: 1.05em;
+  margin-right: 5px;
+  background: #ffffff24;
+  color: #fff;
+  font-size: .7em;
+}
+
+.site-footer-links .brand-mark {
+  width: 1.15em;
+  height: 1.15em;
+  flex-basis: 1.15em;
+  margin-right: 4px;
+  font-size: .7em;
+}
+
+/* The archive tabs are a single cobalt field; only the expanded content
+   carries the cobalt frame. */
+.hobby-heading,
+.motion-heading {
+  border: 0 !important;
+  background: var(--blue) !important;
+}
+
+.hobby-collection > .hobby-panel.is-open {
+  border-color: var(--blue);
+  border-top: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hobby-collection > .hobby-panel,
+  .hobby-collection > .hobby-panel.is-open {
+    transition: none;
   }
 }

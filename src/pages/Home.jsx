@@ -32,7 +32,7 @@ export default function Home({ headingRef }) {
       <a
         href="#about"
         className="scene-object about-object"
-        aria-label="about — the person behind the screen"
+        aria-label="about · the person behind the screen"
       >
         <PhotoStack
           photos={photographGroups.spain}

@@ -1,15 +1,17 @@
+import { ChevronsRight } from 'lucide-react'
 import { experience } from '../data/portfolio'
-import { PageIntro, Star } from '../components/Editorial'
+import { PageIntro } from '../components/Editorial'
+import PageEmblem from '../components/PageEmblem'
 import Silhouette from '../components/Silhouette'
 
 export default function Work({ headingRef }) {
   return (
     <div className="inner-page work-page">
-      <PageIntro headingRef={headingRef}>
-        some of the places
+      <PageIntro headingRef={headingRef} motif="work">
+        some of my
         <br />
-        i’ve <em>worked.</em>
-        <Star />
+        <em>contributions</em>
+        <PageEmblem kind="work" />
       </PageIntro>
       <div className="experience-gallery">
         {experience.map((item, index) => (
@@ -19,7 +21,7 @@ export default function Work({ headingRef }) {
           >
             <div className="experience-identity">
               <img src={item.logo} alt="" loading="lazy" />
-              <h2>{item.company}</h2>
+              <h2><a href={item.website} target="_blank" rel="noreferrer">{item.company}<span className="company-link-arrow" aria-hidden="true"> ↗</span><span className="sr-only"> (opens in a new tab)</span></a></h2>
             </div>
             <p className="experience-role">{item.role}</p>
             <p className="experience-meta">
@@ -33,14 +35,12 @@ export default function Work({ headingRef }) {
             </div>
           </article>
         ))}
-        <div className="work-aside" aria-hidden="true">
-          <Silhouette kind="bear" />
-        </div>
       </div>
       <a className="next-page" href="#projects">
         <span>
-          see what i’m making <i>↗</i>
+          see what i’m making <ChevronsRight className="next-page-chevron" aria-hidden="true" size={22} strokeWidth={1.8} />
         </span>
+        <Silhouette kind="quill" className="next-page-silhouette" />
       </a>
     </div>
   )

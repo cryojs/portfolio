@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { chapters, resolveRoute } from './data/chapters'
 import { profile } from './data/portfolio'
-import { Star } from './components/Editorial'
+import { BrandMark, Star } from './components/Editorial'
 import CyberBackdrop from './components/CyberGraphics'
 import Home from './pages/Home'
 import About from './pages/About'
@@ -165,8 +165,8 @@ export default function App() {
         skip to content
       </a>
       <header className="site-header">
-        <a href="#home" className="wordmark" aria-label="Jason Sun — home">
-          <Star />
+        <a href="#home" className="wordmark" aria-label="Jason Sun · home">
+          <Star monogram />
           <span>jason sun</span>
         </a>
         <nav ref={navRef} aria-label="Main navigation">
@@ -225,10 +225,10 @@ export default function App() {
         <span>© {new Date().getFullYear()} jason sun</span>
         <span className="site-footer-links">
           <a href={profile.links.linkedin} target="_blank" rel="noreferrer">
-            linkedin ↗
+            <BrandMark brand="linkedin" /> LinkedIn ↗
           </a>
           <a href={profile.links.github} target="_blank" rel="noreferrer">
-            github ↗
+            <BrandMark brand="github" /> GitHub ↗
           </a>
         </span>
       </footer>

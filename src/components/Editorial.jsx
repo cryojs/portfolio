@@ -1,6 +1,8 @@
 import { useState } from 'react'
+import { MotifRule } from './PageEmblem'
+import { GithubIcon, LinkedinIcon } from './Icons'
 
-export function Star({ className = '', ...props }) {
+export function Star({ className = '', monogram = false, ...props }) {
   return (
     <svg
       viewBox="0 0 200 200"
@@ -10,6 +12,9 @@ export function Star({ className = '', ...props }) {
       {...props}
     >
       <path d="M100 0L123 76L200 100L124 123L100 200L76 124L0 100L76 76Z" />
+      {monogram && <g fill="none" stroke="var(--graphic-cutout)" strokeWidth="6" strokeLinecap="square" strokeLinejoin="miter">
+        <path d="M79 87h12v24l-5 5h-9v-7M119 87h-16v12h15v16h-17" />
+      </g>}
     </svg>
   )
 }
@@ -68,7 +73,7 @@ export function Photo({ photo, className = '' }) {
         <div
           className="photo-empty"
           role="img"
-          aria-label={`${photo.alt} — photograph to come`}
+          aria-label={`${photo.alt} · photograph to come`}
         >
           <span className="photo-cross">+</span>
           <span className="photo-empty-label">
@@ -105,42 +110,69 @@ export function PhotoStack({ photos, className = '' }) {
           <button
             className="photo-stack-control"
             type="button"
-            onClick={() => setActiveIndex(nextIndex)}
+            onClick={(event) => {
+              setActiveIndex(nextIndex)
+              // Pointer clicks should release :focus-within so the scene can
+              // leave its hover state when the pointer exits the photograph.
+              if (event.detail > 0) event.currentTarget.blur()
+            }}
             aria-label={`flip to photo ${nextIndex + 1} of ${photos.length}`}
           />
         )}
+        {photos.length > 1 && (
+          <span key={`counter-${photo.src}`} className="photo-stack-count" aria-live="polite">
+            <span className="photo-stack-count-text">{activeIndex + 1}/{photos.length}</span>
+          </span>
+        )}
       </div>
-      {photos.length > 1 && (
-        <span className="photo-stack-count" aria-live="polite">
-          {activeIndex + 1}/{photos.length}
-        </span>
-      )}
     </div>
   )
 }
 
-export function ExternalLink({ href, children, className = '' }) {
+export function ExternalLink({ href, children, className = '', ...props }) {
   return (
     <a
       className={`text-link ${className}`}
       href={href}
       target="_blank"
       rel="noreferrer"
+      {...props}
     >
       {children}
-      <span aria-hidden="true">↗</span>
+      <span className="external-link-arrow" aria-hidden="true">↗</span>
       <span className="sr-only"> (opens in a new tab)</span>
     </a>
   )
 }
 
-export function PageIntro({ children, description, headingRef }) {
+const brandLabels = {
+  waterloo: 'W',
+  readify: 'R',
+  dmoj: 'D',
+  leetcode: 'LC',
+  github: null,
+  linkedin: null,
+  instagram: '◎',
+  youtube: '▶',
+}
+
+export function BrandMark({ brand }) {
+  const Icon = brand === 'github' ? GithubIcon : brand === 'linkedin' ? LinkedinIcon : null
+  return (
+    <span className={`brand-mark brand-mark-${brand}`} aria-hidden="true">
+      {Icon ? <Icon size={13} strokeWidth={2.2} /> : brandLabels[brand] || brand.slice(0, 1).toUpperCase()}
+    </span>
+  )
+}
+
+export function PageIntro({ children, description, headingRef, motif }) {
   return (
     <div className="page-intro">
       <h1 tabIndex={-1} ref={headingRef}>
         {children}
       </h1>
       {description && <p className="page-description">{description}</p>}
+      {motif && <MotifRule variant={motif} />}
     </div>
   )
 }

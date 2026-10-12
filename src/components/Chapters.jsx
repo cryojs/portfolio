@@ -39,7 +39,7 @@ export function AboutContent({ education, profile, skillGroups }) {
   </div>
 }
 function Contact({ profile }) {
-  return <section className="contact-content"><a className="email-link" href={`mailto:${profile.email}`}>{profile.email} <span aria-hidden="true">↗</span></a><div className="contact-links"><ExternalLink href={profile.links.github}>github</ExternalLink><ExternalLink href={profile.links.linkedin}>linkedin</ExternalLink></div></section>
+  return <section className="contact-content"><a className="email-link" href={`mailto:${profile.email}`}>{profile.email} <span aria-hidden="true">↗</span></a><div className="contact-links"><ExternalLink href={profile.links.github}>GitHub</ExternalLink><ExternalLink href={profile.links.linkedin}>LinkedIn</ExternalLink></div></section>
 }
 export function ChapterContent(props) {
   if (props.chapter === 'work') return <Experience experience={props.experience}/>

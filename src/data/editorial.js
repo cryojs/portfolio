@@ -78,8 +78,13 @@ export const aboutCopy = {
     'My projects take different forms: a more comfortable way to read the web, a place to focus, a tool for testing interfaces, and a game with its own level editor. I’m interested in the details that make software feel better to use.',
   learning:
     'Competitive programming gives me a different kind of challenge: finding the structure in a difficult problem. Building software asks me to turn that understanding into something someone can actually use.',
-  // Add verified hobbies / personal stories here when ready. Never invent them.
-  outside: '',
+  next: [
+    'keep building things that make the web feel more comfortable.',
+    'keep learning by getting stuck on harder problems.',
+    'make more room for travel, photographs, and new places.',
+  ],
+  // Keep these easy to edit as more personal details become part of the site.
+  outside: ['travel / photography', 'competitive programming', 'good questions'],
 }
 
 // These captions describe the existing project functionality, not unverified individual contributions.

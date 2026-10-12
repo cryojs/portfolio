@@ -1,5 +1,19 @@
 # Personal photographs
 
+## About hobby gallery
+
+The photography selection is in `src/data/hobbies.js` (`photography`). The current
+four entries are existing travel photos, not a selection verified against Instagram.
+Save your chosen @cryojs exports in this directory and update `src`, `alt`, and
+`caption` there. The gallery supports click-to-enlarge.
+
+The same data file contains the seven YouTube edits in newest-first order.
+No local videos are required for YouTube embeds. For faster hover previews,
+place short muted MP4 exports in `public/videos/` and set each edit's `previewSrc`
+to `/videos/filename.mp4`. Full playback still opens the YouTube player with sound
+enabled and a direct YouTube fallback link. Browser autoplay rules and each video's
+embedding permissions can affect playback.
+
 Add Jason’s actual images here. No fictional portraits or stock people are used.
 
 In `src/data/editorial.js`, update `photographs.portrait` and `photographs.everyday`:

@@ -16,7 +16,7 @@ export const education = {
   school: 'University of Waterloo',
   degree: 'Bachelor of Computer Science, Co-op',
   location: 'Waterloo, ON',
-  dates: 'Sept. 2026 — expected May 2031',
+  dates: 'Sept. 2026 to expected May 2031',
 }
 
 export const experience = [
@@ -25,9 +25,11 @@ export const experience = [
     tech: ['Swift', 'SwiftUI', 'UIKit'],
     role: 'iOS Developer (Co-op)',
     company: 'Career Education Council',
+    website: 'https://www.careereducationcouncil.ca/',
+    shortContribution: 'built 10 iOS apps with Swift, UIKit, and SwiftUI.',
     logo: '/logos/develop-the-future-program.jpg',
     location: 'Remote',
-    dates: 'Sept. 2024 — Jan. 2025',
+    dates: 'Sept. 2024 to Jan. 2025',
     highlights: [
       'Built 10 iOS applications in Swift, UIKit, and SwiftUI through an Apple-supported development program, incorporating code and UX feedback from industry engineers into each release.',
       'Designed and built a SwiftUI productivity app prototype and presented the finished application, visual presentation, and elevator pitch to a panel of industry developers and judges.',
@@ -38,9 +40,11 @@ export const experience = [
     tech: ['Open source', 'Algorithms', 'Editorials'],
     role: 'Open Source Contributor',
     company: 'USACO Guide',
+    website: 'https://usaco.guide/',
+    shortContribution: 'contributed 6 pull requests with algorithm explanations, solutions, and test cases.',
     logo: '/logos/cpinitiative.jpg',
     location: 'Remote',
-    dates: 'Oct. 2024 — Dec. 2024',
+    dates: 'Oct. 2024 to Dec. 2024',
     highlights: [
       'Authored 6 pull requests adding editorial solutions, test cases, and algorithmic guides for competitive programmers.',
     ],
@@ -50,6 +54,8 @@ export const experience = [
     tech: ['Python', 'Teaching', 'Mentorship'],
     role: 'Computer Camp Assistant',
     company: 'Three-Flavors Summer Camp',
+    website: 'https://threeflavors.org/',
+    shortContribution: 'taught Python and programming fundamentals to 15+ students.',
     logo: '/logos/threeflavors.webp',
     location: 'Richmond Hill, ON',
     dates: 'July 2023',
@@ -100,7 +106,7 @@ export const projects = [
   {
     id: 'refrain',
     title: 'Refrain',
-    dates: 'July 2026 — Sept. 2026',
+    dates: 'July 2026 to Sept. 2026',
     description: 'A customizable Pomodoro workspace with accurate background timers, reorderable tasks, notes, and live activity visualizations.',
     tech: ['Next.js', 'React', 'TypeScript', 'dnd-kit', 'Recharts'],
     github: 'https://github.com/CryoJS/refrain',
@@ -116,7 +122,7 @@ export const projects = [
   {
     id: 'tidebreak',
     title: 'Tidebreak',
-    dates: 'Apr. 2026 — July 2026',
+    dates: 'Apr. 2026 to July 2026',
     description: 'A 2D platformer with custom movement and water physics, plus a complete in-game level editor with undo and redo.',
     tech: ['C#', 'MonoGame', 'Gum UI'],
     github: 'https://github.com/CryoJS/tidebreak',

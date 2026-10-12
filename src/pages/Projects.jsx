@@ -1,13 +1,17 @@
 import { useState } from 'react'
+import { ChevronsRight } from 'lucide-react'
 import { projects } from '../data/portfolio'
 import { projectEditorial } from '../data/editorial'
-import { ExternalLink, PageIntro, Star } from '../components/Editorial'
+import { ExternalLink, PageIntro } from '../components/Editorial'
+import PageEmblem from '../components/PageEmblem'
+import Silhouette from '../components/Silhouette'
+import ProjectMark from '../components/ProjectMark'
 
 function ProjectImage({ src, alt, ...props }) {
   const [failed, setFailed] = useState(false)
   return failed ? (
     <div className="missing-media">
-      screenshot unavailable — explore the source below.
+      screenshot unavailable · explore the source below.
     </div>
   ) : (
     <img
@@ -20,23 +24,15 @@ function ProjectImage({ src, alt, ...props }) {
   )
 }
 
-export default function Projects({ headingRef, anchor }) {
+export default function Projects({ headingRef }) {
   return (
     <div className="inner-page projects-page">
-      <PageIntro headingRef={headingRef}>
-        from a thought
+      <PageIntro headingRef={headingRef} motif="projects">
+        from thought
         <br />
-        to a <em>thing.</em>
-        <Star />
+        to <em>thing</em>
+        <PageEmblem kind="projects" />
       </PageIntro>
-      <nav className="project-index" aria-label="Project index">
-        {projects.map((item) => (
-          <a href={`#projects/${item.id}`} key={item.id}>
-            {item.title}
-            <span aria-hidden="true">↘</span>
-          </a>
-        ))}
-      </nav>
       <div className="project-spreads">
         {projects.map((item) => {
           const editorial = projectEditorial[item.id] || {
@@ -74,7 +70,7 @@ export default function Projects({ headingRef, anchor }) {
                       </span>
                     ))}
                   </p>
-                  <Star />
+                  <ProjectMark kind={item.id} />
                 </div>
                 <a
                   className="project-screen"
@@ -92,46 +88,16 @@ export default function Projects({ headingRef, anchor }) {
                 </a>
               </div>
               <div className="project-info">
-                <h2 tabIndex={-1}>{item.title}</h2>
-                <div>
+                <div className="project-overview">
+                  <h2 tabIndex={-1}>{item.title}</h2>
                   <p className="project-description">{item.description}</p>
+                </div>
+                <div>
                   <ul className="tags" aria-label="Technologies">
                     {item.tech.map((tech) => (
                       <li key={tech}>{tech}</li>
                     ))}
                   </ul>
-                  <details
-                    key={`${item.id}-${anchor === `project-${item.id}`}`}
-                    open={anchor === `project-${item.id}` || undefined}
-                  >
-                    <summary>
-                      take a closer look <span aria-hidden="true">+</span>
-                    </summary>
-                    <div className="project-details">
-                      <p>{editorial.detail}</p>
-                      {editorial.contribution && (
-                        <p>{editorial.contribution}</p>
-                      )}
-                      {item.media.video && (
-                        <video
-                          controls
-                          preload="none"
-                          poster={item.media.image}
-                          aria-label="Readify product demonstration"
-                        >
-                          <source src={item.media.video} type="video/webm" />
-                        </video>
-                      )}
-                      {item.media.editor && (
-                        <ProjectImage
-                          src={item.media.editor}
-                          alt="Tidebreak in-game level editor"
-                          width={1783}
-                          height={1018}
-                        />
-                      )}
-                    </div>
-                  </details>
                   <div className="project-links">
                     <ExternalLink href={item.github}>source code</ExternalLink>
                     {item.live && (
@@ -151,8 +117,9 @@ export default function Projects({ headingRef, anchor }) {
       </div>
       <a className="next-page" href="#contact">
         <span>
-          let’s talk about it <i>↗</i>
+          let’s talk about it <ChevronsRight className="next-page-chevron" aria-hidden="true" size={22} strokeWidth={1.8} />
         </span>
+        <Silhouette kind="letter" className="next-page-silhouette" />
       </a>
     </div>
   )
