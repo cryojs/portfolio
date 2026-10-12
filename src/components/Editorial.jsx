@@ -163,6 +163,8 @@ const brandLabels = {
   leetcode: 'LC',
   github: null,
   linkedin: null,
+  chrome: 'C',
+  firefox: 'F',
   instagram: '◎',
   youtube: '▶',
 }
@@ -174,6 +176,8 @@ const brandImages = {
   leetcode: '/logos/leetcode.png',
   github: '/logos/github.svg',
   linkedin: '/logos/linkedin.webp',
+  chrome: '/logos/chrome-store.webp',
+  firefox: '/logos/firefox.webp',
 }
 
 export function BrandMark({ brand }) {
@@ -183,6 +187,20 @@ export function BrandMark({ brand }) {
   return <span className={className} aria-hidden="true">
     {image ? <img src={image} alt="" /> : Icon ? <Icon size={13} strokeWidth={2.2} /> : brandLabels[brand] || brand.slice(0, 1).toUpperCase()}
   </span>
+}
+
+export function AboutLinkBadge({ href, brand, image, children, external = false, className = '', ...props }) {
+  const badgeClassName = `about-link-badge${brand ? ` about-link-badge-${brand}` : ''}${className ? ` ${className}` : ''}`
+  const mark = image
+    ? <span className="brand-mark brand-mark-image" aria-hidden="true"><img src={image} alt="" /></span>
+    : <BrandMark brand={brand} />
+  const content = <>{mark}{children}</>
+
+  if (external) {
+    return <ExternalLink href={href} className={badgeClassName} {...props}>{content}</ExternalLink>
+  }
+
+  return <a href={href} className={badgeClassName} {...props}>{content}</a>
 }
 
 export function PageIntro({ children, description, headingRef, motif }) {

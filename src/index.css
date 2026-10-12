@@ -4298,9 +4298,6 @@ summary {
   .about-experience-line {
     font-size: 17px;
   }
-  .about-chip-company {
-    white-space: normal;
-  }
   .about-experience-details p {
     font-size: 15px;
   }
@@ -4313,69 +4310,10 @@ summary {
   }
 }
 
-/* Inline profile links read like small code labels, so useful destinations
-   stay visible inside the sentence that gives them context. */
-.about-code-link,
-.about-code-link.text-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  margin: 0 2px;
-  padding: 3px 7px 4px;
-  border: 1px solid color-mix(in srgb, var(--blue) 76%, white);
-  background: var(--blue);
-  color: white;
-  font: 800 0.78em/1.2 var(--mono);
-  letter-spacing: 0.02em;
-  text-decoration: none;
-  text-transform: none;
-  white-space: nowrap;
-  clip-path: polygon(0 0, 96% 0, 100% 76%, 4% 100%);
-  transition: transform 0.25s var(--ease), filter 0.25s ease;
-}
-.about-code-link:hover,
-.about-code-link:focus-visible,
-.about-code-link.text-link:hover,
-.about-code-link.text-link:focus-visible {
-  color: white;
-  filter: brightness(1.16);
-  transform: translateY(-2px) rotate(-1deg);
-}
 .about-experience-mark {
   font-size: 24px;
   line-height: 1.25;
   letter-spacing: 0;
-}
-
-/* Keep profile destinations legible as part of the sentence rather than
-   turning every link into a separate bright badge. */
-.about-code-link,
-.about-code-link.text-link {
-  display: inline;
-  margin: 0 0.16em;
-  padding: 1px 4px 2px;
-  border: 0;
-  border-bottom: 1px solid currentColor;
-  background: color-mix(in srgb, var(--blue) 9%, transparent);
-  color: var(--blue);
-  font: 700 0.82em/1.3 var(--mono);
-  letter-spacing: 0.015em;
-  border-radius: 0;
-  clip-path: inset(0);
-  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
-}
-.about-code-link > .external-link-arrow {
-  display: none;
-}
-.about-code-link:hover,
-.about-code-link:focus-visible,
-.about-code-link.text-link:hover,
-.about-code-link.text-link:focus-visible {
-  color: white;
-  background: var(--blue);
-  border-bottom-color: var(--blue);
-  filter: none;
-  transform: none;
 }
 
 /* Previously is a jot list, not a stack of separated cards. */
@@ -4398,136 +4336,6 @@ summary {
   color: var(--muted);
   font-size: 17px;
   line-height: 1.7;
-}
-
-.about-chip-company {
-  border-radius: 0;
-  clip-path: inset(0);
-}
-.about-chip-company:hover,
-.about-chip-company:focus-visible {
-  transform: translateY(-2px);
-  filter: brightness(1.12);
-}
-
-/* Keep every inline destination on the same baseline as its sentence. */
-.about-chip-company,
-.about-code-link,
-.about-code-link.text-link {
-  vertical-align: middle;
-}
-
-/* Profile links use the same rectangular label language as the role chips. */
-.about-code-link,
-.about-code-link.text-link {
-  display: inline-flex;
-  align-items: center;
-  margin: 0 0.16em;
-  padding: 3px 7px 4px;
-  border: 0;
-  border-radius: 0;
-  background: var(--blue);
-  color: white;
-  font: 700 0.82em/1.2 var(--mono);
-  letter-spacing: 0.015em;
-  text-decoration: none;
-  white-space: nowrap;
-  clip-path: inset(0);
-  transition: color 0.2s ease, background 0.2s ease, transform 0.2s var(--ease);
-}
-.about-code-link:hover,
-.about-code-link:focus-visible,
-.about-code-link.text-link:hover,
-.about-code-link.text-link:focus-visible {
-  color: white;
-  background: var(--luminous);
-  transform: translateY(-2px);
-}
-
-/* The profile destinations share the same soft label language as the
-   organizations in the contribution list. */
-.about-code-link,
-.about-code-link.text-link {
-  padding: 3px 5px 4px;
-  --badge-bg: #d8ddff;
-  background: var(--badge-bg);
-  color: var(--ink);
-  font: 600 0.82em/1.2 'Inter Variable', sans-serif;
-  letter-spacing: 0;
-}
-.about-code-link.about-code-link-readify {
-  --badge-bg: #d9d2ff;
-  background: var(--badge-bg);
-}
-.about-code-link.about-code-link-dmoj {
-  --badge-bg: #f7e5a3;
-  background: var(--badge-bg);
-}
-.about-code-link.about-code-link-leetcode {
-  --badge-bg: #f6d19d;
-  background: var(--badge-bg);
-}
-.about-code-link.about-code-link-github {
-  --badge-bg: #dedede;
-  background: var(--badge-bg);
-}
-.about-code-link.about-code-link-linkedin {
-  --badge-bg: #c8e1f4;
-  background: var(--badge-bg);
-}
-.about-code-link:hover,
-.about-code-link:focus-visible,
-.about-code-link.text-link:hover,
-.about-code-link.text-link:focus-visible {
-  color: var(--ink);
-  filter: brightness(1.06);
-  transform: translateY(-2px);
-}
-.about-code-link.about-code-link-readify:is(:hover, :focus-visible) {
-  background: color-mix(in srgb, white 50%, var(--badge-bg));
-}
-.about-code-link.about-code-link-dmoj:is(:hover, :focus-visible) {
-  background: color-mix(in srgb, white 50%, var(--badge-bg));
-}
-.about-code-link.about-code-link-leetcode:is(:hover, :focus-visible) {
-  background: color-mix(in srgb, white 50%, var(--badge-bg));
-}
-.about-code-link.about-code-link-github:is(:hover, :focus-visible) {
-  background: color-mix(in srgb, white 50%, var(--badge-bg));
-}
-.about-code-link.about-code-link-linkedin:is(:hover, :focus-visible) {
-  background: color-mix(in srgb, white 50%, var(--badge-bg));
-}
-
-/* Keep every current link at the same compact height as Readify. */
-.about-code-link,
-.about-code-link.text-link {
-  min-height: 0;
-  height: auto;
-}
-
-/* All About-page badges share one small lift, expansion, and white-wash on
-   hover so the current and previously lists feel like one link system. */
-.about-page .about-chip:hover,
-.about-page .about-chip:focus-visible,
-.about-page .about-code-link:hover,
-.about-page .about-code-link:focus-visible {
-  background: color-mix(in srgb, white 50%, var(--badge-bg));
-  filter: none;
-  transform: translateY(-1.5px) scale(1.02);
-}
-
-/* Waterloo carries a warm gold chip that echoes the crest while matching the
-   rectangular geometry of the other profile badges. */
-.about-chip-waterloo {
-  min-height: 0;
-  padding: 3px 5px 4px;
-  border-radius: 0;
-  color: var(--ink);
-  font: 600 0.82em/1.2 'Inter Variable', sans-serif;
-  letter-spacing: 0;
-  vertical-align: middle;
-  clip-path: inset(0);
 }
 
 /* The portrait now sits beside the shorter dot-jot column as a near-square
@@ -5101,8 +4909,6 @@ summary {
 .about-page .about-bullet-list,
 .about-page .about-experience-line { font-size: var(--about-copy-size); line-height: 1.75; }
 .about-page .about-bullet-list { margin-top: 22px; gap: 16px; }
-.about-page .about-chip,
-.about-page .about-code-link { white-space: normal; max-width: 100%; }
 .about-current, .about-outside, .about-info-card { min-width: 0; }
 .about-page .about-info-grid { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); align-items: center; gap: 50px; }
 .education-details {
@@ -5125,6 +4931,8 @@ summary {
 .music-preview {
   display: inline;
   vertical-align: middle;
+  user-select: none;
+  -webkit-user-select: none;
 }
 .music-joiner {
   display: inline-block;
@@ -5143,6 +4951,9 @@ summary {
   padding: 3px 6px 6px;
   background: linear-gradient(105deg, #cbd4ff, #e4e9ff);
   color: var(--ink);
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
   vertical-align: middle;
 }
 .music-track-title {
@@ -5151,6 +4962,9 @@ summary {
   font: 600 .72em/1.2 'Inter Variable', Arial, sans-serif;
   text-overflow: ellipsis;
   white-space: nowrap;
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
 }
 .music-card-controls {
   display: inline-flex;
@@ -5180,10 +4994,14 @@ summary {
   position: relative;
   display: inline-flex;
   align-items: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
 }
 .music-volume-toggle {
   width: 14px !important;
   min-width: 14px !important;
+  cursor: pointer;
 }
 .music-volume-popover {
   position: absolute;
@@ -5199,6 +5017,9 @@ summary {
   border: 1px solid var(--blue);
   background: var(--paper);
   box-shadow: 3px 3px 0 var(--blue);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
   transform: translateX(-50%);
 }
 .music-volume-slider {
@@ -5206,6 +5027,9 @@ summary {
   height: 86px;
   margin: 0;
   accent-color: var(--blue);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
   writing-mode: vertical-lr;
   direction: rtl;
 }
@@ -6176,18 +6000,11 @@ summary {
   }
 }
 
-/* Cybercore cursor: hide the native glyph only after a fine mouse is detected */
-html.custom-pointer-enabled,
-html.custom-pointer-enabled * {
-  cursor: none !important;
-}
-.custom-cursor-bursts,
-.custom-cursor {
+/* Keep the click bursts independent from the browser's native cursor */
+.custom-cursor-bursts {
   position: fixed;
   inset: 0;
   pointer-events: none;
-}
-.custom-cursor-bursts {
   z-index: 198;
   overflow: visible;
 }
@@ -6234,116 +6051,8 @@ html.custom-pointer-enabled * {
   14% { opacity: var(--spark-opacity, .85); transform: rotate(var(--angle)) translateY(calc(var(--distance) * -.28)) scaleY(1.15); }
   100% { opacity: 0; transform: rotate(var(--angle)) translateY(calc(var(--distance) * -1)) scaleY(.35); }
 }
-.custom-cursor {
-  z-index: 200;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-  will-change: transform;
-}
-.custom-cursor.is-visible { opacity: 1; }
-.custom-cursor-shell {
-  position: absolute;
-  left: -2px;
-  top: -1.333px;
-  width: 24px;
-  height: 27.333px;
-  transform-origin: 2px 1.333px;
-}
-.custom-cursor.is-down .custom-cursor-shell {
-  transform: scale(.94);
-}
-.custom-cursor-glyph {
-  width: 24px;
-  height: 27.333px;
-  overflow: visible;
-  filter: drop-shadow(0 .5px .5px #08090d80);
-}
-.custom-cursor:not([data-mode="default"]):not([data-mode="link"]) .custom-cursor-shell {
-  left: -12px; top: -13px; transform-origin: 12px 13px;
-}
-.custom-cursor[data-mode="link"] .custom-cursor-shell {
-  left: -11.333px; top: -1.667px; transform-origin: 11.333px 1.667px;
-}
-.custom-cursor[data-mode="grabbing"] .cursor-glyph-grab {
-  transform-origin: 36px 39px; transform: scale(.9, .8);
-}
-.cursor-glyph { display: none; }
-.custom-cursor[data-mode="default"] .cursor-glyph-arrow,
-.custom-cursor[data-mode="link"] .cursor-glyph-link,
-.custom-cursor[data-mode="text"] .cursor-glyph-text,
-.custom-cursor[data-mode="zoom-in"] .cursor-glyph-zoom-in,
-.custom-cursor[data-mode="zoom-out"] .cursor-glyph-zoom-out,
-.custom-cursor[data-mode="grab"] .cursor-glyph-grab,
-.custom-cursor[data-mode="grabbing"] .cursor-glyph-grab,
-.custom-cursor[data-mode="wait"] .cursor-glyph-wait,
-.custom-cursor[data-mode="crosshair"] .cursor-glyph-crosshair,
-.custom-cursor[data-mode="not-allowed"] .cursor-glyph-not-allowed,
-.custom-cursor[data-mode="move"] .cursor-glyph-move,
-.custom-cursor[data-mode="resize"] .cursor-glyph-resize,
-.custom-cursor[data-mode="help"] .cursor-glyph-help,
-.custom-cursor[data-mode="copy"] .cursor-glyph-copy {
-  display: block;
-}
-.custom-cursor[data-mode="zoom-in"] .zoom-minus,
-.custom-cursor[data-mode="zoom-out"] .zoom-plus {
-  display: none;
-}
-.cursor-glitch {
-  position: absolute;
-  display: block;
-  background: #172ce8;
-  opacity: 0;
-  filter: drop-shadow(0 0 2px #172ce8);
-  animation: custom-cursor-glitch 2.2s steps(1, end) infinite;
-  animation-play-state: paused;
-  will-change: opacity, transform, clip-path;
-}
-.custom-cursor.is-visible .cursor-glitch { animation-play-state: running; }
-.cursor-glitch-a {
-  width: 8px;
-  height: 2.5px;
-  left: 6px;
-  top: 7px;
-}
-.cursor-glitch-b {
-  width: 5px;
-  height: 1.5px;
-  left: 3px;
-  top: 15px;
-  animation-delay: -.16s;
-}
-.cursor-glitch-c {
-  width: 4px;
-  height: 1.5px;
-  left: 14px;
-  top: 21px;
-  animation-delay: -.31s;
-}
-.cursor-glitch-d {
-  width: 7px;
-  height: 1px;
-  left: 11px;
-  top: 12px;
-  animation-delay: -.09s;
-}
-.cursor-glitch-e {
-  width: 3px;
-  height: 2px;
-  left: 17px;
-  top: 5px;
-  animation-delay: -.24s;
-}
-@keyframes custom-cursor-glitch {
-  0%, 51%, 100% { opacity: 0; translate: 0 0; scale: 1 1; clip-path: inset(0); }
-  52% { opacity: .95; translate: 2px -1px; scale: 1.15 1; clip-path: inset(0 0 35% 0); }
-  52.8% { opacity: .2; translate: -1px 1px; scale: .8 1; clip-path: inset(55% 0 0 0); }
-  53.5% { opacity: .9; translate: -2px 0; scale: 1.25 1; clip-path: inset(35% 0 25% 0); }
-  54.8% { opacity: 0; translate: 0 0; scale: 1 1; clip-path: inset(0); }
-}
 @media (prefers-reduced-motion: reduce) {
-  .custom-cursor-bursts,
-  .custom-cursor { display: none; }
+  .custom-cursor-bursts { display: none; }
 }
 
 /* Animate the measured panel height so every open and close is visible. A
@@ -6481,6 +6190,20 @@ html.custom-pointer-enabled * {
   background: #1c52e8;
 }
 
+.brand-mark-chrome {
+  background: #4285f4;
+  color: #fff;
+  font-size: .62em;
+  font-weight: 800;
+}
+
+.brand-mark-firefox {
+  background: #e56b2f;
+  color: #fff;
+  font-size: .62em;
+  font-weight: 800;
+}
+
 .brand-mark-dmoj {
   background: #7046d8;
 }
@@ -6532,11 +6255,6 @@ html.custom-pointer-enabled * {
   filter: invert(1);
 }
 
-.about-code-link .brand-mark,
-.about-chip-waterloo .brand-mark {
-  margin-right: 2px;
-}
-
 .hobby-heading .brand-mark {
   width: 1.05em;
   height: 1.05em;
@@ -6576,14 +6294,55 @@ html.custom-pointer-enabled * {
   .hobby-collection > .hobby-panel > .hobby-panel-inner { padding: 18px 12px; }
 }
 
-/* Shared interaction and fluid layouts. */
-.about-page :is(.about-chip, .about-code-link) {
+/* One consistent badge primitive for every About-page destination. */
+.about-page .about-link-badge {
+  display: inline-flex;
+  width: auto;
+  max-width: 100%;
+  height: 27px;
+  min-height: 27px;
+  box-sizing: border-box;
+  align-items: center;
+  gap: 5px;
+  margin: 0 .16em;
+  padding: 3px 5px 4px;
+  border: 0;
+  border-radius: 0;
+  background: var(--badge-bg, #d8ddff);
+  color: var(--ink);
+  font: 600 .82em/1.2 'Inter Variable', sans-serif;
+  letter-spacing: 0;
+  text-decoration: none;
+  white-space: nowrap;
+  vertical-align: middle;
+  clip-path: inset(0);
   transition: transform .25s var(--ease), background-color .25s ease;
 }
-.about-page :is(.about-chip, .about-code-link):is(:hover, :focus-visible) {
-  transform: translateY(-1.5px) scale(1.02);
+.about-page .about-link-badge .brand-mark {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  margin: 0;
+}
+.about-page .about-link-badge .external-link-arrow {
+  display: none;
+}
+.about-link-badge-waterloo { --badge-bg: #f0d36e; }
+.about-link-badge-readify { --badge-bg: #d9d2ff; }
+.about-link-badge-chrome { --badge-bg: #dbe5ff; }
+.about-link-badge-firefox { --badge-bg: #f7d8c4; }
+.about-link-badge-dmoj { --badge-bg: #f7e5a3; }
+.about-link-badge-leetcode { --badge-bg: #f6d19d; }
+.about-link-badge-github { --badge-bg: #dedede; }
+.about-link-badge-linkedin { --badge-bg: #c8e1f4; }
+.about-link-badge-company-0 { --badge-bg: #cbd4ff; }
+.about-link-badge-company-1 { --badge-bg: #d5e8ff; }
+.about-link-badge-company-2 { --badge-bg: #c9f3e0; }
+.about-page .about-link-badge:is(:hover, :focus-visible) {
   background: color-mix(in srgb, white 50%, var(--badge-bg));
+  color: var(--ink);
   filter: none;
+  transform: translateY(-1.5px) scale(1.02);
 }
 .wordmark > .star { width: 36px; height: 36px; transform: none; }
 @media (max-width: 760px) {
@@ -6681,7 +6440,16 @@ html.custom-pointer-enabled * {
   .about-page .education-details { justify-self: start; text-align: left; }
   .about-portrait { width: min(80%, 300px); }
   .page-intro h1 { padding-right: 0; font-size: clamp(48px, 11vw, 78px); }
-  .page-intro h1 > .page-emblem { position: relative; display: block; inset: auto; width: 130px; height: 130px; margin: 18px 0 0 auto; }
+  .page-intro h1 > .page-emblem {
+    position: absolute;
+    display: block;
+    inset: auto;
+    top: -35px;
+    right: -24px;
+    width: 130px;
+    height: 130px;
+    margin: 0;
+  }
   .experience-panel { padding: 24px 20px; }
   .experience-identity { gap: 14px; }
   .experience-identity img { width: 48px; height: 48px; }
@@ -6702,15 +6470,59 @@ html.custom-pointer-enabled * {
   .hobby-heading .text-link { margin-left: auto; }
   .contact-page { padding-inline: 5%; }
   .contact-heading h1 { font-size: clamp(64px, 15vw, 110px); }
-  .contact-heading h1 > .page-emblem { position: relative; inset: auto; display: block; width: 160px; height: 160px; margin-left: auto; }
+  .contact-heading h1 > .page-emblem {
+    position: absolute;
+    inset: auto;
+    top: -90px;
+    right: -30px;
+    display: block;
+    width: 160px;
+    height: 160px;
+    margin: 0;
+  }
   .contact-bottom { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px; }
   .contact-email button { font-size: clamp(17px, 4.8vw, 28px); overflow-wrap: anywhere; white-space: normal; }
   .contact-socials { justify-self: start; max-width: 100%; }
   .site-footer { flex-wrap: wrap; gap: 16px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .project-spread *, .about-page :is(.about-chip, .about-code-link) { animation: none !important; transition: none !important; }
-  .about-page :is(.about-chip, .about-code-link):is(:hover, :focus-visible) { transform: none; }
+  .project-spread *, .about-page .about-link-badge { animation: none !important; transition: none !important; }
+  .about-page .about-link-badge:is(:hover, :focus-visible) { transform: none; }
+}
+
+/* Small screens use the project media as the banner instead of reserving a
+   separate slogan column. Touch devices activate the same visual treatment
+   when each media frame enters the viewport. */
+@media (max-width: 760px) {
+  .project-art {
+    height: clamp(230px, 68vw, 360px);
+    min-height: 0;
+    padding: 8px;
+    gap: 0;
+    align-items: stretch;
+  }
+  .project-art .project-art-copy,
+  .project-readify .project-art-copy {
+    display: none;
+  }
+  .project-art .project-screen,
+  .project-readify .project-screen,
+  .project-refrain .project-screen,
+  .project-tidebreak .project-screen {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 100%;
+    flex: 1 1 auto;
+    transform: none;
+    border-width: 1px;
+  }
+  .project-readify .project-screen img.project-banner-image {
+    padding: 6px 14px;
+  }
+  .project-refrain .project-screen img.project-banner-image {
+    padding: 6px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

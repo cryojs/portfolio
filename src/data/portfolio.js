@@ -71,12 +71,12 @@ export const projects = [
     title: 'Readify',
     dates: 'Sept. 2026',
     spotlightDescription: 'a browser extension available on Chrome and Firefox',
-    description: 'A shipped cross-browser accessibility extension that personalizes typography and uses AI to explain and answer questions about webpages.',
+    description: 'A cross-browser accessibility extension that personalizes typography and uses AI to explain and answer questions about webpages.',
     tech: ['WXT', 'React', 'TypeScript', 'Gemini API', 'Groq API', 'xAI API'],
     github: 'https://github.com/CryoJS/readify',
     storeLinks: [
-      { label: 'Chrome', href: 'https://chromewebstore.google.com/search/Readify' },
-      { label: 'Firefox', href: 'https://addons.mozilla.org/en-US/firefox/search/?q=Readify' },
+      { label: 'Chrome', href: 'https://chromewebstore.google.com/detail/readify/cpdfcocmpacdfogkbgjggdokppbffafb' },
+      { label: 'Firefox', href: 'https://addons.mozilla.org/en-CA/firefox/addon/readify-web/' },
     ],
     media: {
       image: '/projects/readify/cover.png',

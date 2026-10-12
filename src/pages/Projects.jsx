@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { ChevronsRight } from 'lucide-react'
 import { projects } from '../data/portfolio'
 import { projectEditorial } from '../data/editorial'
@@ -24,25 +24,45 @@ function ProjectImage({ src, alt, ...props }) {
 }
 
 function ProjectBannerMedia({ media, title }) {
+  const mediaRef = useRef(null)
   const videoRef = useRef(null)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [isInView, setIsInView] = useState(false)
 
-  const playPreview = () => {
+  const playPreview = useCallback(() => {
     if (!videoRef.current) return
     videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {})
-  }
+  }, [])
 
-  const stopPreview = () => {
+  const stopPreview = useCallback(() => {
     if (!videoRef.current) return
     videoRef.current.pause()
     videoRef.current.currentTime = 0
     setIsPlaying(false)
-  }
+  }, [])
+
+  useEffect(() => {
+    const element = mediaRef.current
+    const touchDevice = window.matchMedia('(hover: none), (pointer: coarse)')
+    if (!element || !touchDevice.matches || !('IntersectionObserver' in window)) return undefined
+
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsInView(entry.isIntersecting)
+    }, { threshold: 0.45 })
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (isInView) playPreview()
+    else stopPreview()
+  }, [isInView, playPreview, stopPreview])
 
   if (media.variant === 'tidebreak') {
     return (
       <div
-        className="project-banner-media project-banner-media-tidebreak"
+        ref={mediaRef}
+        className={`project-banner-media project-banner-media-tidebreak${isInView ? ' is-in-view' : ''}`}
         role="img"
         aria-label={media.alt}
       >
@@ -60,7 +80,8 @@ function ProjectBannerMedia({ media, title }) {
 
   return (
     <div
-      className={`project-banner-media${isPlaying ? ' is-playing' : ''}`}
+      ref={mediaRef}
+      className={`project-banner-media${isPlaying ? ' is-playing' : ''}${isInView ? ' is-in-view' : ''}`}
       onMouseEnter={playPreview}
       onMouseLeave={stopPreview}
     >

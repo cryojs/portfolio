@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import { ChevronsRight } from 'lucide-react'
 import { aboutCopy, photographs } from '../data/editorial'
 import { education, experience, profile } from '../data/portfolio'
-import { BrandMark, ExternalLink, PageIntro, Photo } from '../components/Editorial'
+import { AboutLinkBadge, PageIntro, Photo } from '../components/Editorial'
 import Hobbies from '../components/Hobbies'
 import PageEmblem from '../components/PageEmblem'
 import Silhouette from '../components/Silhouette'
@@ -10,12 +10,14 @@ import MusicPreview from '../components/MusicPreview'
 
 function CompanyChip({ item, index }) {
   return (
-    <a href={item.website} target="_blank" rel="noreferrer"
-      className={`about-chip about-chip-company about-chip-${index}`}>
-      <img src={item.logo} alt="" />
-      <span>{item.company}</span>
-      <span className="sr-only"> (opens in a new tab)</span>
-    </a>
+    <AboutLinkBadge
+      href={item.website}
+      external
+      image={item.logo}
+      className={`about-link-badge-company about-link-badge-company-${index}`}
+    >
+      {item.company}
+    </AboutLinkBadge>
   )
 }
 
@@ -39,61 +41,55 @@ export default function About({ headingRef }) {
           <ul className="about-bullet-list about-current-list">
             <li>
               studying computer science at{' '}
-              <a
-                className="about-chip about-chip-waterloo"
+              <AboutLinkBadge
+                brand="waterloo"
                 href="https://uwaterloo.ca/"
-                target="_blank"
-                rel="noreferrer"
+                external
+                className="about-link-badge-waterloo"
               >
-                <BrandMark brand="waterloo" />
                 the University of Waterloo
-                <span className="sr-only"> (opens in a new tab)</span>
-              </a>
+              </AboutLinkBadge>
             </li>
             <li>
               building{' '}
-              <a
-                className="about-code-link about-code-link-readify"
+              <AboutLinkBadge
+                brand="readify"
                 href="#projects/readify"
               >
-                <BrandMark brand="readify" />
                 Readify
-              </a>
-              , a browser extension for a more personal reading experience
-            </li>
-            <li>
-              practicing competitive programming on{' '}
-              <ExternalLink
-                className="about-code-link about-code-link-dmoj"
-                href={profile.links.dmoj}
+              </AboutLinkBadge>
+              , a browser extension for a more personal reading experience, now available on{' '}
+              <AboutLinkBadge
+                brand="chrome"
+                href="https://chromewebstore.google.com/detail/readify/cpdfcocmpacdfogkbgjggdokppbffafb"
+                external
               >
-                <BrandMark brand="dmoj" />
-                DMOJ
-              </ExternalLink>{' and '}
-              <ExternalLink
-                className="about-code-link about-code-link-leetcode"
-                href={profile.links.leetcode}
+                Chrome Web Store
+              </AboutLinkBadge>{' '}and{' '}
+              <AboutLinkBadge
+                brand="firefox"
+                href="https://addons.mozilla.org/en-CA/firefox/addon/readify-web/"
+                external
               >
-                <BrandMark brand="leetcode" />
-                LeetCode
-              </ExternalLink>
+                Firefox Add-ons
+              </AboutLinkBadge>
             </li>
             <li>
               elsewhere:{' '}
-              <ExternalLink
-                className="about-code-link about-code-link-github"
+              <AboutLinkBadge
+                brand="github"
                 href={profile.links.github}
+                external
               >
-                <BrandMark brand="github" />
                 GitHub
-              </ExternalLink>{' '}
-              <ExternalLink
-                className="about-code-link about-code-link-linkedin"
+              </AboutLinkBadge>{' '}
+              <AboutLinkBadge
+                brand="linkedin"
                 href={profile.links.linkedin}
+                external
               >
-                <BrandMark brand="linkedin" />
                 LinkedIn
-              </ExternalLink>
+              </AboutLinkBadge>
             </li>
           </ul>
         </section>
@@ -104,15 +100,39 @@ export default function About({ headingRef }) {
           <span className="about-section-kicker">previously:</span>
         </div>
         <div className="about-experience-list">
+          <article className="about-experience-item" key="competitive-programming">
+            <span className="about-experience-mark" aria-hidden="true">•</span>
+            <p className="about-experience-line">
+              practiced competitive programming on{' '}
+              <AboutLinkBadge
+                brand="dmoj"
+                href={profile.links.dmoj}
+                external
+              >
+                DMOJ
+              </AboutLinkBadge>{' and '}
+              <AboutLinkBadge
+                brand="leetcode"
+                href={profile.links.leetcode}
+                external
+              >
+                LeetCode
+              </AboutLinkBadge>, and earned Honor Roll in CCC Senior 2026
+            </p>
+          </article>
+          <article className="about-experience-item" key="governor-general">
+            <span className="about-experience-mark" aria-hidden="true">•</span>
+            <p className="about-experience-line">won the Governor General&apos;s Academic Medal from my high school</p>
+          </article>
           {experience.map((item, index) => (
             <Fragment key={item.id}>
               <article className="about-experience-item">
                 <span className="about-experience-mark" aria-hidden="true">
                   •
                 </span>
-                <p className="about-experience-line">
-                  {item.id === 'career-education-council' && (
-                    <>built 10 iOS apps at <CompanyChip item={item} index={index} /></>
+                  <p className="about-experience-line">
+                    {item.id === 'career-education-council' && (
+                    <>built and designed iOS apps at <CompanyChip item={item} index={index} /></>
                   )}
                   {item.id === 'usaco-guide' && (
                     <>contributed 6 pull requests with algorithm explanations and solutions to <CompanyChip item={item} index={index} /></>
@@ -122,12 +142,6 @@ export default function About({ headingRef }) {
                   )}
                 </p>
               </article>
-              {index === 0 && (
-                <article className="about-experience-item" key="governor-general">
-                  <span className="about-experience-mark" aria-hidden="true">•</span>
-                  <p className="about-experience-line">won the Governor General&apos;s Academic Medal from my high school</p>
-                </article>
-              )}
             </Fragment>
           ))}
         </div>
