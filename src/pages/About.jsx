@@ -100,26 +100,6 @@ export default function About({ headingRef }) {
           <span className="about-section-kicker">previously:</span>
         </div>
         <div className="about-experience-list">
-          <article className="about-experience-item" key="competitive-programming">
-            <span className="about-experience-mark" aria-hidden="true">•</span>
-            <p className="about-experience-line">
-              practiced competitive programming on{' '}
-              <AboutLinkBadge
-                brand="dmoj"
-                href={profile.links.dmoj}
-                external
-              >
-                DMOJ
-              </AboutLinkBadge>{' and '}
-              <AboutLinkBadge
-                brand="leetcode"
-                href={profile.links.leetcode}
-                external
-              >
-                LeetCode
-              </AboutLinkBadge>, and earned Honor Roll in CCC Senior 2026
-            </p>
-          </article>
           <article className="about-experience-item" key="governor-general">
             <span className="about-experience-mark" aria-hidden="true">•</span>
             <p className="about-experience-line">won the Governor General&apos;s Academic Medal from my high school</p>
@@ -142,6 +122,28 @@ export default function About({ headingRef }) {
                   )}
                 </p>
               </article>
+              {item.id === 'career-education-council' && (
+                <article className="about-experience-item" key="competitive-programming">
+                  <span className="about-experience-mark" aria-hidden="true">•</span>
+                  <p className="about-experience-line">
+                    practiced competitive programming on{' '}
+                    <AboutLinkBadge
+                      brand="dmoj"
+                      href={profile.links.dmoj}
+                      external
+                    >
+                      DMOJ
+                    </AboutLinkBadge>{' and '}
+                    <AboutLinkBadge
+                      brand="leetcode"
+                      href={profile.links.leetcode}
+                      external
+                    >
+                      LeetCode
+                    </AboutLinkBadge>, and earned Honor Roll in CCC Senior 2026
+                  </p>
+                </article>
+              )}
             </Fragment>
           ))}
         </div>
