@@ -163,7 +163,6 @@ export default function About({ headingRef }) {
             <li>reading and philosophy (like camus and lacan)</li>
             <li>enjoys photography and eating chocolate</li>
             <li>currently listening to <MusicPreview /> by quadeca</li>
-            <li>inspired by euler&apos;s work ethic and brilliance</li>
           </ul>
         </section>
       </div>
