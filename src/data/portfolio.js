@@ -69,7 +69,7 @@ export const projects = [
   {
     id: 'readify',
     title: 'Readify',
-    dates: 'Sept. 2026',
+    dates: 'Sept. 2026 to Oct. 2026',
     spotlightDescription: 'a browser extension available on Chrome and Firefox',
     description: 'A cross-browser accessibility extension that personalizes typography and uses AI to explain and answer questions about webpages.',
     tech: ['WXT', 'React', 'TypeScript', 'Gemini API', 'Groq API', 'xAI API'],
