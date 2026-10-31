@@ -227,10 +227,10 @@ export default function App() {
         <span>© {new Date().getFullYear()} jason sun</span>
         <span className="site-footer-links">
           <a href={profile.links.linkedin} target="_blank" rel="noreferrer">
-            <BrandMark brand="linkedin" /> LinkedIn ↗
+            <BrandMark brand="linkedin" /> linkedin ↗
           </a>
           <a href={profile.links.github} target="_blank" rel="noreferrer">
-            <BrandMark brand="github" /> GitHub ↗
+            <BrandMark brand="github" /> github ↗
           </a>
         </span>
       </footer>

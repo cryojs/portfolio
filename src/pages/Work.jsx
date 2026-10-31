@@ -26,17 +26,21 @@ export default function Work({ headingRef }) {
                 <h2><a href={item.website} target="_blank" rel="noreferrer">{item.company}<span className="company-link-arrow" aria-hidden="true">{'\u00a0↗'}</span><span className="sr-only"> (opens in a new tab)</span></a></h2>
               </div>
               <div className="experience-details">
-                <p className="experience-role">{item.role}</p>
-                <p className="experience-meta">
-                  <span>{item.dates}</span>
-                  <span>{item.location}</span>
-                </p>
+                <div className="experience-role-line">
+                  <p className="experience-role">{item.role}</p>
+                  <p className="experience-meta">
+                    <span>{item.dates}</span>
+                    <span>{item.location}</span>
+                  </p>
+                </div>
               </div>
             </div>
             <div className="experience-body">
-              {item.highlights.map((text) => (
-                <p key={text}>{text}</p>
-              ))}
+              <ul className="experience-bullets">
+                {item.highlights.map((text) => (
+                  <li key={text}>{text}</li>
+                ))}
+              </ul>
             </div>
           </article>
         ))}

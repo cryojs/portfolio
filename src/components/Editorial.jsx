@@ -1,4 +1,4 @@
-import { useId, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 import { MotifRule } from './PageEmblem'
 import { GithubIcon, LinkedinIcon } from './Icons'
 
@@ -65,7 +65,7 @@ export function Trajectories({ className = '' }) {
   )
 }
 
-export function Photo({ photo, className = '' }) {
+export function Photo({ photo, className = '', loading = 'lazy' }) {
   const [failed, setFailed] = useState(false)
   const hasPhoto = photo.src && !failed
   return (
@@ -78,7 +78,8 @@ export function Photo({ photo, className = '' }) {
           alt={photo.alt}
           style={{ objectPosition: photo.position }}
           onError={() => setFailed(true)}
-          loading="lazy"
+          loading={loading}
+          decoding="async"
         />
       ) : (
         <div
@@ -100,6 +101,26 @@ export function Photo({ photo, className = '' }) {
 
 export function PhotoStack({ photos, className = '' }) {
   const [activeIndex, setActiveIndex] = useState(0)
+  useEffect(() => {
+    if (!photos?.length) return undefined
+
+    const preloadedImages = photos
+      .filter((photo) => photo?.src)
+      .map((photo) => {
+        const image = new Image()
+        image.decoding = 'async'
+        image.src = photo.src
+        return image
+      })
+
+    return () => {
+      preloadedImages.forEach((image) => {
+        image.onload = null
+        image.onerror = null
+      })
+    }
+  }, [photos])
+
   if (!photos?.length) return null
 
   const photo = photos[activeIndex]
@@ -116,7 +137,7 @@ export function PhotoStack({ photos, className = '' }) {
         aria-hidden="true"
       />
       <div className="photo-stack-frame">
-        <Photo key={photo.src} photo={photo} />
+        <Photo key={photo.src} photo={photo} loading="eager" />
         {photos.length > 1 && (
           <button
             className="photo-stack-control"

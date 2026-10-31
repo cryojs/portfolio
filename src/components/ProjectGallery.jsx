@@ -117,10 +117,13 @@ export default function ProjectGallery({ media, title }) {
           </button>
         )}
       </div>
-      <button className="gallery-icon-button gallery-side-arrow gallery-prev" type="button" aria-label={`Previous ${title} slide`} onClick={() => goToSlide(activeIndex - 1)} disabled={slides.length < 2}><GalleryChevron direction="left" /></button>
-      <button className="gallery-icon-button gallery-side-arrow gallery-next" type="button" aria-label={`Next ${title} slide`} onClick={() => goToSlide(activeIndex + 1)} disabled={slides.length < 2}><GalleryChevron direction="right" /></button>
+      <button className="gallery-icon-button gallery-side-arrow gallery-prev" type="button" aria-label={`Previous ${title} slide`} title="previous slide" onClick={() => goToSlide(activeIndex - 1)} disabled={slides.length < 2}><GalleryChevron direction="left" /></button>
+      <button className="gallery-icon-button gallery-side-arrow gallery-next" type="button" aria-label={`Next ${title} slide`} title="next slide" onClick={() => goToSlide(activeIndex + 1)} disabled={slides.length < 2}><GalleryChevron direction="right" /></button>
       <div className="gallery-bottom-bar">
-        <span className="gallery-expand-slot">{!isVideo && <button className="gallery-icon-button" type="button" onClick={() => setExpanded(true)} aria-label={`Expand ${title} image`}><Maximize2 size={16} aria-hidden="true" /></button>}</span>
+        <span className="gallery-expand-slot">
+          {!isVideo && <button className="gallery-icon-button" type="button" onClick={() => setExpanded(true)} aria-label={`Expand ${title} image`} title="expand image"><Maximize2 size={16} aria-hidden="true" /></button>}
+          <span className="gallery-hint">{isVideo ? 'use the player controls' : 'click to expand'}</span>
+        </span>
         <div className="gallery-pagination" aria-label={`${title} slides`}>
           {slides.map((item, index) => (
             <button key={item.src || item.alt} type="button" aria-label={`Show ${title} ${item.type === 'video' ? 'video' : 'image'} ${index + 1}`} aria-current={index === activeIndex ? 'true' : undefined} onClick={() => goToSlide(index)}><span /></button>

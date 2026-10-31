@@ -26,6 +26,22 @@ export default function Projects({ headingRef }) {
         to <em>thing</em>
         <PageEmblem kind="projects" />
       </PageIntro>
+      <nav className="project-index" aria-label="project index">
+        <span className="project-index-label">
+          jump to a project <span aria-hidden="true">↓</span>
+        </span>
+        <div className="project-index-links">
+          {projects.map((item, index) => (
+            <a href={`#projects/${item.id}`} key={item.id}>
+              <span className="project-index-number">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <span>{item.title.toLowerCase()}</span>
+              <ArrowUpRight size={14} strokeWidth={1.8} aria-hidden="true" />
+            </a>
+          ))}
+        </div>
+      </nav>
       <div className="project-spreads">
         {projects.map((item) => {
           const editorial = projectEditorial[item.id] || { category: 'software project' }
