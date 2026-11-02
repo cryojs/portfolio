@@ -16,6 +16,68 @@ test('only banner hover moves project media and banners use product showcases', 
   await page.locator('.project-art').first().screenshot({ path: 'test-results/cybercore-banner.png' })
 })
 
+test('project gallery controls and indicators share the bottom row', async ({ page }) => {
+  await page.goto('/#projects')
+  const gallery = page.locator('.project-readify .project-gallery')
+  const footer = gallery.locator('.gallery-bottom-bar')
+
+  await expect(gallery.locator('.gallery-topbar, .gallery-project-name, .gallery-hint')).toHaveCount(0)
+  await expect(gallery.locator('.gallery-decor, .gallery-halftone, .gallery-checkers')).toHaveCount(0)
+  expect(await gallery.locator('.gallery-stage').evaluate((stage) => getComputedStyle(stage, '::before').content)).toBe('none')
+  await expect(footer.locator('.gallery-star')).toHaveCount(0)
+  await expect(footer.locator('.gallery-kind, .gallery-caption-text, .gallery-counter')).toHaveCount(0)
+  await expect(footer.locator('.gallery-bottom-caption, .gallery-icon-button')).toHaveCount(0)
+  await expect(footer.locator('.gallery-pagination')).toBeVisible()
+  await expect(footer.locator('.gallery-footer-motif')).toHaveCount(0)
+  const footerBox = await footer.boundingBox()
+  expect(footerBox).not.toBeNull()
+  expect(footerBox.height).toBeLessThan(42)
+  await gallery.locator('.gallery-pagination button').nth(1).click()
+  await expect(footer.locator('.gallery-kind, .gallery-caption-text, .gallery-counter')).toHaveCount(0)
+  await expect(footer.locator('.gallery-bottom-caption, .gallery-icon-button')).toHaveCount(0)
+})
+
+test('projects use compact desktop spreads without the project index', async ({ page }) => {
+  await page.goto('/#projects')
+  const spread = page.locator('.project-readify')
+  const info = spread.locator('.project-info')
+  const gallery = spread.locator('.project-gallery')
+
+  await expect(page.locator('.projects-page .project-index')).toHaveCount(0)
+  await expect(spread.locator('.project-top span')).toHaveCount(1)
+  await expect(spread.locator('.project-top')).not.toContainText('accessibility')
+  await expect(info.locator('.project-details .tags')).toBeVisible()
+  await expect(info.locator('.project-details .project-links')).toBeVisible()
+  const infoBox = await info.boundingBox()
+  const galleryBox = await gallery.boundingBox()
+  expect(galleryBox.x).toBeGreaterThan(infoBox.x)
+
+  await page.setViewportSize({ width: 760, height: 844 })
+  await page.reload()
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+})
+
+test('each project spread carries its own accent through the editorial dividers', async ({ page }) => {
+  await page.goto('/#projects')
+  const colors = await page.locator('.project-spread').evaluateAll((spreads) => spreads.map((spread) => {
+    const info = spread.querySelector('.project-info')
+    const tag = spread.querySelector('.tags li')
+    const link = spread.querySelector('.project-destination')
+    return {
+      accent: getComputedStyle(spread).getPropertyValue('--gallery-accent').trim(),
+      infoRule: getComputedStyle(info, '::before').backgroundColor,
+      tagBorder: getComputedStyle(tag).borderTopColor,
+      linkBorder: getComputedStyle(link).borderBottomColor,
+    }
+  }))
+
+  expect(colors).toHaveLength(4)
+  expect(new Set(colors.map((color) => color.accent)).size).toBe(4)
+  expect(new Set(colors.map((color) => color.infoRule)).size).toBe(4)
+  expect(new Set(colors.map((color) => color.tagBorder)).size).toBe(4)
+  expect(new Set(colors.map((color) => color.linkBorder)).size).toBe(4)
+})
+
 test('custom cursor preserves interactive states with idle glitches and click bursts', async ({ page }) => {
   await page.goto('#contact')
   await expect.poll(async () => {

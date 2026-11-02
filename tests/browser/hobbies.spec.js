@@ -75,6 +75,24 @@ test('hobby previews mount on intent and expanded media closes with focus restor
   expect(await page.evaluate(() => document.body.style.overflow)).not.toBe('hidden')
 })
 
+test('motion editing stays secondary while its archive remains accessible', async ({ page }) => {
+  await page.goto('/#about')
+  const motionSection = page.locator('.motion-collection')
+  const motionHeading = motionSection.locator('.motion-heading-subtle')
+  const photographyHeading = page.locator('.photography-collection > .hobby-heading')
+
+  await expect(motionHeading.locator('h3')).toHaveText('motion graphics & vfx')
+  await expect(motionHeading).toBeVisible()
+  await expect(motionSection.locator('.hobby-panel')).toBeHidden()
+  expect(await motionHeading.evaluate((element) => getComputedStyle(element).backgroundColor)).toBe('rgba(0, 0, 0, 0)')
+  expect(await photographyHeading.evaluate((element) => getComputedStyle(element).backgroundColor)).toBe('rgba(0, 0, 0, 0)')
+  expect(await photographyHeading.evaluate((element) => getComputedStyle(element).borderTopStyle)).toBe('solid')
+
+  await motionHeading.locator('.hobby-heading-trigger').click()
+  await expect(motionSection.locator('.hobby-panel')).toBeVisible()
+  await expect(motionSection.locator('.motion-tile')).toHaveCount(8)
+})
+
 test('hobby archives animate open and close on every toggle', async ({ page }) => {
   await page.goto('/#about')
   const section = page.locator('.photography-collection')

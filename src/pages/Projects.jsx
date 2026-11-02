@@ -1,6 +1,5 @@
 import { ArrowUpRight, ChevronsRight, Code2, Globe, Puzzle } from 'lucide-react'
 import { projects } from '../data/portfolio'
-import { projectEditorial } from '../data/editorial'
 import { PageIntro } from '../components/Editorial'
 import PageEmblem from '../components/PageEmblem'
 import ProjectGallery from '../components/ProjectGallery'
@@ -26,49 +25,33 @@ export default function Projects({ headingRef }) {
         to <em>thing</em>
         <PageEmblem kind="projects" />
       </PageIntro>
-      <nav className="project-index" aria-label="project index">
-        <span className="project-index-label">
-          jump to a project <span aria-hidden="true">↓</span>
-        </span>
-        <div className="project-index-links">
-          {projects.map((item, index) => (
-            <a href={`#projects/${item.id}`} key={item.id}>
-              <span className="project-index-number">
-                {String(index + 1).padStart(2, '0')}
-              </span>
-              <span>{item.title.toLowerCase()}</span>
-              <ArrowUpRight size={14} strokeWidth={1.8} aria-hidden="true" />
-            </a>
-          ))}
-        </div>
-      </nav>
       <div className="project-spreads">
         {projects.map((item) => {
-          const editorial = projectEditorial[item.id] || { category: 'software project' }
           return (
             <article id={`project-${item.id}`} className={`project-spread project-${item.id}`} key={item.id}>
               <div className="project-top mono">
-                <span>{editorial.category.replace(/^\d+ \/ /, '').toLowerCase()}</span>
                 <span>{item.dates}</span>
               </div>
-              <ProjectGallery media={item.media} title={item.title} />
-              <div className="project-info">
-                <div className="project-overview">
-                  <h2 tabIndex={-1}>{item.title}</h2>
-                  <p className="project-description">{item.description}</p>
-                </div>
-                <div>
-                  <ul className="tags" aria-label="Technologies">
-                    {item.tech.map((tech) => <li key={tech}>{tech}</li>)}
-                  </ul>
-                  <div className="project-links">
-                    <ProjectLink href={item.github} icon={Code2}>source code</ProjectLink>
-                    {item.live && <ProjectLink href={item.live} icon={Globe}>live project</ProjectLink>}
-                    {item.storeLinks?.map((link) => (
-                      <ProjectLink href={link.href} icon={Puzzle} key={link.label}>
-                        find on {link.label.toLowerCase()}
-                      </ProjectLink>
-                    ))}
+              <div className="project-layout">
+                <ProjectGallery media={item.media} title={item.title} />
+                <div className="project-info">
+                  <div className="project-overview">
+                    <h2 tabIndex={-1}>{item.title}</h2>
+                    <p className="project-description">{item.description}</p>
+                  </div>
+                  <div className="project-details">
+                    <ul className="tags" aria-label="Technologies">
+                      {item.tech.map((tech) => <li key={tech}>{tech}</li>)}
+                    </ul>
+                    <div className="project-links">
+                      <ProjectLink href={item.github} icon={Code2}>source code</ProjectLink>
+                      {item.live && <ProjectLink href={item.live} icon={Globe}>live project</ProjectLink>}
+                      {item.storeLinks?.map((link) => (
+                        <ProjectLink href={link.href} icon={Puzzle} key={link.label}>
+                          find on {link.label.toLowerCase()}
+                        </ProjectLink>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>

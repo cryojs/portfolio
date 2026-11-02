@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Image, Maximize2, Play, X } from 'lucide-react'
-import { Star } from './Editorial'
+import { X } from 'lucide-react'
 import './ProjectGallery.css'
 
 function GalleryImage({ src, alt, ...props }) {
@@ -22,26 +21,6 @@ function Still({ slide }) {
   ) : <GalleryImage src={slide.src} alt={slide.alt} />
 }
 
-function GalleryDecor() {
-  return (
-    <div className="gallery-decor" aria-hidden="true">
-      <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
-        <g fill="none" stroke="currentColor">
-          <ellipse cx="1100" cy="135" rx="295" ry="95" transform="rotate(-32 1100 135)" />
-          <ellipse cx="1100" cy="135" rx="307" ry="105" transform="rotate(-32 1100 135)" strokeDasharray="2 9" />
-          <path d="M-100 550 375 295M-90 562 360 320M970-80 1270 330" />
-        </g>
-        <g fill="currentColor">
-          <path d="m26 442 52 12-29 39 8-29Zm1100-16 60 46-70 16 37-27Z" />
-          <path d="m1165 45-5 37 31 10-37 5-15 36 5-37-31-10 37-5Z" />
-        </g>
-      </svg>
-      <span className="gallery-halftone" />
-      <span className="gallery-checkers" />
-    </div>
-  )
-}
-
 function GalleryChevron({ direction }) {
   return <svg className="gallery-chevron" viewBox="0 0 24 100" fill="none" aria-hidden="true"><path d={direction === 'left' ? 'M21 2 3 50 21 98' : 'M3 2 21 50 3 98'} stroke="currentColor" strokeWidth="1.5" vectorEffect="non-scaling-stroke" /></svg>
 }
@@ -58,7 +37,6 @@ export default function ProjectGallery({ media, title }) {
   const touchStart = useRef(null)
   const slide = slides[activeIndex]
   const isVideo = slide?.type === 'video'
-  const MediaIcon = isVideo ? Play : Image
 
   useEffect(() => {
     if (!expanded) return undefined
@@ -90,11 +68,6 @@ export default function ProjectGallery({ media, title }) {
 
   return (
     <section className="project-gallery" aria-label={`${title} project gallery`} aria-roledescription="carousel" tabIndex={0} onKeyDown={handleKeyDown}>
-      <GalleryDecor />
-      <div className="gallery-topbar">
-        <div className="gallery-heading"><Star className="gallery-star" /><span className="gallery-project-name">{title}</span><span className="gallery-divider" aria-hidden="true">/</span><span className="gallery-kind" aria-live="polite"><MediaIcon size={13} aria-hidden="true" />{isVideo ? 'demo' : (slide.caption || slide.alt)}</span></div>
-        <span className="gallery-counter" aria-live="polite" aria-atomic="true"><span>{String(activeIndex + 1).padStart(2, '0')}</span><span aria-hidden="true">/</span>{String(slides.length).padStart(2, '0')}</span>
-      </div>
       <div
         className="gallery-stage"
         onTouchStart={(event) => { touchStart.current = isVideo ? null : event.touches[0] }}
@@ -120,16 +93,11 @@ export default function ProjectGallery({ media, title }) {
       <button className="gallery-icon-button gallery-side-arrow gallery-prev" type="button" aria-label={`Previous ${title} slide`} title="previous slide" onClick={() => goToSlide(activeIndex - 1)} disabled={slides.length < 2}><GalleryChevron direction="left" /></button>
       <button className="gallery-icon-button gallery-side-arrow gallery-next" type="button" aria-label={`Next ${title} slide`} title="next slide" onClick={() => goToSlide(activeIndex + 1)} disabled={slides.length < 2}><GalleryChevron direction="right" /></button>
       <div className="gallery-bottom-bar">
-        <span className="gallery-expand-slot">
-          {!isVideo && <button className="gallery-icon-button" type="button" onClick={() => setExpanded(true)} aria-label={`Expand ${title} image`} title="expand image"><Maximize2 size={16} aria-hidden="true" /></button>}
-          <span className="gallery-hint">{isVideo ? 'use the player controls' : 'click to expand'}</span>
-        </span>
         <div className="gallery-pagination" aria-label={`${title} slides`}>
           {slides.map((item, index) => (
             <button key={item.src || item.alt} type="button" aria-label={`Show ${title} ${item.type === 'video' ? 'video' : 'image'} ${index + 1}`} aria-current={index === activeIndex ? 'true' : undefined} onClick={() => goToSlide(index)}><span /></button>
           ))}
         </div>
-        <span className="gallery-footer-motif" aria-hidden="true" />
       </div>
       {expanded && (
         <dialog ref={dialogRef} className="gallery-lightbox" aria-label={`${title} expanded image`} onClose={() => setExpanded(false)} onClick={(event) => { if (event.target === event.currentTarget) setExpanded(false) }}>

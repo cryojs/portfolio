@@ -7831,3 +7831,92 @@ summary {
     height: clamp(110px, 14vh, 145px);
   }
 }
+
+/* Both personal-media archives use a quieter index treatment. The gallery
+   geometry stays unchanged; only the surrounding tabs and frame soften. */
+.hobby-collection {
+  margin: 0;
+}
+
+.hobby-collection + .hobby-collection {
+  margin-top: 28px;
+}
+
+.hobby-collection > .hobby-heading,
+.hobby-collection > .motion-heading-subtle {
+  min-height: 72px;
+  margin: 0 !important;
+  padding: 14px 18px;
+  border: 1px solid color-mix(in srgb, var(--blue) 34%, transparent) !important;
+  background: linear-gradient(105deg, color-mix(in srgb, var(--blue) 12%, transparent), transparent 74%) !important;
+  color: var(--foreground);
+}
+
+.hobby-collection > .hobby-heading h3,
+.hobby-collection > .motion-heading-subtle h3 {
+  color: var(--foreground) !important;
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 500;
+  letter-spacing: -.02em;
+}
+
+.hobby-collection > .hobby-heading p,
+.hobby-collection > .motion-heading-subtle p {
+  margin-top: 5px;
+  color: var(--muted) !important;
+  font-size: 12px;
+}
+
+.hobby-collection > .hobby-heading .text-link,
+.hobby-collection > .hobby-heading .text-link:hover,
+.hobby-collection > .hobby-heading .text-link:focus-visible,
+.hobby-collection > .motion-heading-subtle .text-link,
+.hobby-collection > .motion-heading-subtle .text-link:hover,
+.hobby-collection > .motion-heading-subtle .text-link:focus-visible {
+  color: var(--muted) !important;
+  border-bottom: 0;
+}
+
+.hobby-collection > .hobby-heading .hobby-toggle,
+.hobby-collection > .motion-heading-subtle .hobby-toggle {
+  border-color: color-mix(in srgb, var(--blue) 58%, transparent);
+  color: var(--blue);
+}
+
+.hobby-collection > .hobby-heading .hobby-heading-trigger:focus-visible,
+.hobby-collection > .motion-heading-subtle .hobby-heading-trigger:focus-visible {
+  outline-color: var(--blue);
+}
+
+.hobby-collection.is-open > .hobby-heading,
+.hobby-collection.is-open > .motion-heading-subtle {
+  border-bottom-color: transparent !important;
+}
+
+.hobby-collection > .hobby-panel {
+  /* Keep the target color present even while the border width is zero. This
+     prevents the opening transition from interpolating through currentColor. */
+  border: 0 solid color-mix(in srgb, var(--blue) 34%, transparent);
+  border-top-color: transparent;
+}
+
+.hobby-collection > .hobby-panel.is-open {
+  border: 1px solid color-mix(in srgb, var(--blue) 34%, transparent);
+  border-top-color: transparent;
+}
+
+@media (max-width: 760px) {
+  .hobby-collection + .hobby-collection {
+    margin-top: 20px;
+  }
+
+  .hobby-collection > .hobby-heading,
+  .hobby-collection > .motion-heading-subtle {
+    min-height: 66px;
+    padding: 12px 14px;
+  }
+
+  .hobby-collection > .motion-heading-subtle .hobby-heading-trigger {
+    width: auto;
+  }
+}

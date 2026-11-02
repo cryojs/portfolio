@@ -136,13 +136,13 @@ export default function Hobbies() {
         </div>
       </section>
       <section className={`hobby-collection motion-collection${motionOpen ? ' is-open' : ''}`}>
-        <div className="hobby-heading motion-heading">
+        <div className="hobby-heading motion-heading motion-heading-subtle">
           <button type="button" className="hobby-heading-trigger" aria-expanded={motionOpen}
             aria-controls="motion-panel" onClick={() => toggleCollection(setMotionOpen)}>
           <span className="hobby-heading-label">
             <span>
               <h3 id="motion-heading">motion graphics &amp; vfx</h3>
-              <p>hover to preview · click to watch with sound</p>
+              <p>open the archive · click to watch with sound</p>
             </span>
             <span className="hobby-toggle" aria-hidden="true">
               <Plus className="hobby-toggle-plus" size={17} strokeWidth={2.2} />
