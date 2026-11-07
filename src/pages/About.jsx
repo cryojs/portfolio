@@ -162,8 +162,8 @@ export default function About({ headingRef }) {
         <section className="about-section about-outside" id="outside">
           <span className="about-section-kicker">interests:</span>
           <ul className="about-bullet-list">
-            <li>reading and philosophy (like camus and lacan)</li>
-            <li>enjoys photography and eating chocolate</li>
+            <li>philosophy, photography, and reading</li>
+            <li>cats and chocolate</li>
             <li>currently listening to <MusicPreview /> by quadeca</li>
           </ul>
         </section>
