@@ -142,7 +142,7 @@ export default function Hobbies() {
           <span className="hobby-heading-label">
             <span>
               <h3 id="motion-heading">motion graphics &amp; vfx</h3>
-              <p>open the archive · click to watch with sound</p>
+              <p>bringing creativity to life</p>
             </span>
             <span className="hobby-toggle" aria-hidden="true">
               <Plus className="hobby-toggle-plus" size={17} strokeWidth={2.2} />
