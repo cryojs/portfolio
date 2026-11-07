@@ -7272,7 +7272,7 @@ summary {
   .home-scene > .scene-object { display: block; position: relative; inset: auto; width: 100%; max-width: 180px; height: auto; min-height: 165px; justify-self: center; margin: 0; transform: none; }
   .home-scene .photo-stack, .home-scene .about-object .photo-stack { height: 165px; width: 100%; }
   .home-scene .silhouette { max-width: 100%; height: 165px; }
-  .home-scene .object-label { font-size: 13px; }
+  .home-scene .object-label { font-size: 20px; }
   .about-hero-grid, .about-lower-grid, .about-page .about-info-grid, .project-info { grid-template-columns: minmax(0, 1fr); gap: 32px; }
   .about-page .education-details { justify-self: start; text-align: left; }
   .about-portrait { width: min(80%, 300px); }
@@ -7912,11 +7912,20 @@ summary {
 
   .hobby-collection > .hobby-heading,
   .hobby-collection > .motion-heading-subtle {
+    align-items: center;
+    flex-wrap: nowrap;
     min-height: 66px;
     padding: 12px 14px;
   }
 
+  .hobby-collection > .hobby-heading .hobby-heading-trigger,
   .hobby-collection > .motion-heading-subtle .hobby-heading-trigger {
     width: auto;
+    flex: 1 1 auto;
+  }
+
+  .hobby-collection > .hobby-heading .hobby-heading-label,
+  .hobby-collection > .motion-heading-subtle .hobby-heading-label {
+    align-items: center;
   }
 }
