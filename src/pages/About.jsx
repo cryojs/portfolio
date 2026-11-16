@@ -1,23 +1,20 @@
 import { Fragment } from 'react'
-import { ChevronsRight } from 'lucide-react'
 import { aboutCopy, photographs } from '../data/editorial'
 import { education, experience, profile } from '../data/portfolio'
-import { AboutLinkBadge, PageIntro, Photo } from '../components/Editorial'
-import Hobbies from '../components/Hobbies'
+import { LinkBadge, NextPage, PageIntro, Photo } from '../components/Editorial'
 import PageEmblem from '../components/PageEmblem'
-import Silhouette from '../components/Silhouette'
 import MusicPreview from '../components/MusicPreview'
 
 function CompanyChip({ item, index }) {
   return (
-    <AboutLinkBadge
+    <LinkBadge
       href={item.website}
       external
       image={item.logo}
-      className={`about-link-badge-company about-link-badge-company-${index}`}
+      className={`link-badge-company link-badge-company-${index}`}
     >
       {item.company}
-    </AboutLinkBadge>
+    </LinkBadge>
   )
 }
 
@@ -37,59 +34,59 @@ export default function About({ headingRef }) {
         </figure>
 
         <section className="about-current about-section" id="currently">
-          <span className="about-section-kicker">currently:</span>
-          <ul className="about-bullet-list about-current-list">
+          <span className="section-kicker">currently:</span>
+          <ul className="bullet-list about-current-list">
             <li>
               studying computer science at{' '}
-              <AboutLinkBadge
+              <LinkBadge
                 brand="waterloo"
                 href="https://uwaterloo.ca/"
                 external
-                className="about-link-badge-waterloo"
+                className="link-badge-waterloo"
               >
                 the University of Waterloo
-              </AboutLinkBadge>
+              </LinkBadge>
             </li>
             <li>
               building{' '}
-              <AboutLinkBadge
+              <LinkBadge
                 brand="readify"
                 href="#projects/readify"
               >
                 Readify
-              </AboutLinkBadge>
+              </LinkBadge>
               , a browser extension for a more personal reading experience, now available on{' '}
-              <AboutLinkBadge
+              <LinkBadge
                 brand="chrome"
                 href="https://chromewebstore.google.com/detail/readify/cpdfcocmpacdfogkbgjggdokppbffafb"
                 external
               >
                 Chrome Web Store
-              </AboutLinkBadge>{' '}and{' '}
-              <AboutLinkBadge
+              </LinkBadge>{' '}and{' '}
+              <LinkBadge
                 brand="firefox"
                 href="https://addons.mozilla.org/en-CA/firefox/addon/readify-web/"
                 external
               >
                 Firefox Add-ons
-              </AboutLinkBadge>
+              </LinkBadge>
             </li>
             <li>
               elsewhere:{' '}
-              <AboutLinkBadge
+              <LinkBadge
                 brand="github"
                 href={profile.links.github}
                 external
               >
                 GitHub
-              </AboutLinkBadge>{' '}
-              <AboutLinkBadge
+              </LinkBadge>{' '}
+              <LinkBadge
                 brand="linkedin"
                 href={profile.links.linkedin}
                 external
               >
                 LinkedIn
-              </AboutLinkBadge>
+              </LinkBadge>
             </li>
           </ul>
         </section>
@@ -97,7 +94,7 @@ export default function About({ headingRef }) {
 
       <section className="about-previous about-section" id="experience">
         <div className="about-section-heading">
-          <span className="about-section-kicker">previously:</span>
+          <span className="section-kicker">previously:</span>
         </div>
         <div className="about-experience-list">
           <article className="about-experience-item" key="governor-general">
@@ -127,20 +124,20 @@ export default function About({ headingRef }) {
                   <span className="about-experience-mark" aria-hidden="true">•</span>
                   <p className="about-experience-line">
                     practiced competitive programming on{' '}
-                    <AboutLinkBadge
+                    <LinkBadge
                       brand="dmoj"
                       href={profile.links.dmoj}
                       external
                     >
                       DMOJ
-                    </AboutLinkBadge>{' and '}
-                    <AboutLinkBadge
+                    </LinkBadge>{' and '}
+                    <LinkBadge
                       brand="leetcode"
                       href={profile.links.leetcode}
                       external
                     >
                       LeetCode
-                    </AboutLinkBadge>, and earned Honor Roll in CCC Senior 2026
+                    </LinkBadge>, and earned Honor Roll in CCC Senior 2026
                   </p>
                 </article>
               )}
@@ -151,8 +148,8 @@ export default function About({ headingRef }) {
 
       <div className="about-lower-grid">
         <section className="about-section about-next" id="next">
-          <span className="about-section-kicker">next:</span>
-          <ul className="about-bullet-list">
+          <span className="section-kicker">next:</span>
+          <ul className="bullet-list">
             {aboutCopy.next.map((item) => (
               <li key={item}>{item}</li>
             ))}
@@ -160,9 +157,15 @@ export default function About({ headingRef }) {
         </section>
 
         <section className="about-section about-outside" id="outside">
-          <span className="about-section-kicker">interests:</span>
-          <ul className="about-bullet-list">
-            <li>philosophy, photography, and reading</li>
+          <span className="section-kicker">interests:</span>
+          <ul className="bullet-list">
+            <li>
+              philosophy, photography{' '}
+              <LinkBadge brand="instagram" href={profile.links.instagram} external>
+                @cryojs
+              </LinkBadge>
+              , and reading
+            </li>
             <li>cats and chocolate</li>
             <li>currently listening to <MusicPreview /> by quadeca</li>
           </ul>
@@ -171,7 +174,7 @@ export default function About({ headingRef }) {
 
       <div className="about-info-grid">
         <section className="about-info-card" id="education">
-          <span className="about-section-kicker">education:</span>
+          <span className="section-kicker">education:</span>
           <h2>{education.school}</h2>
         </section>
         <div className="education-details">
@@ -180,14 +183,9 @@ export default function About({ headingRef }) {
         </div>
       </div>
 
-      <Hobbies />
-
-      <a className="next-page" href="#work">
-        <span>
-          learning by doing <ChevronsRight className="next-page-chevron" aria-hidden="true" size={22} strokeWidth={1.8} />
-        </span>
-        <Silhouette kind="bear" className="next-page-silhouette" />
-      </a>
+      <NextPage href="#work" silhouette="bear">
+        learning by doing
+      </NextPage>
     </div>
   )
 }

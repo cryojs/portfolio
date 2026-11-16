@@ -1,116 +1,104 @@
 import { test, expect } from '@playwright/test'
 
-test('only banner hover moves project media and banners use product showcases', async ({ page }) => {
+test('project gallery controls live in one bar beneath the media', async ({ page }) => {
   await page.goto('/#projects')
-  for (const card of await page.locator('.project-spread').all()) {
-    const screen = card.locator('.project-screen')
-    await card.locator('.project-description').hover()
-    await page.waitForTimeout(650)
-    expect(await screen.evaluate((el) => getComputedStyle(el).translate)).toBe('none')
-    await card.locator('.project-art').hover()
-    await page.waitForTimeout(650)
-    expect(await screen.evaluate((el) => getComputedStyle(el).translate)).toBe('0px -8px')
-    await expect(card.locator('.project-mark')).toHaveCount(0)
-    await expect(card.locator('.project-banner-media')).toBeVisible()
-  }
-  await page.locator('.project-art').first().screenshot({ path: 'test-results/cybercore-banner.png' })
+  const gallery = page.locator('.project-friction .project-gallery')
+  const stage = await gallery.locator('.gallery-stage').boundingBox()
+  const controls = await gallery.locator('.gallery-controls').boundingBox()
+  // Nothing overlaps the media: the controls sit entirely below it.
+  expect(controls.y).toBeGreaterThanOrEqual(stage.y + stage.height - 1)
+  await expect(gallery.locator('.gallery-side-arrow')).toHaveCount(0)
+  const segments = gallery.locator('.gallery-track button')
+  const total = await segments.count()
+  await expect(gallery.locator('.gallery-count')).toHaveText(`01 / ${String(total).padStart(2, '0')}`)
+  await expect(gallery.locator('.gallery-caption')).toHaveText('demo video')
+
+  await gallery.getByRole('button', { name: 'Next Friction slide' }).click()
+  await expect(gallery.locator('.gallery-count')).toContainText('02')
+  await expect(segments.nth(1)).toHaveAttribute('aria-current', 'true')
+  await expect(gallery.locator('.gallery-caption')).toHaveText('live routes & agent activity')
+  await gallery.getByRole('button', { name: 'Previous Friction slide' }).click()
+  await gallery.getByRole('button', { name: 'Previous Friction slide' }).click()
+  await expect(gallery.locator('.gallery-count')).toContainText(String(total).padStart(2, '0') + ' /')
+  await segments.nth(2).click()
+  await expect(gallery.locator('.gallery-count')).toContainText('03')
+
+  // The enlarged view steps through stills with buttons and arrow keys.
+  await gallery.locator('.gallery-image-button').click()
+  const lightbox = page.locator('.gallery-lightbox')
+  await expect(lightbox).toBeVisible()
+  const before = await lightbox.locator('.gallery-caption').innerText()
+  await page.keyboard.press('ArrowRight')
+  await expect(lightbox.locator('.gallery-caption')).not.toHaveText(before)
+  await lightbox.getByRole('button', { name: 'Previous Friction image' }).click()
+  await expect(lightbox.locator('.gallery-caption')).toHaveText(before)
+  await page.keyboard.press('Escape')
+  await expect(lightbox).toHaveCount(0)
 })
-
-test('project gallery controls and indicators share the bottom row', async ({ page }) => {
+test('project spreads alternate sides on desktop and lead with their kicker', async ({ page }) => {
   await page.goto('/#projects')
-  const gallery = page.locator('.project-readify .project-gallery')
-  const footer = gallery.locator('.gallery-bottom-bar')
-
-  await expect(gallery.locator('.gallery-topbar, .gallery-project-name, .gallery-hint')).toHaveCount(0)
-  await expect(gallery.locator('.gallery-decor, .gallery-halftone, .gallery-checkers')).toHaveCount(0)
-  expect(await gallery.locator('.gallery-stage').evaluate((stage) => getComputedStyle(stage, '::before').content)).toBe('none')
-  await expect(footer.locator('.gallery-star')).toHaveCount(0)
-  await expect(footer.locator('.gallery-kind, .gallery-caption-text, .gallery-counter')).toHaveCount(0)
-  await expect(footer.locator('.gallery-bottom-caption, .gallery-icon-button')).toHaveCount(0)
-  await expect(footer.locator('.gallery-pagination')).toBeVisible()
-  await expect(footer.locator('.gallery-footer-motif')).toHaveCount(0)
-  const footerBox = await footer.boundingBox()
-  expect(footerBox).not.toBeNull()
-  expect(footerBox.height).toBeLessThan(42)
-  await gallery.locator('.gallery-pagination button').nth(1).click()
-  await expect(footer.locator('.gallery-kind, .gallery-caption-text, .gallery-counter')).toHaveCount(0)
-  await expect(footer.locator('.gallery-bottom-caption, .gallery-icon-button')).toHaveCount(0)
-})
-
-test('projects use compact desktop spreads without the project index', async ({ page }) => {
-  await page.goto('/#projects')
-  const spread = page.locator('.project-readify')
-  const info = spread.locator('.project-info')
-  const gallery = spread.locator('.project-gallery')
-
-  await expect(page.locator('.projects-page .project-index')).toHaveCount(0)
-  await expect(spread.locator('.project-top span')).toHaveCount(1)
-  await expect(spread.locator('.project-top')).not.toContainText('accessibility')
-  await expect(info.locator('.project-details .tags')).toBeVisible()
-  await expect(info.locator('.project-details .project-links')).toBeVisible()
-  const infoBox = await info.boundingBox()
-  const galleryBox = await gallery.boundingBox()
-  expect(galleryBox.x).toBeGreaterThan(infoBox.x)
+  const sides = await page.locator('.project-spread').evaluateAll((spreads) => spreads.map((spread) => {
+    const info = spread.querySelector('.project-info').getBoundingClientRect()
+    const gallery = spread.querySelector('.project-gallery').getBoundingClientRect()
+    return info.x < gallery.x ? 'left' : 'right'
+  }))
+  expect(sides).toEqual(['left', 'right', 'left', 'right'])
+  const readify = page.locator('.project-readify .project-info')
+  await expect(readify.locator('.project-meta')).toContainText('2026')
+  await expect(page.locator('.project-friction .project-context')).toContainText('hack the north', { ignoreCase: true })
+  await expect(readify.locator('.link-badge')).toHaveCount(3)
+  await expect(page.locator('.projects-page .project-index, .projects-page .tags')).toHaveCount(0)
 
   await page.setViewportSize({ width: 760, height: 844 })
   await page.reload()
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
 })
-
-test('each project spread carries its own accent through the editorial dividers', async ({ page }) => {
+test('project banners share one accent and sit just off the page colour', async ({ page }) => {
   await page.goto('/#projects')
-  const colors = await page.locator('.project-spread').evaluateAll((spreads) => spreads.map((spread) => {
-    const info = spread.querySelector('.project-info')
-    const tag = spread.querySelector('.tags li')
-    const link = spread.querySelector('.project-destination')
-    return {
-      accent: getComputedStyle(spread).getPropertyValue('--gallery-accent').trim(),
-      infoRule: getComputedStyle(info, '::before').backgroundColor,
-      tagBorder: getComputedStyle(tag).borderTopColor,
-      linkBorder: getComputedStyle(link).borderBottomColor,
-    }
-  }))
-
-  expect(colors).toHaveLength(4)
-  expect(new Set(colors.map((color) => color.accent)).size).toBe(4)
-  expect(new Set(colors.map((color) => color.infoRule)).size).toBe(4)
-  expect(new Set(colors.map((color) => color.tagBorder)).size).toBe(4)
-  expect(new Set(colors.map((color) => color.linkBorder)).size).toBe(4)
+  const read = () => page.locator('.project-spread').evaluateAll((spreads) => spreads.map((spread) => ({
+    accent: getComputedStyle(spread).getPropertyValue('--gallery-accent').trim(),
+    banner: getComputedStyle(spread.querySelector('.project-gallery')).backgroundColor,
+  })))
+  const lightness = (rgb) => rgb.match(/\d+/g).slice(0, 3).reduce((sum, value) => sum + Number(value), 0)
+  const page_bg = () => page.evaluate(() => getComputedStyle(document.querySelector('.site')).backgroundColor)
+  for (const theme of ['dark', 'light']) {
+    if (theme === 'light') await page.locator('.theme-toggle').click()
+    const spreads = await read()
+    expect(new Set(spreads.map((s) => s.accent)).size).toBe(1)
+    const difference = lightness(spreads[0].banner) - lightness(await page_bg())
+    // Dark: a touch lighter than the page. Light: a touch darker. Never a jump.
+    if (theme === 'dark') expect(difference).toBeGreaterThan(0)
+    else expect(difference).toBeLessThan(0)
+    expect(Math.abs(difference)).toBeLessThan(45)
+  }
+  // Every link badge keeps a light fill on hover (the live-project badge used to go black).
+  const badge = page.locator('.project-friction .link-badge-web')
+  await badge.hover()
+  await page.waitForTimeout(300)
+  expect(lightness(await badge.evaluate((el) => getComputedStyle(el).backgroundColor))).toBeGreaterThan(600)
 })
-
-test('custom cursor preserves interactive states with idle glitches and click bursts', async ({ page }) => {
-  await page.goto('#contact')
-  await expect.poll(async () => {
-    await page.mouse.move(20, 200)
-    await page.mouse.move(21, 200)
-    return page.locator('html').getAttribute('class')
-  }).toMatch(/custom-pointer-enabled/)
-  await expect(page.locator('html')).toHaveClass(/custom-pointer-enabled/)
-  await expect(page.locator('.custom-cursor')).toHaveClass(/is-visible/)
-  await expect(page.locator('.custom-cursor')).toHaveAttribute('data-mode', 'default')
-  await page.locator('.site-header nav a').first().hover()
-  await expect(page.locator('.custom-cursor')).toHaveAttribute('data-mode', 'link')
-  await expect(page.locator('.cursor-glyph-link')).toBeVisible()
-  await page.locator('.theme-toggle svg').hover()
-  await expect(page.locator('.custom-cursor')).toHaveAttribute('data-mode', 'link')
-  await page.locator('.copy-status').hover()
-  await expect(page.locator('.custom-cursor')).toHaveAttribute('data-mode', 'text')
-  await expect(page.locator('.cursor-glyph-text')).toBeVisible()
-  await page.locator('.email-copy').hover()
-  await expect(page.locator('.custom-cursor')).toHaveAttribute('data-mode', 'copy')
+test('mouse clicks emit a short-lived burst unless motion is reduced', async ({ page }) => {
+  const countBursts = () => page.evaluate(() => {
+    window.__bursts = 0
+    new MutationObserver((records) => records.forEach((record) => { window.__bursts += record.addedNodes.length }))
+      .observe(document.querySelector('.custom-cursor-bursts'), { childList: true })
+  })
+  await page.goto('/#contact')
+  await countBursts()
+  await page.mouse.move(400, 700)
   await page.mouse.down()
-  await expect(page.locator('.custom-cursor')).toHaveClass(/is-down/)
-  await expect(page.locator('.cursor-burst')).toHaveCount(1)
   await page.mouse.up()
-  await expect(page.locator('.custom-cursor-trail')).toHaveCount(0)
-  await expect(page.locator('.cursor-glitch')).toHaveCount(3)
-  await page.screenshot({ path: 'test-results/custom-cursor.png' })
+  await expect.poll(() => page.evaluate(() => window.__bursts)).toBe(1)
+  await expect(page.locator('.cursor-burst')).toHaveCount(0)
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.reload()
-  await expect(page.locator('.custom-cursor')).toBeHidden()
-  await expect(page.locator('html')).not.toHaveClass(/custom-pointer-enabled/)
+  await countBursts()
+  await page.mouse.move(400, 700)
+  await page.mouse.down()
+  await page.mouse.up()
+  await page.waitForTimeout(200)
+  expect(await page.evaluate(() => window.__bursts)).toBe(0)
 })
-
 test('boba can be stirred with bounded pointer and keyboard input', async ({ page }) => {
   await page.goto('/#about')
   const straw = page.getByRole('slider', { name: 'stir bubble tea' })
@@ -143,51 +131,57 @@ test('boba can be stirred with bounded pointer and keyboard input', async ({ pag
   await page.locator('.emblem-about').screenshot({ path: 'test-results/boba-stir.png' })
 })
 
-test('all six home elements share one decelerating orbital entrance', async ({ page }) => {
+test('home objects stand on a tilted 3D ring and ride it into place clockwise', async ({ page }) => {
   await page.goto('/')
-  const motion = await page.locator('.home-scene').evaluate(scene => {
-    return [...scene.querySelectorAll(':scope > .scene-object')].map(node => {
-      const animation = node.getAnimations().find(a => a.effect.getKeyframes().length === 121)
+  const scene = page.locator('.home-scene')
+  await expect(scene).toHaveClass(/is-entering/)
+  const motion = await scene.evaluate((root) => {
+    const order = ['about', 'work', 'photo-right', 'contact', 'projects', 'photo-left']
+    return order.map((slot) => {
+      const node = root.querySelector(`[data-slot="${slot}"]`)
+      const [animation] = node.getAnimations().filter((a) => a.effect.getKeyframes().some((k) => '--phi' in k))
       const frames = animation.effect.getKeyframes()
-      animation.pause()
-      animation.currentTime = 800
-      return {delay:animation.effect.getTiming().delay, duration:animation.effect.getTiming().duration,
-        initial:parseFloat(frames[1].rotate)-parseFloat(frames[0].rotate),
-        final:parseFloat(frames[120].rotate)-parseFloat(frames[119].rotate)}
+      return {
+        delay: animation.effect.getTiming().delay,
+        slot,
+        startPhi: parseFloat(frames[0]['--phi']),
+        endPhi: parseFloat(frames.at(-1)['--phi']),
+        startBlur: frames[0].filter,
+      }
     })
   })
   expect(motion).toHaveLength(6)
-  const titleAboveObjects = await page.locator('.home-scene').evaluate(scene => {
-    const titleZ = Number(getComputedStyle(scene.querySelector('.home-title')).zIndex)
-    return [...scene.querySelectorAll(':scope > .scene-object')].every(el => Number(getComputedStyle(el).zIndex) < titleZ)
+  for (let i = 1; i < motion.length; i++) expect(motion[i].delay).toBeGreaterThan(motion[i - 1].delay)
+  for (const item of motion) {
+    expect(item.endPhi).toBeGreaterThan(item.startPhi)
+    expect(item.startBlur).not.toBe('blur(0px)')
+  }
+  await expect(scene).not.toHaveClass(/is-entering/, { timeout: 5000 })
+  // Every ride ends exactly at the object's resting slot on the ring.
+  for (const item of motion) {
+    const resting = await page.locator(`[data-slot="${item.slot}"]`).evaluate((node) => {
+      node.getAnimations().forEach((animation) => {
+        if (animation.effect.getKeyframes().some((k) => '--phi' in k)) animation.finish()
+      })
+      return parseFloat(getComputedStyle(node).getPropertyValue('--phi'))
+    })
+    expect(item.endPhi).toBeCloseTo(resting, 3)
+  }
+  // Real perspective: the far pair renders smaller and higher than the near pair.
+  const box = (slot) => page.locator(`[data-slot="${slot}"] > :first-child`).boundingBox()
+  const [about, work, contact, projects, side] = await Promise.all(['about', 'work', 'contact', 'projects', 'photo-left'].map(box))
+  expect(about.width).toBeLessThan(projects.width)
+  expect(work.width).toBeLessThan(contact.width)
+  expect(about.y).toBeLessThan(side.y)
+  expect(side.y).toBeLessThan(projects.y)
+  const titleAboveObjects = await scene.evaluate((root) => {
+    const titleZ = Number(getComputedStyle(root.querySelector('.home-title')).zIndex)
+    const worldZ = parseInt(getComputedStyle(root.querySelector('.home-world')).zIndex, 10) || 0
+    return worldZ < titleZ
   })
   expect(titleAboveObjects).toBe(true)
-  for (const item of motion) {
-    expect(item.delay).toBe(0)
-    expect(item.duration).toBe(1450)
-    expect(Math.abs(item.initial)).toBeGreaterThan(Math.abs(item.final)*100)
-  }
-  await expect(page.locator('.entrance-vortex, .vortex-foreground, .vortex-layer')).toHaveCount(0)
-  await page.emulateMedia({reducedMotion:'reduce'})
+  await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.reload()
-  expect(await page.locator('.scene-object').first().evaluate(el => el.getAnimations().length)).toBe(0)
-})
-
-test('photo-only collage includes every gallery file and expands photos', async ({ page }) => {
-  await page.goto('/#about')
-  await page.locator('.photography-collection .hobby-heading-trigger').click()
-  const photos = page.locator('.photography-frame')
-  await expect(photos).toHaveCount(17)
-  await expect(page.getByText('click to expand · enjoy!', { exact: true })).toBeVisible()
-  await expect(photos.locator('span')).toHaveCount(0)
-  for (const photo of await photos.all()) {
-    await photo.scrollIntoViewIfNeeded()
-    await expect.poll(() => photo.locator('img').evaluate((img) => img.complete && img.naturalWidth > 0)).toBe(true)
-  }
-  await page.locator('.photography-gallery').screenshot({ path: 'test-results/photo-collage.png', style: '.site-header { visibility: hidden }' })
-  await page.setViewportSize({ width: 390, height: 844 })
-  await page.locator('.photography-gallery').screenshot({ path: 'test-results/photo-collage-mobile.png', style: '.site-header { visibility: hidden }' })
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
-  await photos.last().click()
-  await expect(page.locator('.hobby-dialog img')).toHaveAttribute('src', '/photos/gallery/random/airplane.webp')
+  await expect(scene).not.toHaveClass(/is-entering/)
+  expect(await page.locator('.scene-object').first().evaluate((el) => el.getAnimations().length)).toBe(0)
 })

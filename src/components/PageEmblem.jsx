@@ -70,15 +70,3 @@ export default function PageEmblem({ kind, className = '' }) {
     </svg>
   )
 }
-
-export function MotifRule({ variant = 'about' }) {
-  return <div className={`motif-rule motif-rule-${variant}`} aria-hidden="true">
-    <svg viewBox="0 0 900 32" preserveAspectRatio="xMidYMid meet" fill="none">
-      <path d="M0 16h246M512 16h388" stroke="currentColor" strokeWidth="1"/>
-      <path d="M257 7h8v8h-8zm8 8h8v8h-8zm8-8h8v8h-8zm8 8h8v8h-8zm8-8h8v8h-8zM390 6l-14 10 14 10v-8l11 8V6l-11 8z" fill="currentColor"/>
-      <ellipse cx="331" cy="16" rx="18" ry="8" transform="rotate(-20 331 16)" stroke="currentColor" strokeWidth="2"/>
-      <circle cx="331" cy="16" r="4" fill="currentColor"/>
-      <path d="M426 3v26m7-20v15m7-20v25m7-18v11m7-19v26M475 6h20v20h-20z" stroke="currentColor" strokeWidth="2"/>
-    </svg>
-  </div>
-}

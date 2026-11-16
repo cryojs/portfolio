@@ -19,15 +19,26 @@ const cutouts = {
     'M35 81L126 123L183 52L128 110L35 81ZM60 186L107 130L99 126L60 186ZM137 124L211 159L143 116L137 124Z',
 }
 
-export default function Silhouette({ kind, className = '' }) {
+export default function Silhouette({ kind, className = '', finish }) {
   const faceId = useId()
+  const gradientId = useId()
+  const fill = finish === 'cobalt' ? `url(#${gradientId})` : 'currentColor'
   return (
     <svg
       className={`silhouette silhouette-${kind} ${className}`}
       viewBox="0 0 240 240"
       aria-hidden="true"
-      fill="currentColor"
+      fill={fill}
     >
+      {finish === 'cobalt' && (
+        <defs>
+          <linearGradient id={gradientId} x1="40" y1="20" x2="190" y2="230" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#7d9aff" />
+            <stop offset=".45" stopColor="#3b59f4" />
+            <stop offset="1" stopColor="#172ca8" />
+          </linearGradient>
+        </defs>
+      )}
       {kind === 'bear' && (
         <defs>
           <mask id={faceId}>
@@ -73,7 +84,7 @@ export default function Silhouette({ kind, className = '' }) {
         </g>
       ) : (
         <g className="graphic-body">
-          <path d={shapes[kind]} fill="currentColor" fillRule="evenodd" />
+          <path d={shapes[kind]} fill={fill} fillRule="evenodd" />
           <path d={cutouts[kind]} fill="var(--graphic-cutout)" />
         </g>
       )}

@@ -1,357 +1,172 @@
-/* One frame size for every project; only the product palette changes. */
+/* Banners sit on a sheet just off the page colour (a touch lighter in dark
+   mode, a touch darker in light mode), framed by a hairline and the site's
+   blue offset shadow. Controls use the same blue everywhere. */
 .project-spread {
-  --gallery-accent: #a8b8ff;
-  --gallery-base: #11173a;
-  --gallery-glow: #30459a;
-  --project-divider: color-mix(in srgb, var(--gallery-accent) 60%, var(--line));
-  --project-muted: color-mix(in srgb, var(--muted) 82%, var(--gallery-accent));
-  --project-foreground: color-mix(in srgb, var(--foreground) 86%, var(--gallery-accent));
+  --gallery-base: #0e1018;
+  --gallery-accent: var(--blue);
+  --gallery-muted: color-mix(in srgb, var(--gallery-accent) 42%, transparent);
+  --project-divider: color-mix(in srgb, var(--foreground) 14%, transparent);
 }
-.project-readify {
-  --gallery-accent: #c4a4ff;
-  --gallery-base: #211536;
-  --gallery-glow: #7042a7;
-}
-.project-friction {
-  --gallery-accent: #9aa8d5;
-  --gallery-base: #111522;
-  --gallery-glow: #344981;
-}
-.project-refrain {
-  --gallery-accent: #73e5d0;
-  --gallery-base: #092d35;
-  --gallery-glow: #0b6b69;
-}
-.project-tidebreak {
-  --gallery-accent: #a3c7ff;
-  --gallery-base: #102b59;
-  --gallery-glow: #2d60ac;
+.theme-paper .project-spread {
+  --gallery-base: #e8e9ef;
 }
 .project-gallery {
   position: relative;
   isolation: isolate;
   display: grid;
-  grid-template-rows: minmax(0, 1fr) 32px;
-  height: clamp(280px, 46vw, 620px);
-  padding: 0 28px;
+  grid-template-rows: minmax(0, 1fr) auto;
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--gallery-accent) 34%, transparent);
-  background: linear-gradient(145deg, color-mix(in srgb, var(--gallery-glow) 18%, var(--gallery-base)), var(--gallery-base) 58%);
-  color: #f4f3ff;
+  border: 1px solid var(--project-divider);
+  background: var(--gallery-base);
+  color: var(--foreground);
 }
-.gallery-bottom-bar { display: flex; align-items: center; justify-content: center; min-width: 0; background: var(--gallery-base); }
-.gallery-stage { position: relative; display: grid; place-items: center; min-width: 0; min-height: 0; }
+
+/* ---------- media ---------- */
+
+.gallery-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 0;
+  padding: clamp(12px, 1.8vw, 22px) clamp(12px, 1.8vw, 22px) clamp(10px, 1.2vw, 16px);
+}
 .gallery-stage video,
 .gallery-image-button,
-.gallery-image-button > img { display: block; width: 100%; height: 100%; min-width: 0; min-height: 0; max-height: 100%; object-fit: contain; object-position: center; }
+.gallery-image-button > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
 .gallery-image-button { padding: 0; border: 0; background: transparent; cursor: zoom-in; }
 .gallery-stage video { background: transparent; }
 .gallery-collage { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; width: 100%; height: 100%; min-height: 0; }
 .gallery-collage img { width: 100%; height: 100%; min-width: 0; min-height: 0; object-fit: contain; }
-.gallery-pagination { display: flex; align-items: center; justify-content: center; min-width: 0; gap: 3px; }
-.gallery-pagination button { display: grid; place-items: center; width: clamp(14px, 2vw, 26px); height: 22px; padding: 0; background: transparent; }
-.gallery-pagination button > span { display: block; width: 100%; height: 3px; background: color-mix(in srgb, var(--gallery-accent) 28%, transparent); transition: background-color .15s; }
-.gallery-pagination button[aria-current] > span { background: var(--gallery-accent); box-shadow: 0 0 8px color-mix(in srgb, var(--gallery-accent) 30%, transparent); }
-.gallery-pagination button:hover > span { background: #fff; }
-.gallery-icon-button { display: inline-grid; place-items: center; flex: 0 0 auto; width: 34px; height: 32px; padding: 0; border: 1px solid color-mix(in srgb, var(--gallery-accent) 28%, transparent); border-radius: 0; background: color-mix(in srgb, var(--gallery-base) 65%, transparent); color: #f4f3ff; transition: background-color .15s, border-color .15s; }
-.gallery-icon-button:hover { background: color-mix(in srgb, var(--gallery-accent) 20%, var(--gallery-base)); border-color: var(--gallery-accent); }
-.gallery-icon-button:disabled { opacity: .3; cursor: default; }
-.gallery-side-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 32px; height: clamp(58px, 8vw, 92px); z-index: 2; border: 0; background: transparent; color: var(--gallery-accent); opacity: .58; transition: opacity .15s, color .15s; }
-.gallery-chevron { width: 16px; height: 78%; }
-.gallery-side-arrow:hover { background: transparent; color: #fff; opacity: 1; }
-.gallery-prev { left: 0; }
-.gallery-next { right: 0; }
-.project-gallery :is(button, video):focus-visible { outline: 2px solid var(--gallery-accent); outline-offset: 2px; }
-.project-gallery:focus-visible { outline: 2px solid var(--gallery-accent); outline-offset: 4px; }
-.gallery-unavailable { color: #f4f3ff; font: 12px var(--mono); padding: 20px; }
-.gallery-lightbox { position: fixed; inset: 0; width: 96vw; height: 94dvh; max-width: 1800px; max-height: 94dvh; margin: auto; padding: 50px 20px 20px; border: 1px solid var(--gallery-accent); background: #090b12; color: white; }
-.gallery-lightbox::backdrop { background: #03050be8; backdrop-filter: blur(8px); }
-.gallery-close { position: absolute; top: 10px; right: 12px; }
-.gallery-lightbox-media { display: grid; place-items: center; height: 100%; min-height: 0; pointer-events: none; }
-.gallery-lightbox-media > img { width: 100%; height: 100%; object-fit: contain; min-height: 0; }
-.project-links .project-destination { display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 8px 0; color: var(--foreground); border-bottom: 1px solid color-mix(in srgb, var(--gallery-accent) 55%, transparent); font-size: 14px; transition: color .15s, border-color .15s; }
-.project-destination > svg { flex-shrink: 0; color: var(--gallery-accent); }
-.project-destination > svg:last-of-type { width: 13px; margin-left: 2px; }
-.project-links .project-destination:hover { color: var(--gallery-accent); border-bottom-color: var(--gallery-accent); }
-.theme-paper .project-destination > svg { color: var(--gallery-accent); }
-@media (max-width: 600px) {
-  .project-gallery { padding: 0 20px; grid-template-rows: minmax(0, 1fr) 28px; }
-  .gallery-pagination { gap: 2px; }
-  .gallery-pagination button { width: 12px; height: 22px; }
-  .gallery-icon-button { width: 32px; height: 38px; }
-  .gallery-side-arrow { width: 24px; height: 56px; }
-  .gallery-chevron { width: 14px; height: 74%; }
-  .gallery-prev { left: 0; }
-  .gallery-next { right: 0; }
-  .gallery-collage { gap: 6px; }
-  .gallery-lightbox { padding: 50px 8px 12px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .project-gallery *, .project-destination { transition: none !important; }
-}
+.gallery-unavailable { padding: 20px; color: var(--muted); font: 12px var(--mono); }
 
-/* Project navigation uses the same clipped cobalt labels as the main site,
-   so the gallery feels like part of the portfolio rather than a separate UI. */
-.projects-page .project-index {
+/* ---------- controls: a segment track, then caption · count · steps ---------- */
+
+.gallery-controls { min-width: 0; }
+.gallery-track {
+  display: flex;
+  gap: 4px;
+  padding: 0 clamp(12px, 1.8vw, 22px);
+}
+.gallery-track button {
+  flex: 1 1 0;
   display: grid;
-  grid-template-columns: minmax(150px, .32fr) minmax(0, 1fr);
-  align-items: stretch;
-  margin: 34px 0 72px;
-  border: 1px solid var(--line);
-  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  align-items: center;
+  height: 14px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
 }
+.gallery-track button > span {
+  display: block;
+  height: 3px;
+  background: var(--gallery-muted);
+  transition: background-color .2s, height .2s var(--ease);
+}
+.gallery-track button:hover > span { height: 5px; background: color-mix(in srgb, var(--gallery-accent) 70%, transparent); }
+.gallery-track button[aria-current] > span { height: 5px; background: var(--gallery-accent); }
 
-.projects-page .project-index-label {
+.gallery-bar,
+.gallery-lightbox-bar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 14px;
-  padding: 17px 18px;
-  border-right: 1px solid var(--line);
+  min-width: 0;
+  padding: 8px clamp(12px, 1.8vw, 22px) 12px;
+}
+.gallery-caption {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
   color: var(--muted);
   font: 12px/1.4 var(--mono);
+  letter-spacing: .03em;
+  text-overflow: ellipsis;
   text-transform: lowercase;
+  white-space: nowrap;
 }
-
-.projects-page .project-index-label > span {
-  color: var(--blue);
-  font-size: 18px;
-}
-
-.projects-page .project-index-links {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.projects-page .project-index a {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 9px;
-  min-width: 0;
-  padding: 17px 14px;
-  border: 0;
-  border-right: 1px solid var(--line);
-  color: var(--foreground);
-  font: 15px/1.25 'Inter Variable', sans-serif;
-  text-transform: lowercase;
-  transition: background-color .2s ease, color .2s ease;
-}
-
-.projects-page .project-index a:last-child {
-  border-right: 0;
-}
-
-.projects-page .project-index a:hover,
-.projects-page .project-index a:focus-visible {
-  background: var(--blue);
-  color: #fff;
-}
-
-.project-index-number {
-  color: var(--accent-text);
-  font: 10px/1 var(--mono);
-}
-
-.projects-page .project-index a:hover .project-index-number,
-.projects-page .project-index a:focus-visible .project-index-number {
-  color: #fff;
-}
-
-.projects-page .project-index a > svg {
+.gallery-count {
   flex: 0 0 auto;
-  color: var(--accent-text);
-  transition: color .2s ease;
+  color: var(--muted);
+  font: 12px/1 var(--mono);
+  letter-spacing: .06em;
+  font-variant-numeric: tabular-nums;
 }
-
-.projects-page .project-index a:hover > svg,
-.projects-page .project-index a:focus-visible > svg {
+.gallery-count b { color: var(--foreground); font-weight: 600; }
+.gallery-step { display: flex; flex: 0 0 auto; }
+.gallery-step-button {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--project-divider);
+  background: transparent;
+  color: var(--gallery-accent);
+  cursor: pointer;
+  transition: background-color .15s, border-color .15s, color .15s;
+}
+.gallery-step-button + .gallery-step-button { border-left: 0; }
+.gallery-step-button:is(:hover, :focus-visible) {
+  border-color: var(--gallery-accent);
+  background: var(--gallery-accent);
   color: #fff;
 }
+.gallery-step-button:active { transform: translateY(1px); }
+.theme-dark .gallery-step-button { color: color-mix(in srgb, var(--gallery-accent) 55%, #fff); }
+.theme-dark .gallery-step-button:is(:hover, :focus-visible) { color: #fff; }
 
-.projects-page .project-spread {
-  position: relative;
+.project-gallery :is(button, video):focus-visible { outline: 2px solid var(--gallery-accent); outline-offset: 2px; }
+.project-gallery:focus-visible { outline: 2px solid var(--gallery-accent); outline-offset: 4px; }
+
+/* ---------- lightbox ---------- */
+
+.gallery-lightbox {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  width: 96vw;
+  height: 94dvh;
+  max-width: 1800px;
+  max-height: 94dvh;
+  margin: auto;
+  padding: 20px 0 0;
+  border: 1px solid var(--project-divider);
+  background: var(--gallery-base);
+  color: var(--foreground);
 }
+.gallery-lightbox:not([open]) { display: none; }
+.gallery-lightbox::backdrop { background: #03050be8; backdrop-filter: blur(8px); }
+.gallery-lightbox-media { display: grid; place-items: center; min-height: 0; padding: 0 20px; pointer-events: none; }
+.gallery-lightbox-media > img { width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.gallery-lightbox-bar { padding-top: 12px; border-top: 1px solid var(--project-divider); margin-top: 16px; }
+.gallery-close { margin-left: 6px; }
 
-.projects-page .project-layout {
-  min-width: 0;
-}
-
-.projects-page .project-top {
-  justify-content: flex-end;
-  align-items: center;
-  min-height: 28px;
-  padding: 0 1px 12px;
-  color: var(--project-muted);
-  font-size: 12px;
-}
-
-.projects-page .project-info {
-  position: relative;
-  gap: clamp(28px, 6vw, 88px);
-  padding: 28px 2px 0;
-}
-
-.projects-page .project-info::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 74px;
-  height: 2px;
-  background: var(--gallery-accent);
-}
-
-.projects-page .project-info h2 {
-  color: var(--project-foreground);
-  font-size: clamp(48px, 5vw, 72px);
-}
-
-.projects-page .project-description {
-  max-width: 58ch;
-  margin-top: 19px;
-  color: var(--project-muted);
-  font-size: 16px;
-  line-height: 1.72;
-}
-
-.projects-page .project-info > div:last-child {
-  align-self: start;
-  padding-top: 4px;
-}
-
-.projects-page .tags {
-  gap: 7px;
-}
-
-.projects-page .tags li {
-  padding: 6px 9px;
-  border-color: var(--project-divider);
-  color: var(--project-muted);
-}
-
-.projects-page .project-links {
-  gap: 9px 18px;
-  margin-top: 27px;
-}
-
-.projects-page .project-links .project-destination {
-  min-height: 38px;
-  padding: 7px 0;
-  border-bottom: 1px solid var(--project-divider);
-  font-size: 13px;
-}
-
-.projects-page .project-gallery {
-  border-width: 1px 1px 2px;
-  border-color: var(--project-divider);
-}
-
-.projects-page .gallery-bottom-bar {
-  border-top: 1px solid color-mix(in srgb, var(--gallery-accent) 25%, transparent);
-}
-
-.projects-page .gallery-icon-button {
-  clip-path: polygon(0 0, 88% 0, 100% 18%, 100% 100%, 12% 100%, 0 82%);
-}
-
-@media (min-width: 1001px) {
-  .projects-page .project-spread {
-    margin-bottom: clamp(68px, 7vw, 96px);
+@media (max-width: 600px) {
+  .gallery-track { gap: 3px; }
+  .gallery-bar { gap: 10px; }
+  .gallery-caption {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    white-space: normal;
   }
-
-  .projects-page .project-layout {
-    display: grid;
-    grid-template-columns: minmax(280px, .72fr) minmax(0, 1.28fr);
-    grid-template-areas: 'info gallery';
-    align-items: stretch;
-    gap: clamp(28px, 5vw, 76px);
-  }
-
-  .projects-page .project-info {
-    display: flex;
-    grid-area: info;
-    flex-direction: column;
-    align-items: stretch;
-    gap: clamp(24px, 3vw, 42px);
-    min-width: 0;
-    padding: 28px 2px 0;
-  }
-
-  .projects-page .project-info > div:last-child {
-    align-self: stretch;
-    padding-top: 0;
-  }
-
-  .projects-page .project-gallery {
-    grid-area: gallery;
-    height: clamp(320px, 32vw, 470px);
-  }
+  .gallery-step-button { width: 38px; height: 38px; }
+  .gallery-collage { gap: 6px; }
+  .gallery-lightbox-media { padding: 0 8px; }
 }
-
-@media (max-width: 1000px) {
-  .projects-page .project-info {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 900px) {
-  .projects-page .project-index {
-    grid-template-columns: 1fr;
-  }
-
-  .projects-page .project-index-label {
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .projects-page .project-index-links {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .projects-page .project-index a:nth-child(2n) {
-    border-right: 0;
-  }
-
-  .projects-page .project-index a:nth-child(-n + 2) {
-    border-bottom: 1px solid var(--line);
-  }
-}
-
-@media (max-width: 760px) {
-  .projects-page .project-index {
-    margin: 28px 0 52px;
-  }
-
-  .projects-page .project-index-label {
-    padding: 13px 14px;
-    font-size: 11px;
-  }
-
-  .projects-page .project-index a {
-    gap: 6px;
-    padding: 13px 10px;
-    font-size: 13px;
-  }
-
-  .projects-page .project-top {
-    font-size: 11px;
-  }
-
-  .projects-page .project-info {
-    gap: 18px;
-    padding-top: 23px;
-  }
-
-  .projects-page .project-description {
-    font-size: 15px;
-  }
-
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .projects-page .project-index a,
-  .projects-page .project-index a > svg {
-    transition: none;
-  }
+  .project-gallery *,
+  .gallery-lightbox * { transition: none !important; }
 }

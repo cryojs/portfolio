@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { chapters, resolveRoute } from './data/chapters'
+import { chapters, pageTitles, resolveRoute } from './data/chapters'
 import { profile } from './data/portfolio'
 import { BrandMark, Star } from './components/Editorial'
 import CyberBackdrop from './components/CyberGraphics'
@@ -8,6 +8,8 @@ import About from './pages/About'
 import Work from './pages/Work'
 import Projects from './pages/Projects'
 import Contact from './pages/Contact'
+import NotFound from './pages/NotFound'
+import './pages/InnerPages.css'
 import CustomCursor from './components/CustomCursor'
 
 const readRoute = () => ({
@@ -20,6 +22,7 @@ const pages = {
   work: Work,
   projects: Projects,
   contact: Contact,
+  notfound: NotFound,
 }
 
 export default function App() {
@@ -68,7 +71,7 @@ export default function App() {
   }, [])
 
   useLayoutEffect(() => {
-    document.title = 'Jason Sun - Portfolio'
+    document.title = pageTitles[route.page]
     const target = route.anchor ? document.getElementById(route.anchor) : null
     const focusTarget = target?.querySelector('h2, h3') || headingRef.current
     if (

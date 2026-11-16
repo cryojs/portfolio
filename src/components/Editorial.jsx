@@ -1,6 +1,7 @@
 import { useEffect, useId, useState } from 'react'
-import { MotifRule } from './PageEmblem'
-import { GithubIcon, LinkedinIcon } from './Icons'
+import { ChevronsRight, Globe } from 'lucide-react'
+import { GithubIcon, InstagramIcon, LinkedinIcon } from './Icons'
+import Silhouette from './Silhouette'
 
 export function Star({ className = '', brand = false, ...props }) {
   const id = useId()
@@ -30,44 +31,13 @@ export function Star({ className = '', brand = false, ...props }) {
   )
 }
 
-export function Trajectories({ className = '' }) {
-  return (
-    <svg
-      viewBox="0 0 1440 850"
-      preserveAspectRatio="none"
-      className={`trajectories ${className}`}
-      aria-hidden="true"
-    >
-      <g fill="none" stroke="currentColor" strokeWidth=".7">
-        <ellipse
-          cx="728"
-          cy="438"
-          rx="666"
-          ry="210"
-          transform="rotate(-22 728 438)"
-        />
-        <ellipse
-          cx="729"
-          cy="438"
-          rx="671"
-          ry="219"
-          transform="rotate(-19 729 438)"
-        />
-        <path d="M-90 715Q510 120 1510 209M242-120Q355 569 1290 928" />
-        <circle cx="727" cy="438" r="327" strokeDasharray="2 7" />
-      </g>
-      <g fill="currentColor">
-        <circle cx="262" cy="546" r="4" />
-        <circle cx="1108" cy="177" r="3" />
-        <circle cx="902" cy="702" r="4" />
-      </g>
-    </svg>
-  )
-}
-
-export function Photo({ photo, className = '', loading = 'lazy' }) {
+export function Photo({ photo, className = '', loading = 'lazy', onSettle }) {
   const [failed, setFailed] = useState(false)
   const hasPhoto = photo.src && !failed
+  // A placeholder has nothing to wait for.
+  useEffect(() => {
+    if (!photo.src) onSettle?.()
+  }, [photo.src, onSettle])
   return (
     <figure
       className={`photo ${hasPhoto ? 'has-photo' : 'photo-placeholder'} ${className}`}
@@ -77,7 +47,11 @@ export function Photo({ photo, className = '', loading = 'lazy' }) {
           src={photo.src}
           alt={photo.alt}
           style={{ objectPosition: photo.position }}
-          onError={() => setFailed(true)}
+          onLoad={onSettle}
+          onError={() => {
+            setFailed(true)
+            onSettle?.()
+          }}
           loading={loading}
           decoding="async"
         />
@@ -101,6 +75,8 @@ export function Photo({ photo, className = '', loading = 'lazy' }) {
 
 export function PhotoStack({ photos, className = '' }) {
   const [activeIndex, setActiveIndex] = useState(0)
+  // Hidden until the first photograph arrives, so empty frames never flash.
+  const [ready, setReady] = useState(false)
   useEffect(() => {
     if (!photos?.length) return undefined
 
@@ -127,7 +103,7 @@ export function PhotoStack({ photos, className = '' }) {
   const nextIndex = (activeIndex + 1) % photos.length
 
   return (
-    <div className={`photo-stack ${className}`} data-photo-index={activeIndex}>
+    <div className={`photo-stack ${className}`} data-photo-index={activeIndex} data-ready={ready}>
       <span
         className="photo-stack-layer photo-stack-layer-back"
         aria-hidden="true"
@@ -137,7 +113,7 @@ export function PhotoStack({ photos, className = '' }) {
         aria-hidden="true"
       />
       <div className="photo-stack-frame">
-        <Photo key={photo.src} photo={photo} loading="eager" />
+        <Photo key={photo.src} photo={photo} loading="eager" onSettle={() => setReady(true)} />
         {photos.length > 1 && (
           <button
             className="photo-stack-control"
@@ -152,7 +128,7 @@ export function PhotoStack({ photos, className = '' }) {
           />
         )}
         {photos.length > 1 && (
-          <span key={`counter-${photo.src}`} className="photo-stack-count" aria-live="polite">
+          <span key={`counter-${photo.src}`} className="photo-stack-count" aria-live="polite" aria-atomic="true">
             <span className="photo-stack-count-text">{activeIndex + 1}/{photos.length}</span>
           </span>
         )}
@@ -186,12 +162,10 @@ const brandLabels = {
   linkedin: null,
   chrome: 'C',
   firefox: 'F',
-  instagram: '◎',
-  youtube: '▶',
 }
 
 const brandImages = {
-  waterloo: '/logos/uw-transparent.png',
+  waterloo: '/logos/uw-transparent.webp',
   readify: '/logos/readify.png',
   dmoj: '/logos/dmoj.png',
   leetcode: '/logos/leetcode.png',
@@ -202,7 +176,7 @@ const brandImages = {
 }
 
 export function BrandMark({ brand }) {
-  const Icon = brand === 'github' ? GithubIcon : brand === 'linkedin' ? LinkedinIcon : null
+  const Icon = { github: GithubIcon, linkedin: LinkedinIcon, instagram: InstagramIcon, web: Globe }[brand]
   const image = brandImages[brand]
   const className = `brand-mark brand-mark-${brand}${image ? ' brand-mark-image' : ''}`
   return <span className={className} aria-hidden="true">
@@ -210,8 +184,8 @@ export function BrandMark({ brand }) {
   </span>
 }
 
-export function AboutLinkBadge({ href, brand, image, children, external = false, className = '', ...props }) {
-  const badgeClassName = `about-link-badge${brand ? ` about-link-badge-${brand}` : ''}${className ? ` ${className}` : ''}`
+export function LinkBadge({ href, brand, image, children, external = false, className = '', ...props }) {
+  const badgeClassName = `link-badge${brand ? ` link-badge-${brand}` : ''}${className ? ` ${className}` : ''}`
   const mark = image
     ? <span className="brand-mark brand-mark-image" aria-hidden="true"><img src={image} alt="" /></span>
     : <BrandMark brand={brand} />
@@ -224,14 +198,31 @@ export function AboutLinkBadge({ href, brand, image, children, external = false,
   return <a href={href} className={badgeClassName} {...props}>{content}</a>
 }
 
-export function PageIntro({ children, description, headingRef, motif }) {
+export function PageIntro({ children, headingRef }) {
   return (
     <div className="page-intro">
       <h1 tabIndex={-1} ref={headingRef}>
         {children}
       </h1>
-      {description && <p className="page-description">{description}</p>}
-      {motif && <MotifRule variant={motif} />}
     </div>
+  )
+}
+
+// The closing hand-off to the next chapter. The chevron is bound to the last
+// word so it can never wrap onto a line of its own.
+export function NextPage({ href, children, silhouette }) {
+  const words = children.split(' ')
+  const last = words.pop()
+  return (
+    <a className="next-page" href={href}>
+      <span>
+        {words.join(' ')}{' '}
+        <span className="next-page-tail">
+          {last}
+          <ChevronsRight className="next-page-chevron" aria-hidden="true" size={22} strokeWidth={1.8} />
+        </span>
+      </span>
+      <Silhouette kind={silhouette} className="next-page-silhouette" />
+    </a>
   )
 }

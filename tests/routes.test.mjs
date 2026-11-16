@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { chapters, resolveRoute } from '../src/data/chapters.js'
+import { chapters, pageTitles, resolveRoute } from '../src/data/chapters.js'
 
 test('all four destinations resolve as independent pages', () => {
   assert.deepEqual(
@@ -23,7 +23,19 @@ test('project deep links retain a stable destination', () => {
       anchor: `project-${project}`,
     })
 })
-test('home and unknown URLs have a safe fallback', () => {
-  for (const hash of ['', '#home', '#intro', '#unknown'])
+test('home URLs resolve home and unknown URLs get a not-found page', () => {
+  for (const hash of ['', '#home', '#intro'])
     assert.deepEqual(resolveRoute(hash), { page: 'home', anchor: null })
+  for (const hash of ['#unknown', '#projects-old', '#about/me'])
+    assert.deepEqual(resolveRoute(hash), { page: 'notfound', anchor: null })
+})
+test('work deep links open a specific entry', () => {
+  assert.deepEqual(resolveRoute('#work/usaco-guide'), {
+    page: 'work',
+    anchor: 'work-usaco-guide',
+  })
+})
+test('every page has a tab title', () => {
+  for (const page of ['home', 'about', 'work', 'projects', 'contact', 'notfound'])
+    assert.ok(pageTitles[page])
 })

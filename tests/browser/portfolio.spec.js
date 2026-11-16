@@ -10,23 +10,24 @@ test('all pages load directly, expose navigation, and keep assets intact', async
   for (const route of pages) {
     await page.goto(`/#${route}`)
     await expect(page.locator(`.route-${route}`)).toBeVisible()
-    await expect(page).toHaveTitle('Jason Sun - Portfolio')
+    await expect(page).toHaveTitle(/jason sun/)
     await expect(page.locator('.page-wipe')).toHaveCount(0)
     if (route === 'home') {
+      await expect(page.locator('.home-scene')).not.toHaveClass(/is-entering/)
       await expect(page.locator('.home-scene .scene-photo')).toHaveCount(2)
       const stacks = page.locator('.home-scene .photo-stack')
       await expect(stacks).toHaveCount(3)
       const firstPhotos = [
-        '/photos/selfie-spain.jpg',
-        '/photos/spain.jpg',
-        '/photos/toronto.jpg',
+        '/photos/selfie-spain.webp',
+        '/photos/spain.webp',
+        '/photos/toronto.webp',
       ]
       await expect(stacks.nth(1).getByText('1/3')).toBeVisible()
       for (let index = 0; index < stacks.count(); index += 1) {
         const stack = stacks.nth(index)
         const stackImage = stack.locator('img')
         if (index === 2) {
-          await expect(stackImage).toHaveAttribute('src', '/photos/disney.jpg')
+          await expect(stackImage).toHaveAttribute('src', '/photos/disney.webp')
         } else {
           await expect(stackImage).toHaveAttribute('src', firstPhotos[index])
         }
@@ -65,7 +66,9 @@ test('all pages load directly, expose navigation, and keep assets intact', async
         ),
     ).toBeTruthy()
     for (const img of await page.locator('img:visible').all()) {
-      await img.scrollIntoViewIfNeeded()
+      // Home objects sway continuously, so scroll directly rather than
+      // waiting for them to hold still.
+      await img.evaluate((el) => el.scrollIntoView({ block: 'nearest' }))
       await expect(img).toHaveJSProperty('complete', true)
       expect(await img.evaluate((el) => el.naturalWidth)).toBeGreaterThan(0)
     }
@@ -83,7 +86,7 @@ test('navigation transitions, keyboard focus, history, and deep links', async ({
   page,
 }) => {
   await page.goto('/#home')
-  await page.locator('.projects-object').click()
+  await page.locator('.projects-object').click({ force: true }) // home objects sway continuously
   await expect(page).toHaveURL(/#projects$/)
   await expect(page.locator('h1')).toContainText('from thought')
   await expect(page.locator('h1')).toBeFocused()
@@ -128,14 +131,21 @@ test('mobile, tablet, short desktop: no horizontal overflow', async ({
         `${route} at ${width}px`,
       ).toBeTruthy()
       if (route === 'home' && width <= 760) {
-        await expect(page.locator('.home-scene > .scene-object:visible')).toHaveCount(6)
+        await expect(page.locator('.home-scene .scene-object:visible')).toHaveCount(6)
       }
       if (route === 'projects' && width <= 760) {
-        for (const art of await page.locator('.project-art').all()) {
-          const copy = await art.locator('.project-art-copy').boundingBox()
-          const screen = await art.locator('.project-screen').boundingBox()
-          expect(screen.y).toBeGreaterThanOrEqual(copy.y + copy.height)
+        for (const spread of await page.locator('.project-spread').all()) {
+          const info = await spread.locator('.project-info').boundingBox()
+          const gallery = await spread.locator('.project-gallery').boundingBox()
+          expect(gallery.y).toBeGreaterThanOrEqual(info.y + info.height)
         }
+      }
+      const tail = page.locator('.next-page-tail')
+      if (await tail.count()) {
+        const box = await tail.boundingBox()
+        const chevron = await tail.locator('.next-page-chevron').boundingBox()
+        expect(chevron.y, `${route} chevron stays with its word`).toBeLessThan(box.y + box.height)
+        expect(chevron.y + chevron.height).toBeGreaterThan(box.y)
       }
       if (width === 390) {
         for (const img of await page.locator('img:visible').all()) {
@@ -194,13 +204,12 @@ test('email fallback and broken screenshot keep the page usable', async ({
     'couldn’t copy automatically',
   )
   await page.goto('/#projects')
-  await page
-    .locator('.project-screen img')
-    .first()
-    .evaluate((img) => {
-      img.src = '/deliberately-missing.png'
-    })
-  await expect(page.locator('.missing-media')).toBeVisible()
+  const gallery = page.locator('.project-readify .project-gallery')
+  await gallery.locator('.gallery-track button').nth(1).click()
+  await gallery.locator('.gallery-stage img').evaluate((img) => {
+    img.src = '/deliberately-missing.png'
+  })
+  await expect(gallery.locator('.gallery-unavailable')).toBeVisible()
   await expect(
     page.locator('.project-links').first().getByText('source code'),
   ).toBeVisible()
@@ -219,7 +228,7 @@ test('dark by default, persistent icon theme toggle, and clear lowercase UI', as
     page.locator('.scene-topline, .scene-bottom, .scene-side'),
   ).toHaveCount(0)
   await expect(page.locator('.silhouette-bear')).toBeVisible()
-  await expect(page.locator('.silhouette-quill')).toBeVisible()
+  await expect(page.locator('.project-glyph')).toBeVisible()
   await expect(page.locator('.silhouette-letter')).toBeVisible()
   await theme.click()
   await page.reload()
@@ -241,9 +250,11 @@ test('dark by default, persistent icon theme toggle, and clear lowercase UI', as
   await page.goto('/#work')
   await expect(page.locator('.work-page')).toBeVisible()
   await expect(page.locator('.site')).toHaveClass(/theme-dark/)
-  await expect(
-    page.locator('.experience-panel .tags, .experience-number'),
-  ).toHaveCount(0)
+  await expect(page.locator('.work-entry')).toHaveCount(3)
+  await expect(page.locator('.work-entry .work-entry-role').first()).toHaveCSS(
+    'text-transform',
+    'lowercase',
+  )
   await expect(page.locator('.site')).toHaveClass(/theme-dark/)
   await expect(page.locator('.site-header nav')).toHaveText(
     'aboutworkprojectscontact',
@@ -259,9 +270,59 @@ test('content fades into focus without a swipe or navbar animation', async ({
     'content-focus',
   )
   await expect(page.locator('.site-header')).toHaveCSS('animation-name', 'none')
-  await page.locator('.work-object').click()
+  await page.locator('.work-object').click({ force: true }) // home objects sway continuously
   await expect(page.locator('.route-work')).toBeVisible()
   await expect(page.locator('.page-entrance, .page-wipe')).toHaveCount(0)
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await expect(page.locator('.page')).toHaveCSS('animation-name', 'none')
+})
+
+test('work entries start collapsed and expand on demand', async ({ page }) => {
+  await page.goto('/#work')
+  const toggles = page.locator('.work-entry-toggle')
+  await expect(toggles).toHaveCount(3)
+  for (const toggle of await toggles.all()) await expect(toggle).toHaveAttribute('aria-expanded', 'false')
+  const first = page.locator('.work-entry').first()
+  await expect(first.locator('.work-entry-highlights li').first()).not.toBeInViewport()
+  await toggles.first().click()
+  await expect(toggles.first()).toHaveAttribute('aria-expanded', 'true')
+  await expect(first.locator('.work-entry-highlights li').first()).toBeVisible()
+  // The whole entry toggles; the company ↗ is the only link and does not.
+  await first.locator('.work-entry-meta').click()
+  await expect(toggles.first()).toHaveAttribute('aria-expanded', 'false')
+  await first.locator('.work-entry-name').click()
+  await expect(toggles.first()).toHaveAttribute('aria-expanded', 'true')
+  await expect(first.locator('.work-entry-name > a')).toHaveCount(0)
+  const popup = page.waitForEvent('popup')
+  await first.locator('.work-entry-link').click()
+  await (await popup).close()
+  await expect(toggles.first()).toHaveAttribute('aria-expanded', 'true')
+  // Role and dates share the top row on desktop.
+  const role = await first.locator('.work-entry-role').boundingBox()
+  const meta = await first.locator('.work-entry-meta').boundingBox()
+  expect(Math.abs(role.y + role.height / 2 - (meta.y + meta.height / 2))).toBeLessThan(4)
+})
+
+test('work deep links open their entry; unknown pages get a 404 and tab titles follow the page', async ({ page }) => {
+  await page.goto('/#work/usaco-guide')
+  await expect(page.locator('#work-usaco-guide .work-entry-toggle')).toHaveAttribute('aria-expanded', 'true')
+  await expect(page.locator('#work-career-education-council .work-entry-toggle')).toHaveAttribute('aria-expanded', 'false')
+  await expect(page).toHaveTitle('work · jason sun')
+  await page.goto('/#definitely-not-a-page')
+  await expect(page.locator('.notfound-page h1')).toContainText('lost in')
+  await expect(page).toHaveTitle('not found · jason sun')
+  await page.getByRole('link', { name: 'back to the start' }).click()
+  await expect(page.locator('.home-scene')).toBeVisible()
+  await expect(page).toHaveTitle('jason sun — developer & cs student')
+})
+
+test('phone header stays on one row with every destination reachable', async ({ page }) => {
+  for (const width of [320, 390, 600]) {
+    await page.setViewportSize({ width, height: 800 })
+    await page.goto('/#projects')
+    const header = await page.locator('.site-header').boundingBox()
+    expect(header.height).toBeLessThanOrEqual(64)
+    for (const link of await page.locator('.site-header nav a').all()) await expect(link).toBeInViewport()
+    await expect(page.locator('.theme-toggle')).toBeInViewport()
+  }
 })

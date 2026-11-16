@@ -1,13 +1,3 @@
-export function ArrowIcon({ direction = 'up-right', className = '' }) {
-  const directionClass = direction === 'up-right' ? '-rotate-45' : direction === 'up' ? '-rotate-90' : ''
-
-  return (
-    <svg aria-hidden="true" className={`size-[15px] shrink-0 ${directionClass} ${className}`} viewBox="0 0 20 20" fill="none">
-      <path d="M4.5 10h10M10.5 6l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
 export function GithubIcon({ className = '' }) {
   return (
     <svg aria-hidden="true" className={`size-[15px] shrink-0 ${className}`} viewBox="0 0 24 24" fill="currentColor">
@@ -24,23 +14,12 @@ export function LinkedinIcon({ className = '' }) {
   )
 }
 
-export function MailIcon({ className = '' }) {
+export function InstagramIcon({ className = '' }) {
   return (
-    <svg aria-hidden="true" className={`size-[15px] shrink-0 ${className}`} viewBox="0 0 24 24" fill="none">
-      <rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" strokeWidth="1.6" />
-      <path d="m4.5 7 7.5 6 7.5-6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
-export function MenuIcon({ open }) {
-  return (
-    <svg aria-hidden="true" className="size-[18px]" viewBox="0 0 20 20" fill="none">
-      {open ? (
-        <path d="m5 5 10 10M15 5 5 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      ) : (
-        <path d="M4 6.5h12M4 13.5h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      )}
+    <svg aria-hidden="true" className={`size-[15px] shrink-0 ${className}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4.2" />
+      <circle cx="17.4" cy="6.6" r="0.6" fill="currentColor" stroke="none" />
     </svg>
   )
 }

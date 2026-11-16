@@ -3,12 +3,12 @@ export const profile = {
   firstName: 'Jason',
   lastName: 'Sun',
   email: 'jasonsun.dev@gmail.com',
-  currentProjectId: 'readify',
   links: {
     github: 'https://github.com/CryoJS',
     linkedin: 'https://www.linkedin.com/in/jasonsuncs/',
     dmoj: 'https://dmoj.ca/user/Vastaway',
     leetcode: 'https://leetcode.com/u/Vastaway/',
+    instagram: 'https://www.instagram.com/cryojs/',
   },
 }
 
@@ -22,11 +22,9 @@ export const education = {
 export const experience = [
   {
     id: 'career-education-council',
-    tech: ['Swift', 'SwiftUI', 'UIKit'],
     role: 'iOS Developer (Co-op)',
     company: 'Career Education Council',
     website: 'https://www.careereducationcouncil.ca/',
-    shortContribution: 'built 10 iOS apps with Swift, UIKit, and SwiftUI.',
     logo: '/logos/develop-the-future-program.jpg',
     location: 'Remote',
     dates: 'Sept. 2024 to Jan. 2025',
@@ -37,11 +35,9 @@ export const experience = [
   },
   {
     id: 'usaco-guide',
-    tech: ['Open source', 'Algorithms', 'Editorials'],
     role: 'Open Source Contributor',
     company: 'USACO Guide',
     website: 'https://usaco.guide/',
-    shortContribution: 'contributed 6 pull requests with algorithm explanations, solutions, and test cases.',
     logo: '/logos/cpinitiative.jpg',
     location: 'Remote',
     dates: 'Oct. 2024 to Dec. 2024',
@@ -51,11 +47,9 @@ export const experience = [
   },
   {
     id: 'three-flavors',
-    tech: ['Python', 'Teaching', 'Mentorship'],
     role: 'Computer Camp Assistant',
     company: 'Three-Flavors Summer Camp',
     website: 'https://threeflavors.org/',
-    shortContribution: 'taught Python and programming fundamentals to 15+ students.',
     logo: '/logos/threeflavors.webp',
     location: 'Richmond Hill, ON',
     dates: 'July 2023',
@@ -70,7 +64,6 @@ export const projects = [
     id: 'readify',
     title: 'Readify',
     dates: 'Sept. 2026 to Oct. 2026',
-    spotlightDescription: 'a browser extension available on Chrome and Firefox',
     description: 'A cross-browser accessibility extension that personalizes typography and uses AI to explain and answer questions about webpages.',
     tech: ['WXT', 'React', 'TypeScript', 'Gemini API', 'Groq API', 'xAI API'],
     github: 'https://github.com/CryoJS/readify',
@@ -79,7 +72,7 @@ export const projects = [
       { label: 'Firefox', href: 'https://addons.mozilla.org/en-CA/firefox/addon/readify-web/' },
     ],
     media: {
-      image: '/projects/readify/wiki-ask-ai.png',
+      image: '/projects/readify/wiki-ask-ai.webp',
       width: 1093,
       height: 1168,
       video: '/projects/readify/showcase.mp4',
@@ -94,19 +87,19 @@ export const projects = [
         },
         {
           type: 'image',
-          src: '/projects/readify/wiki-base.png',
+          src: '/projects/readify/wiki-base.webp',
           caption: 'original page · before Readify',
           alt: 'Readify on a Wikipedia article before accessibility settings are applied',
         },
         {
           type: 'image',
-          src: '/projects/readify/wiki-ask-ai.png',
+          src: '/projects/readify/wiki-ask-ai.webp',
           caption: 'ask AI about the page',
           alt: 'Readify asking AI to explain a Wikipedia article',
         },
         {
           type: 'image',
-          src: '/projects/readify/wiki-typography.png',
+          src: '/projects/readify/wiki-typography.webp',
           caption: 'fonts, spacing & readability',
           alt: 'Readify typography controls applied to a Wikipedia article',
         },
@@ -117,12 +110,14 @@ export const projects = [
     id: 'friction',
     title: 'Friction',
     dates: 'Sept. 2026',
+    // Optional: where or why a project was made, shown beside its dates.
+    context: { prefix: 'built at', label: 'Hack the North 2026', href: 'https://hackthenorth.com/' },
     description: 'An AI-powered QA control room that tests live websites, surfaces UX friction, verifies fixes, and creates pull requests.',
     tech: ['React', 'TypeScript', 'Browserbase', 'OpenAI API', 'React Flow'],
     github: 'https://github.com/CryoJS/friction',
     live: 'https://friction-d95.pages.dev/',
     media: {
-      image: '/projects/friction/cover.png',
+      image: '/projects/friction/cover.webp',
       width: 2190,
       height: 1457,
       alt: 'Friction Paths view showing site routes, assigned agents, and scan results',
@@ -137,31 +132,31 @@ export const projects = [
         },
         {
           type: 'image',
-          src: '/projects/friction/cover.png',
+          src: '/projects/friction/cover.webp',
           caption: 'live routes & agent activity',
           alt: 'Friction Paths view showing site routes, assigned agents, and scan results',
         },
         {
           type: 'image',
-          src: '/projects/friction/friction1.png',
+          src: '/projects/friction/friction1.webp',
           caption: 'start a scan & connect a repository',
           alt: 'Friction project scan workspace',
         },
         {
           type: 'image',
-          src: '/projects/friction/friction2.png',
+          src: '/projects/friction/friction2.webp',
           caption: 'task results & findings',
           alt: 'Friction task graph showing completed and failed tasks with issue severity',
         },
         {
           type: 'image',
-          src: '/projects/friction/friction3.png',
+          src: '/projects/friction/friction3.webp',
           caption: 'site paths & assigned agents',
           alt: 'Friction project findings view',
         },
         {
           type: 'image',
-          src: '/projects/friction/friction4.png',
+          src: '/projects/friction/friction4.webp',
           caption: 'page annotations & UX issues',
           alt: 'Friction project issue review view',
         },
@@ -173,13 +168,13 @@ export const projects = [
         },
         {
           type: 'image',
-          src: '/projects/friction/friction-howitworks.png',
+          src: '/projects/friction/friction-howitworks.webp',
           caption: 'from website scan to fixes',
           alt: 'Diagram showing how Friction turns website scans into fixes',
         },
         {
           type: 'image',
-          src: '/projects/friction/friction-architecture.png',
+          src: '/projects/friction/friction-architecture.webp',
           caption: 'system architecture',
           alt: 'Friction system architecture diagram',
         },
@@ -260,7 +255,7 @@ export const projects = [
         },
         {
           type: 'image',
-          src: '/projects/tidebreak/tidebreak-mapselection.png',
+          src: '/projects/tidebreak/tidebreak-mapselection.webp',
           caption: 'choose a level',
           alt: 'Tidebreak level selection screen',
         },
@@ -273,29 +268,4 @@ export const projects = [
       ],
     },
   },
-]
-
-export const projectsById = Object.fromEntries(projects.map((project) => [project.id, project]))
-
-export const skillGroups = [
-  {
-    id: 'languages',
-    label: 'Languages',
-    values: ['Python', 'C++', 'C#', 'Swift', 'JavaScript', 'TypeScript', 'HTML/CSS'],
-  },
-  {
-    id: 'frameworks-tools',
-    label: 'Frameworks & tools',
-    values: ['React', 'Next.js', 'WXT', 'React Flow', 'Browserbase', 'OpenAI API', 'Gemini API', 'Supabase', 'Git'],
-  },
-]
-
-export const navigation = [
-  { id: 'intro', label: 'hello' },
-  { id: 'currently', label: 'currently' },
-  { id: 'experience', label: 'experience' },
-  { id: 'projects', label: 'projects' },
-  { id: 'skills', label: 'skills' },
-  { id: 'education', label: 'education' },
-  { id: 'contact', label: 'contact' },
 ]

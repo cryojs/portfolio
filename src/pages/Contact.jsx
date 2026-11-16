@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import { ArrowUpRight, Copy, Check, Mail } from 'lucide-react'
+import { ArrowUpRight, Copy, Check } from 'lucide-react'
 import { profile } from '../data/portfolio'
-import { BrandMark } from '../components/Editorial'
-import PageEmblem, { MotifRule } from '../components/PageEmblem'
-import './Contact.css'
+import { BrandMark, PageIntro } from '../components/Editorial'
+import PageEmblem from '../components/PageEmblem'
 
 export default function Contact({ headingRef }) {
   const [status, setStatus] = useState('')
@@ -20,20 +19,16 @@ export default function Contact({ headingRef }) {
     timer.current = setTimeout(() => setStatus(''), 5500)
   }
   return (
-    <section className="contact-page">
-      <div className="contact-postmark" aria-hidden="true"><span /><span /><span /></div>
-      <div className="contact-heading">
-        <h1 ref={headingRef} tabIndex={-1}>
-          let’s make
-          <br />
-          <em>something.</em>
-          <PageEmblem kind="contact" />
-        </h1>
-      </div>
-      <MotifRule variant="contact" />
+    <section className="inner-page contact-page">
+      <PageIntro headingRef={headingRef}>
+        let’s make
+        <br />
+        <em>something.</em>
+        <PageEmblem kind="contact" />
+      </PageIntro>
       <div className="contact-bottom">
-        <div className="contact-email">
-          <span className="contact-channel-label"><Mail size={15} aria-hidden="true" />drop me a line</span>
+        <div className="contact-email inner-rule">
+          <span className="section-kicker">drop me a line:</span>
           <button
             className="email-copy"
             onClick={copy}
@@ -46,7 +41,8 @@ export default function Contact({ headingRef }) {
             {status || 'click to copy'}
           </p>
         </div>
-        <nav className="contact-socials" aria-label="Social profiles">
+        <nav className="contact-socials inner-rule" aria-label="Social profiles">
+          <span className="section-kicker">elsewhere:</span>
           <a className="contact-profile" href={profile.links.github} target="_blank" rel="noreferrer"><BrandMark brand="github" /><span><span className="contact-profile-name">GitHub</span><span className="contact-profile-detail">@CryoJS</span></span><ArrowUpRight size={20} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>
           <a className="contact-profile" href={profile.links.linkedin} target="_blank" rel="noreferrer"><BrandMark brand="linkedin" /><span><span className="contact-profile-name">LinkedIn</span><span className="contact-profile-detail">let’s connect</span></span><ArrowUpRight size={20} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span></a>
         </nav>

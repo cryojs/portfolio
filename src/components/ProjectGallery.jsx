@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import './ProjectGallery.css'
 
 function GalleryImage({ src, alt, ...props }) {
@@ -21,8 +21,20 @@ function Still({ slide }) {
   ) : <GalleryImage src={slide.src} alt={slide.alt} />
 }
 
-function GalleryChevron({ direction }) {
-  return <svg className="gallery-chevron" viewBox="0 0 24 100" fill="none" aria-hidden="true"><path d={direction === 'left' ? 'M21 2 3 50 21 98' : 'M3 2 21 50 3 98'} stroke="currentColor" strokeWidth="1.5" vectorEffect="non-scaling-stroke" /></svg>
+const pad = (value) => String(value).padStart(2, '0')
+const captionFor = (slide) => slide.caption || (slide.type === 'video' ? 'demo video' : slide.alt)
+
+function StepButtons({ onPrevious, onNext, label, className = '' }) {
+  return (
+    <div className={`gallery-step ${className}`}>
+      <button type="button" className="gallery-step-button" onClick={onPrevious} aria-label={`Previous ${label}`} title="previous (←)">
+        <ChevronLeft size={18} strokeWidth={2.2} aria-hidden="true" />
+      </button>
+      <button type="button" className="gallery-step-button" onClick={onNext} aria-label={`Next ${label}`} title="next (→)">
+        <ChevronRight size={18} strokeWidth={2.2} aria-hidden="true" />
+      </button>
+    </div>
+  )
 }
 
 export default function ProjectGallery({ media, title }) {
@@ -30,6 +42,8 @@ export default function ProjectGallery({ media, title }) {
     const gallery = media.gallery || [{ type: 'image', src: media.image, alt: media.alt }]
     return [...gallery.filter((slide) => slide.type === 'video'), ...gallery.filter((slide) => slide.type !== 'video')]
   }, [media])
+  // The lightbox only browses stills; videos keep their own native player.
+  const stills = useMemo(() => slides.flatMap((slide, index) => (slide.type === 'video' ? [] : [index])), [slides])
   const [activeIndex, setActiveIndex] = useState(0)
   const [expanded, setExpanded] = useState(false)
   const videoRef = useRef(null)
@@ -37,6 +51,7 @@ export default function ProjectGallery({ media, title }) {
   const touchStart = useRef(null)
   const slide = slides[activeIndex]
   const isVideo = slide?.type === 'video'
+  const several = slides.length > 1
 
   useEffect(() => {
     if (!expanded) return undefined
@@ -53,6 +68,11 @@ export default function ProjectGallery({ media, title }) {
   function goToSlide(index) {
     videoRef.current?.pause()
     setActiveIndex((index + slides.length) % slides.length)
+  }
+
+  function stepStill(direction) {
+    const position = stills.indexOf(activeIndex)
+    setActiveIndex(stills[(position + direction + stills.length) % stills.length])
   }
 
   function handleKeyDown(event) {
@@ -90,19 +110,65 @@ export default function ProjectGallery({ media, title }) {
           </button>
         )}
       </div>
-      <button className="gallery-icon-button gallery-side-arrow gallery-prev" type="button" aria-label={`Previous ${title} slide`} title="previous slide" onClick={() => goToSlide(activeIndex - 1)} disabled={slides.length < 2}><GalleryChevron direction="left" /></button>
-      <button className="gallery-icon-button gallery-side-arrow gallery-next" type="button" aria-label={`Next ${title} slide`} title="next slide" onClick={() => goToSlide(activeIndex + 1)} disabled={slides.length < 2}><GalleryChevron direction="right" /></button>
-      <div className="gallery-bottom-bar">
-        <div className="gallery-pagination" aria-label={`${title} slides`}>
-          {slides.map((item, index) => (
-            <button key={item.src || item.alt} type="button" aria-label={`Show ${title} ${item.type === 'video' ? 'video' : 'image'} ${index + 1}`} aria-current={index === activeIndex ? 'true' : undefined} onClick={() => goToSlide(index)}><span /></button>
-          ))}
+
+      <div className="gallery-controls">
+        {several && (
+          <div className="gallery-track" role="group" aria-label={`${title} slides`}>
+            {slides.map((item, index) => (
+              <button
+                key={item.src || item.alt}
+                type="button"
+                aria-label={`Show ${title} ${item.type === 'video' ? 'video' : 'image'} ${index + 1}: ${captionFor(item)}`}
+                aria-current={index === activeIndex ? 'true' : undefined}
+                title={captionFor(item)}
+                onClick={() => goToSlide(index)}
+              >
+                <span />
+              </button>
+            ))}
+          </div>
+        )}
+        <div className="gallery-bar">
+          <p className="gallery-caption" aria-live="polite">{captionFor(slide)}</p>
+          {several && (
+            <>
+              <span className="gallery-count" aria-hidden="true">
+                <b>{pad(activeIndex + 1)}</b> / {pad(slides.length)}
+              </span>
+              <StepButtons label={`${title} slide`} onPrevious={() => goToSlide(activeIndex - 1)} onNext={() => goToSlide(activeIndex + 1)} />
+            </>
+          )}
         </div>
       </div>
+
       {expanded && (
-        <dialog ref={dialogRef} className="gallery-lightbox" aria-label={`${title} expanded image`} onClose={() => setExpanded(false)} onClick={(event) => { if (event.target === event.currentTarget) setExpanded(false) }}>
-          <button className="gallery-icon-button gallery-close" type="button" onClick={() => setExpanded(false)} aria-label="Close expanded image" autoFocus><X size={22} aria-hidden="true" /></button>
+        <dialog
+          ref={dialogRef}
+          className="gallery-lightbox"
+          aria-label={`${title} expanded image`}
+          onClose={() => setExpanded(false)}
+          onClick={(event) => { if (event.target === event.currentTarget) setExpanded(false) }}
+          onKeyDown={(event) => {
+            if (stills.length < 2 || (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight')) return
+            event.preventDefault()
+            stepStill(event.key === 'ArrowLeft' ? -1 : 1)
+          }}
+        >
           <div className="gallery-lightbox-media"><Still slide={slide} /></div>
+          <div className="gallery-lightbox-bar">
+            <p className="gallery-caption">{captionFor(slide)}</p>
+            {stills.length > 1 && (
+              <>
+                <span className="gallery-count" aria-hidden="true">
+                  <b>{pad(stills.indexOf(activeIndex) + 1)}</b> / {pad(stills.length)}
+                </span>
+                <StepButtons label={`${title} image`} onPrevious={() => stepStill(-1)} onNext={() => stepStill(1)} />
+              </>
+            )}
+            <button className="gallery-step-button gallery-close" type="button" onClick={() => setExpanded(false)} aria-label="Close expanded image" autoFocus>
+              <X size={18} strokeWidth={2.2} aria-hidden="true" />
+            </button>
+          </div>
         </dialog>
       )}
     </section>
