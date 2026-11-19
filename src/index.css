@@ -2015,3 +2015,9 @@ summary {
   .site-header { padding: 0 6px 0 10px; }
   .site-header nav a { padding: 8px 7px; font-size: 14px; }
 }
+
+@media (max-width: 760px) {
+  .site-footer-copy { display: none; }
+  .site-footer { justify-content: center; }
+  .site-footer-links { gap: 14px; }
+}

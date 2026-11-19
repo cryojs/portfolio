@@ -227,8 +227,11 @@ export default function App() {
         <Page headingRef={headingRef} anchor={route.anchor} />
       </main>
       <footer className="site-footer" key={`footer-${route.page}`}>
-        <span>© {new Date().getFullYear()} jason sun</span>
+        <span className="site-footer-copy">© {new Date().getFullYear()} jason sun</span>
         <span className="site-footer-links">
+          <a href="/Jason%20Sun%20-%20Resume.pdf" target="_blank" rel="noreferrer">
+            resume ↗
+          </a>
           <a href={profile.links.linkedin} target="_blank" rel="noreferrer">
             <BrandMark brand="linkedin" /> linkedin ↗
           </a>
