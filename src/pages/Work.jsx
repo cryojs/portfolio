@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ArrowUpRight, Plus } from 'lucide-react'
 import { experience } from '../data/portfolio'
-import { NextPage, PageIntro } from '../components/Editorial'
+import { LinkBadge, NextPage, PageIntro } from '../components/Editorial'
 import PageEmblem from '../components/PageEmblem'
 
 function WorkEntry({ item, initiallyOpen }) {
@@ -60,8 +60,18 @@ function WorkEntry({ item, initiallyOpen }) {
       <div id={panelId} className="work-entry-panel" inert={!open}>
         <div>
           <ul className="bullet-list work-entry-highlights">
-            {item.highlights.map((text) => (
-              <li key={text}>{text}</li>
+            {item.highlights.map((text, i) => (
+              <li key={i}>
+                {[].concat(text).map((part, j) =>
+                  typeof part === 'string' ? (
+                    part
+                  ) : (
+                    <LinkBadge brand={part.brand} href={part.href} external key={j}>
+                      {part.label}
+                    </LinkBadge>
+                  ),
+                )}
+              </li>
             ))}
           </ul>
         </div>

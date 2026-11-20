@@ -19,6 +19,9 @@ export const education = {
   dates: 'Sept. 2026 to expected Apr. 2031',
 }
 
+const dsaHandbook = { brand: 'github', label: 'DSA Handbook', href: 'https://github.com/cryojs/DSA-Handbook' }
+
+// A highlight is a string, or an array mixing strings and { brand, label, href } badges.
 export const experience = [
   {
     id: 'career-education-council',
@@ -55,8 +58,9 @@ export const experience = [
     dates: 'Sept. 2024 to June 2026',
     highlights: [
       'Wrote and taught a 5-part competitive programming curriculum covering time complexity, prefix sums, data structures, recursion, and greedy algorithms.',
-      'Open-sourced the curriculum as the DSA Handbook, a presentation-style guide to competitive programming fundamentals.',
+      ['Open-sourced the curriculum as the ', dsaHandbook, ', a presentation-style guide to competitive programming fundamentals.'],
     ],
+    repo: dsaHandbook,
   },
 ]
 

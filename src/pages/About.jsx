@@ -117,8 +117,8 @@ export default function About({ headingRef }) {
                   {item.id === 'stephen-lewis' && (
                     <>
                       led the CS and math clubs at <CompanyChip item={item} index={index} />, and open-sourced our{' '}
-                      <LinkBadge brand="github" href="https://github.com/cryojs/DSA-Handbook" external>
-                        DSA Handbook
+                      <LinkBadge brand={item.repo.brand} href={item.repo.href} external>
+                        {item.repo.label}
                       </LinkBadge>
                     </>
                   )}
