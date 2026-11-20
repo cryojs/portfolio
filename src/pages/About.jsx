@@ -112,10 +112,15 @@ export default function About({ headingRef }) {
                     <>built and designed iOS apps at <CompanyChip item={item} index={index} /></>
                   )}
                   {item.id === 'usaco-guide' && (
-                    <>contributed 6 pull requests with algorithm explanations and solutions to <CompanyChip item={item} index={index} /></>
+                    <>merged 6 pull requests adding python solutions and quizzes to <CompanyChip item={item} index={index} /></>
                   )}
-                  {item.id === 'three-flavors' && (
-                    <>taught python and programming fundamentals to 15+ students at <CompanyChip item={item} index={index} /></>
+                  {item.id === 'stephen-lewis' && (
+                    <>
+                      led the CS and math clubs at <CompanyChip item={item} index={index} />, and open-sourced our{' '}
+                      <LinkBadge brand="github" href="https://github.com/cryojs/DSA-Handbook" external>
+                        DSA Handbook
+                      </LinkBadge>
+                    </>
                   )}
                 </p>
               </article>
@@ -137,7 +142,7 @@ export default function About({ headingRef }) {
                       external
                     >
                       LeetCode
-                    </LinkBadge>, and earned Honor Roll in CCC Senior 2026
+                    </LinkBadge>, earned Honor Roll in CCC Senior 2026, and got a perfect score in CCC Junior 2024
                   </p>
                 </article>
               )}

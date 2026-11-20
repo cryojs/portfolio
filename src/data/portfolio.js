@@ -16,7 +16,7 @@ export const education = {
   school: 'University of Waterloo',
   degree: 'Bachelor of Computer Science, Co-op',
   location: 'Waterloo, ON',
-  dates: 'Sept. 2026 to expected May 2031',
+  dates: 'Sept. 2026 to expected Apr. 2031',
 }
 
 export const experience = [
@@ -30,7 +30,7 @@ export const experience = [
     dates: 'Sept. 2024 to Jan. 2025',
     highlights: [
       'Built 10 iOS applications in Swift, UIKit, and SwiftUI through an Apple-supported development program, incorporating code and UX feedback from industry engineers into each release.',
-      'Designed and built a SwiftUI productivity app prototype and presented the finished application, visual presentation, and elevator pitch to a panel of industry developers and judges.',
+      'Designed and built Stream, a SwiftUI productivity app prototype, and presented the finished application, visual presentation, and elevator pitch to a panel of industry developers and judges.',
     ],
   },
   {
@@ -42,19 +42,20 @@ export const experience = [
     location: 'Remote',
     dates: 'Oct. 2024 to Dec. 2024',
     highlights: [
-      'Authored 6 pull requests adding editorial solutions, test cases, and algorithmic guides for competitive programmers.',
+      'Merged 6 pull requests into the open-source USACO Guide, adding Python solutions and quizzes to Bronze and Gold modules (sorting, graphs, bitmask DP).',
     ],
   },
   {
-    id: 'three-flavors',
-    role: 'Computer Camp Assistant',
-    company: 'Three-Flavors Summer Camp',
-    website: 'https://threeflavors.org/',
-    logo: '/logos/threeflavors.webp',
-    location: 'Richmond Hill, ON',
-    dates: 'July 2023',
+    id: 'stephen-lewis',
+    role: 'President, CS Club & Math Club',
+    company: 'Stephen Lewis Secondary School',
+    website: 'https://stephenlewis-ss.yrdsb.ca/',
+    logo: '/logos/stephen-lewis.webp',
+    location: 'Thornhill, ON',
+    dates: 'Sept. 2024 to June 2026',
     highlights: [
-      'Taught Python fundamentals and core programming logic to 15+ students, helping every student complete their first working program.',
+      'Wrote and taught a 5-part competitive programming curriculum covering time complexity, prefix sums, data structures, recursion, and greedy algorithms.',
+      'Open-sourced the curriculum as the DSA Handbook, a presentation-style guide to competitive programming fundamentals.',
     ],
   },
 ]
@@ -111,7 +112,7 @@ export const projects = [
     title: 'Friction',
     dates: 'Sept. 2026',
     // Optional: where or why a project was made, shown beside its dates.
-    context: { prefix: 'built at', label: 'Hack the North 2026', href: 'https://hackthenorth.com/' },
+    context: { prefix: 'Browserbase finalist at', label: 'Hack the North 2026', href: 'https://hackthenorth.com/' },
     description: 'An AI-powered QA control room that tests live websites, surfaces UX friction, verifies fixes, and creates pull requests.',
     tech: ['React', 'TypeScript', 'Browserbase', 'OpenAI API', 'React Flow'],
     github: 'https://github.com/CryoJS/friction',
