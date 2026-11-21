@@ -247,6 +247,12 @@ export const projects = [
       alt: 'Tidebreak gameplay and in-game level editor',
       gallery: [
         {
+          type: 'video',
+          src: '/projects/tidebreak/tidebreak-demo.webm',
+          poster: '/projects/tidebreak/video-poster.jpg',
+          alt: 'Tidebreak demo: building a level in the map editor, then clearing levels from easy to hard',
+        },
+        {
           type: 'image',
           src: '/projects/tidebreak/tidebreak-gameplay-sliding.png',
           caption: 'sliding through tranquil forest',
