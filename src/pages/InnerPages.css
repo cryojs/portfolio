@@ -171,19 +171,34 @@
   font: 500 12px/1.5 var(--mono);
   letter-spacing: .04em;
 }
+/* An award reads as a small slanted tab, the same shape as the active nav
+   item, so it carries the site's own accent instead of a generic chip. */
 .project-context {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 9px;
-  background: color-mix(in srgb, var(--blue) 10%, transparent);
-  color: var(--muted);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 16px 0 0;
+  padding: 6px 18px 6px 14px;
+  background: var(--blue);
+  color: #fff;
+  font: 500 12px/1.5 var(--mono);
+  letter-spacing: .04em;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 100%, 8px 100%);
 }
+.project-context-icon { flex: none; margin-top: 2px; }
 .project-context a {
-  color: var(--accent-text);
+  color: inherit;
   font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  transition: text-decoration-color .2s;
 }
-.project-context a:is(:hover, :focus-visible) { text-decoration: underline; text-underline-offset: 3px; }
+.project-context a:is(:hover, :focus-visible) { text-decoration-color: currentColor; }
+/* clip-path would cut an outline off, so keyboard focus thickens the underline. */
+.project-context a:focus-visible { outline: none; text-decoration-thickness: 2px; }
 .project-info h2 {
   margin: 12px 0 0;
   color: var(--foreground);
@@ -220,6 +235,64 @@
   height: auto;
   aspect-ratio: 4 / 3;
   box-shadow: 10px 10px 0 var(--blue);
+}
+
+/* Smaller projects: one compact row each under a shared kicker, a small
+   thumbnail beside the copy instead of a full gallery spread. */
+.small-projects {
+  margin-top: clamp(96px, 11vw, 160px);
+  padding-top: 24px;
+  border-top: 1px solid var(--hairline);
+}
+.small-project-list {
+  display: grid;
+  gap: clamp(32px, 4vw, 48px);
+  margin-top: clamp(28px, 3vw, 40px);
+}
+.small-project {
+  display: grid;
+  grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+  gap: clamp(24px, 3.5vw, 48px);
+  align-items: center;
+  scroll-margin-top: calc(var(--header-height) + 24px);
+}
+.small-project + .small-project {
+  padding-top: clamp(32px, 4vw, 48px);
+  border-top: 1px solid var(--hairline);
+}
+.small-project-thumb {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--foreground) 18%, transparent);
+  box-shadow: 6px 6px 0 var(--blue);
+}
+.small-project-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: left top;
+}
+.small-project-info { min-width: 0; }
+.small-project-info h3 {
+  margin: 8px 0 0;
+  color: var(--foreground);
+  font: 400 clamp(32px, 3vw, 42px)/1 var(--serif);
+  letter-spacing: -.03em;
+  text-transform: none;
+}
+.small-project-info h3:focus { outline: none; }
+.small-project-description {
+  max-width: 60ch;
+  margin-top: 12px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.small-project-info .project-tech { margin-top: 12px; }
+.small-project-info .project-links { margin-top: 16px; }
+
+@media (max-width: 640px) {
+  .small-project { grid-template-columns: minmax(0, 1fr); gap: 20px; }
 }
 
 /* ---------- contact ---------- */

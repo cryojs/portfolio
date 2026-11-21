@@ -313,7 +313,7 @@ test('work deep links open their entry; unknown pages get a 404 and tab titles f
   await expect(page).toHaveTitle('not found · jason sun')
   await page.getByRole('link', { name: 'back to the start' }).click()
   await expect(page.locator('.home-scene')).toBeVisible()
-  await expect(page).toHaveTitle('jason sun — developer & cs student')
+  await expect(page).toHaveTitle('jason sun · developer & cs student')
 })
 
 test('phone header stays on one row with every destination reachable', async ({ page }) => {

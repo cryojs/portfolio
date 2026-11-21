@@ -27,7 +27,7 @@ export const chapters = [
 
 // Titles shown in the browser tab for each page.
 export const pageTitles = {
-  home: 'jason sun — developer & cs student',
+  home: 'jason sun · developer & cs student',
   about: 'about · jason sun',
   work: 'work · jason sun',
   projects: 'projects · jason sun',

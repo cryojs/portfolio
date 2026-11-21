@@ -42,7 +42,8 @@ test('project spreads alternate sides on desktop and lead with their kicker', as
     const gallery = spread.querySelector('.project-gallery').getBoundingClientRect()
     return info.x < gallery.x ? 'left' : 'right'
   }))
-  expect(sides).toEqual(['left', 'right', 'left', 'right'])
+  expect(sides).toEqual(['left', 'right', 'left'])
+  await expect(page.locator('.small-projects .small-project.project-refrain h3')).toHaveText('Refrain')
   const readify = page.locator('.project-readify .project-info')
   await expect(readify.locator('.project-meta')).toContainText('2026')
   await expect(page.locator('.project-friction .project-context')).toContainText('hack the north', { ignoreCase: true })

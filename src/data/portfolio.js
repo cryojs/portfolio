@@ -187,51 +187,6 @@ export const projects = [
     },
   },
   {
-    id: 'refrain',
-    title: 'Refrain',
-    dates: 'July 2026 to Sept. 2026',
-    description: 'A customizable Pomodoro workspace with accurate background timers, reorderable tasks, notes, and live activity visualizations.',
-    tech: ['Next.js', 'React', 'TypeScript', 'dnd-kit', 'Recharts'],
-    github: 'https://github.com/CryoJS/refrain',
-    live: 'https://refrain-timer.vercel.app/',
-    media: {
-      image: '/projects/refrain/refrain-timer.png',
-      width: 1626,
-      height: 714,
-      alt: 'Refrain focus timer beside a task list',
-      position: 'center',
-      gallery: [
-        {
-          type: 'image',
-          src: '/projects/refrain/refrain-timer.png',
-          caption: 'focus timer & to-do list',
-          alt: 'Refrain focus timer beside a task list',
-        },
-        {
-          type: 'image',
-          src: '/projects/refrain/refrain-stats.png',
-          caption: 'study streaks & activity',
-          alt: 'Refrain study statistics dashboard',
-        },
-        {
-          type: 'image',
-          src: '/projects/refrain/refrain-notes.png',
-          caption: 'notes with Markdown preview',
-          alt: 'Refrain notes workspace with markdown preview',
-        },
-        {
-          type: 'collage',
-          caption: 'timer plans & appearance settings',
-          alt: 'Refrain timer plans and appearance settings',
-          images: [
-            { src: '/projects/refrain/refrain-settings1.png' },
-            { src: '/projects/refrain/refrain-settings2.png' },
-          ],
-        },
-      ],
-    },
-  },
-  {
     id: 'tidebreak',
     title: 'Tidebreak',
     dates: 'Apr. 2026 to July 2026',
@@ -278,5 +233,19 @@ export const projects = [
         },
       ],
     },
+  },
+]
+
+// Smaller builds, listed compactly beneath the main spreads.
+export const smallProjects = [
+  {
+    id: 'refrain',
+    title: 'Refrain',
+    dates: 'July 2026 to Sept. 2026',
+    description: 'A customizable Pomodoro workspace with accurate background timers, reorderable tasks, notes, and live activity visualizations.',
+    tech: ['Next.js', 'React', 'TypeScript', 'dnd-kit', 'Recharts'],
+    github: 'https://github.com/CryoJS/refrain',
+    live: 'https://refrain-timer.vercel.app/',
+    image: { src: '/projects/refrain/refrain-timer.png', alt: 'Refrain focus timer beside a task list' },
   },
 ]

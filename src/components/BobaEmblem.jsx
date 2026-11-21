@@ -68,7 +68,7 @@ export default function BobaEmblem({ className = '' }) {
     <g className="boba-straw" role="slider" tabIndex={0} aria-label="stir bubble tea"
       aria-valuemin={-42} aria-valuemax={42} aria-valuenow={Math.round(position)}
       data-depth={strawDepth.toFixed(2)}
-      aria-valuetext={`Across ${Math.round(position)}, depth ${Math.round(depth)} — use arrow keys to stir in two dimensions`}
+      aria-valuetext={`Across ${Math.round(position)}, depth ${Math.round(depth)}. Use arrow keys to stir in two dimensions`}
       onPointerDown={(event) => { event.preventDefault(); event.currentTarget.focus(); drag.current = {point:localPoint(event), position, depth}; event.currentTarget.setPointerCapture(event.pointerId) }}
       onPointerMove={(event) => { if(drag.current) { const point=localPoint(event); stir(drag.current.position + point.x-drag.current.point.x, drag.current.depth + point.y-drag.current.point.y) } }}
       onPointerUp={(event) => { drag.current = null; event.currentTarget.releasePointerCapture(event.pointerId) }}
